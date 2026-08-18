@@ -43,5 +43,16 @@ public class Order {
         this.updatedAt = currentTime;
     }
 
+    //order confirm check
+    public void confirmCheck(LocalDateTime currentTime){
+        //check order is pending
+        if(this.orderStatus != OrderStatus.PENDING){
+            throw new IllegalStateException("Only pending orders can be confirmed");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.CONFIRMED;
+        this.updatedAt = currentTime;
+    }
+
 
 }
