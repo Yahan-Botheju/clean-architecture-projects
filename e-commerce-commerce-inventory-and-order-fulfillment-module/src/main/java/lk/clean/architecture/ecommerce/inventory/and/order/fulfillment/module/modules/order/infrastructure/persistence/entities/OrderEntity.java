@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class OrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "order_id", nullable = false, updatable = false)
     private UUID orderId;
 
     @Column(name = "customer_id", nullable = false)
