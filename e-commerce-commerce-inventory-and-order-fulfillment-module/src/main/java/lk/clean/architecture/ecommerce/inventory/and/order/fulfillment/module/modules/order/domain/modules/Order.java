@@ -65,4 +65,14 @@ public class Order {
         this.updatedAt = currentTime;
     }
 
+    //cancel check
+    public void cancelCheck(LocalDateTime currentTime){
+        //check order is ship OR cancel
+        if(this.orderStatus == OrderStatus.SHIPPED || this.orderStatus == OrderStatus.CANCELED){
+            throw new IllegalStateException("pending or confirmed orders can be cancelled");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.CANCELED;
+        this.updatedAt = currentTime;
+    }
 }
