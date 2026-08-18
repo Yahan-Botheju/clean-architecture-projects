@@ -28,4 +28,51 @@ public class Order {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    /* __DOMAIN_BUSINESS_LOGICS__ */
+
+    //order creation check
+    public void createOrderCheck(LocalDateTime currentTime){
+        //check order quantity > 0 OR price > 0
+        if(this.orderQuantity <= 0 || this.totalPrice == null || this.totalPrice.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalStateException("Order quantity and total price must be greater than 0");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.PENDING;
+        this.createdAt = currentTime;
+        this.updatedAt = currentTime;
+    }
+
+    //order confirm check
+    public void confirmCheck(LocalDateTime currentTime){
+        //check order is pending
+        if(this.orderStatus != OrderStatus.PENDING){
+            throw new IllegalStateException("Only pending orders can be confirmed");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.CONFIRMED;
+        this.updatedAt = currentTime;
+    }
+
+    //order ship check
+    public void shipCheck(LocalDateTime currentTime){
+        //check order is confirmed
+        if(this.orderStatus !=  OrderStatus.CONFIRMED){
+            throw new IllegalStateException("Only confirmed orders can be shipped");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.SHIPPED;
+        this.updatedAt = currentTime;
+    }
+
+    //cancel check
+    public void cancelCheck(LocalDateTime currentTime){
+        //check order is ship OR cancel
+        if(this.orderStatus == OrderStatus.SHIPPED || this.orderStatus == OrderStatus.CANCELED){
+            throw new IllegalStateException("pending or confirmed orders can be cancelled");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.CANCELED;
+        this.updatedAt = currentTime;
+    }
 }
