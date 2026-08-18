@@ -28,4 +28,20 @@ public class Order {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    /* __DOMAIN_BUSINESS_LOGICS__ */
+
+    //order creation check
+    public void createOrderCheck(LocalDateTime currentTime){
+        //check order quantity > 0 OR price > 0
+        if(this.orderQuantity <= 0 || this.totalPrice == null || this.totalPrice.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalStateException("Order quantity and total price must be greater than 0");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.PENDING;
+        this.createdAt = currentTime;
+        this.updatedAt = currentTime;
+    }
+
+
 }
