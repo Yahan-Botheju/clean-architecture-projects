@@ -54,5 +54,15 @@ public class Order {
         this.updatedAt = currentTime;
     }
 
+    //order ship check
+    public void shipCheck(LocalDateTime currentTime){
+        //check order is confirmed
+        if(this.orderStatus !=  OrderStatus.CONFIRMED){
+            throw new IllegalStateException("Only confirmed orders can be shipped");
+        }
+        //mutate value
+        this.orderStatus = OrderStatus.SHIPPED;
+        this.updatedAt = currentTime;
+    }
 
 }
