@@ -1,8 +1,12 @@
 package lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.persistence;
 
+import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.domain.modules.Order;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.domain.repositories.OrderRepository;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.persistence.jpa.JpaOrderRepository;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.persistence.persistenceMapper.OrderPersistenceMapper;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class OrderRepositoryImpl implements OrderRepository {
 
@@ -16,5 +20,12 @@ public class OrderRepositoryImpl implements OrderRepository {
     ) {
         this.jpaOrderRepository = jpaOrderRepository;
         this.orderPersistenceMapper = orderPersistenceMapper;
+    }
+
+    //product find by id
+    @Override
+    public Optional<Order> findById(UUID productId) {
+        return jpaOrderRepository.findByProductId(productId)
+                .map(orderPersistenceMapper::toDomainModel);
     }
 }
