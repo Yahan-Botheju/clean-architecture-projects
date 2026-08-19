@@ -28,4 +28,10 @@ public class OrderRepositoryImpl implements OrderRepository {
         return jpaOrderRepository.findByProductId(productId)
                 .map(orderPersistenceMapper::toDomainModel);
     }
+
+    //check customer by id
+    @Override
+    public boolean customer_existsById(UUID customerId){
+        return jpaOrderRepository.existsById(customerId);
+    }
 }
