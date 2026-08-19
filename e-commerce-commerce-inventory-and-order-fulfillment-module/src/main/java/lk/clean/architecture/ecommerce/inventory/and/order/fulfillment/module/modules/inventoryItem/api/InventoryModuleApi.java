@@ -10,5 +10,5 @@ public interface InventoryModuleApi {
     public void stockReservation(UUID productId, int requestedQuantity,  LocalDateTime currentTime);
 
     //unite price
-    BigDecimal calculateTotalPrice(UUID productId);
+    BigDecimal getUnitPrice(UUID productId);
 }
