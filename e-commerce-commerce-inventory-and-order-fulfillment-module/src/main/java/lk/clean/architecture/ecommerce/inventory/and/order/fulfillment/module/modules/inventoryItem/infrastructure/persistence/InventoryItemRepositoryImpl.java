@@ -6,6 +6,9 @@ import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.mo
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.infrastructure.persistence.jpa.JpaInventoryItemRepository;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.infrastructure.persistence.persistenceMapper.PersistenceMapper;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 
     //inject required dependencies
@@ -18,6 +21,13 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepository {
     ) {
         this.jpaInventoryItemRepository = jpaInventoryItemRepository;
         this.persistenceMapper = persistenceMapper;
+    }
+
+    //product find by id
+    @Override
+    public Optional<InventoryItem> findByProductId(UUID productId) {
+        return jpaInventoryItemRepository.findById(productId)
+                .map(persistenceMapper::toDomainModel);
     }
 
     //save item
