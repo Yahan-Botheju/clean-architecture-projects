@@ -8,4 +8,7 @@ import java.util.UUID;
 public interface OrderRepository {
 
     Optional<Order> findById(UUID productId);
+
+    //check customer by id
+    boolean customer_existsById(UUID customerId);
 }
