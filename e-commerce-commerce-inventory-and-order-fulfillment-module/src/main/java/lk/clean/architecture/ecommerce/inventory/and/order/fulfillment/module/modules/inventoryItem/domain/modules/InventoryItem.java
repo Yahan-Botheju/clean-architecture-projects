@@ -43,5 +43,12 @@ public class InventoryItem {
         this.reservedStock -= requestedQuantity;
         this.updatedAt = currentTime;
     }
-
+    //re stock
+    public void restock(int restockQuantity, LocalDateTime currentTime) {
+        if(restockQuantity <= 0) {
+            throw new IllegalStateException("restock quantity cannot be less than zero");
+        }
+        this.availableStock += restockQuantity;
+        this.updatedAt = currentTime;
+    }
 }
