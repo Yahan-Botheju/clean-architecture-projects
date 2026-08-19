@@ -35,4 +35,13 @@ public class InventoryItem {
         this.reservedStock += requestedQuantity;
         this.updatedAt = currentTime;
     }
+    //stock release
+    public void stockRelease(int requestedQuantity, LocalDateTime currentTime) {
+        if(requestedQuantity <= 0){
+            throw new IllegalStateException("requested quantity cannot be less than zero");
+        }
+        this.reservedStock -= requestedQuantity;
+        this.updatedAt = currentTime;
+    }
+
 }
