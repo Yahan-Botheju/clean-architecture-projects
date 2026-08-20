@@ -29,6 +29,22 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
+    /* __STATIC_FACTORY_METHOD__ */
+
+    //for create model externally
+    public static Order createNewOrder(UUID customerId, UUID productId, int  orderQuantity, BigDecimal totalPrice) {
+         return new Order(
+                 UUID.randomUUID(),
+                 productId,
+                 customerId,
+                 orderQuantity,
+                 totalPrice,
+                 null,
+                 null,
+                 null
+         );
+    }
+
     /* __DOMAIN_BUSINESS_LOGICS__ */
 
     //order creation check
