@@ -6,6 +6,7 @@ import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.mo
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
@@ -22,20 +23,29 @@ public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
         this.inventoryModuleApi = inventoryModuleApi;
     }
 
+    //place new order
+    @Override
     public Order placeOrder(
             UUID customerId,
             UUID productId,
             int requestQuantity
     ){
-
-        //check product existence
-        Order checkProduct = orderRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("product not found"));
-
+        //check customer existence
         if(!orderRepository.customer_existsById(customerId)){
             throw new ResourceNotFoundException("customer not found");
         }
+        //create time
+        LocalDateTime currentTime = LocalDateTime.now();
 
-    return null;
+        //use inventory domain components
+        inventoryModuleApi.stockReservation(productId,requestQuantity,currentTime);
+
+        BigDecimal totalPrice = inventoryModuleApi.getUnitPrice(productId);
+        //use static method for create new model
+        Order newOrder = Order.createNewOrder(customerId, productId, requestQuantity, totalPrice);
+        //use domain logic
+        newOrder.createOrderCheck(currentTime);
+
+        return newOrder;
     }
 }
