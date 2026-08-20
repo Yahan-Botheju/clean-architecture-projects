@@ -11,4 +11,7 @@ public interface OrderRepository {
 
     //check customer by id
     boolean customer_existsById(UUID customerId);
+
+    //save new order
+    Order save(Order order);
 }
