@@ -46,6 +46,6 @@ public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
         //use domain logic
         newOrder.createOrderCheck(currentTime);
 
-        return newOrder;
+        return  orderRepository.save(newOrder);
     }
 }
