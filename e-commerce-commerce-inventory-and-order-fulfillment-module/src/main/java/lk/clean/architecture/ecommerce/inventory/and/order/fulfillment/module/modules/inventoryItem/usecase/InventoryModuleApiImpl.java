@@ -31,7 +31,7 @@ public class InventoryModuleApiImpl implements InventoryModuleApi {
         //call domain logic
         checkProduct.stockReservation(requestedQuantity, currentTime);
 
-        inventoryItemRepository.createNewItem(checkProduct);
+        inventoryItemRepository.save(checkProduct);
     }
 
     //unit price for order domain usecase impl
@@ -43,4 +43,6 @@ public class InventoryModuleApiImpl implements InventoryModuleApi {
         //unit price related to product
         return checkProduct.getUnitPrice();
     }
+
+    public
 }
