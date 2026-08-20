@@ -32,7 +32,7 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 
     //save item
     @Override
-    public InventoryItem createNewItem(InventoryItem inventoryItem) {
+    public InventoryItem save(InventoryItem inventoryItem) {
 
         InventoryItemEntity toEntity = persistenceMapper.toEntity(inventoryItem);
         InventoryItemEntity savedItem = jpaInventoryItemRepository.save(toEntity);

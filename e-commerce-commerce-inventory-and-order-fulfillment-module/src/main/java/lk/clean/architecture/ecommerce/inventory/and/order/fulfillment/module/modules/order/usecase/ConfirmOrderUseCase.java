@@ -4,8 +4,8 @@ import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.mo
 
 import java.util.UUID;
 
-public interface PlaceOrderUseCase {
+public interface ConfirmOrderUseCase {
 
-    //place new order
-    Order placeOrder( UUID customerId, UUID productId, int requestQuantity);
+    //confirm order
+    Order confirmOrder(UUID orderId);
 }

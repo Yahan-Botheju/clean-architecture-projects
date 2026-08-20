@@ -2,6 +2,7 @@ package lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.m
 
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.domain.modules.Order;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.domain.repositories.OrderRepository;
+import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.persistence.entities.OrderEntity;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.persistence.jpa.JpaOrderRepository;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.persistence.persistenceMapper.OrderPersistenceMapper;
 
@@ -33,5 +34,15 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public boolean customer_existsById(UUID customerId){
         return jpaOrderRepository.existsById(customerId);
+    }
+
+    //save new order
+    @Override
+    public Order save(Order order) {
+
+        OrderEntity toEntity = orderPersistenceMapper.toEntity(order);
+        OrderEntity savedEntity = jpaOrderRepository.save(toEntity);
+
+        return orderPersistenceMapper.toDomainModel(savedEntity);
     }
 }

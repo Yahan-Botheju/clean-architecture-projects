@@ -11,5 +11,6 @@ public interface InventoryItemRepository {
     Optional<InventoryItem> findByProductId(UUID productId);
 
     //create new item
-    InventoryItem createNewItem(InventoryItem inventoryItem);
+    InventoryItem save(InventoryItem inventoryItem);
+
 }
