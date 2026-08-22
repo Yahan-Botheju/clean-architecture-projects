@@ -1,11 +1,9 @@
 package lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.infrastructure.configs;
 
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.api.InventoryModuleApi;
+import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.domain.repositories.InventoryItemRepository;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.domain.repositories.OrderRepository;
-import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.usecase.ConfirmOrderUseCase;
-import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.usecase.ConfirmOrderUseCaseImpl;
-import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.usecase.PlaceOrderUseCase;
-import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.usecase.PlaceOrderUseCaseImpl;
+import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.usecase.*;
 import org.springframework.context.annotation.Bean;
 
 public class UseCaseBeanConfigs {
@@ -25,5 +23,14 @@ public class UseCaseBeanConfigs {
             OrderRepository orderRepository
     ){
         return new ConfirmOrderUseCaseImpl(orderRepository);
+    }
+
+    //ship order usecase impl
+    @Bean
+    public ShipOrderUseCase shipOrderUseCase(
+            OrderRepository orderRepository,
+            InventoryModuleApi inventoryModuleApi
+    ){
+        return new ShipOrderUseCaseImpl(orderRepository, inventoryModuleApi);
     }
 }
