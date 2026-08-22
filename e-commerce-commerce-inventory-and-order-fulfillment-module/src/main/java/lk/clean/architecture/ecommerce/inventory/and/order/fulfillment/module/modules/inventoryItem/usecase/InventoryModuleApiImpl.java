@@ -44,5 +44,18 @@ public class InventoryModuleApiImpl implements InventoryModuleApi {
         return checkProduct.getUnitPrice();
     }
 
-    public
+    @Override
+    public void deductStock(
+            UUID productId,
+            int requestedQuantity,
+            LocalDateTime currentTime
+    ){
+        InventoryItem checkProduct = inventoryItemRepository.findByProductId(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        //call domain logic
+        checkProduct.stockRelease(requestedQuantity, currentTime);
+
+        inventoryItemRepository.save(checkProduct);
+    }
 }

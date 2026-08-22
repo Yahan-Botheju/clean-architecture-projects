@@ -11,4 +11,8 @@ public interface InventoryModuleApi {
 
     //unite price
     BigDecimal getUnitPrice(UUID productId);
+
+
+    void deductStock(UUID productId, int requestedQuantity, LocalDateTime currentTime);
+
 }
