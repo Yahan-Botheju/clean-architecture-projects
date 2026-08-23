@@ -42,6 +42,6 @@ public class CreateInventoryItemUseCaseImpl implements  CreateInventoryItemUseCa
         );
 
         //save and return
-        return inventoryItemRepository.createNewItem(newInventoryItem);
+        return inventoryItemRepository.save(newInventoryItem);
     }
 }
