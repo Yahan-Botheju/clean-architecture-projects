@@ -63,4 +63,15 @@ public class OrderController {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDTO);
     }
+
+    //ship order
+    @PatchMapping("/{orderId}/ship")
+    public ResponseEntity<OrderResponseDTO> shipOrder(
+            @PathVariable UUID orderId
+    ){
+        Order toUseCase = shipOrderUseCase.shipOrder(orderId);
+        OrderResponseDTO responseDTO = orderWebMapper.toResponseDTO(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
 }
