@@ -10,10 +10,9 @@ import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.mo
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.order.web.webMappers.OrderWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -52,5 +51,16 @@ public class OrderController {
         OrderResponseDTO responseDTO = orderWebMapper.toResponseDTO(toUseCase);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
+    //confirm order
+    @PatchMapping("/{orderId}/confirm")
+    public ResponseEntity<OrderResponseDTO> confirmOrder(
+            @PathVariable UUID orderId
+    ){
+        Order toUseCase = confirmOrderUseCase.confirmOrder(orderId);
+        OrderResponseDTO responseDTO = orderWebMapper.toResponseDTO(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDTO);
     }
 }
