@@ -1,5 +1,6 @@
 package lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.web.controllers;
 
+import jakarta.validation.Valid;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.domain.modules.InventoryItem;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.usecase.CreateInventoryItemUseCase;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.usecase.RestockInventoryUseCase;
@@ -35,7 +36,7 @@ public class InventoryController {
     //create inventory
     @PostMapping
     public ResponseEntity<InventoryResponseDTO> createInventoryItem(
-            @RequestBody CreateInventoryRequestDTO createInventoryRequestDTO
+            @Valid @RequestBody CreateInventoryRequestDTO createInventoryRequestDTO
             ){
         //set values to usecase
         InventoryItem toUseCase = createInventoryItemUseCase.createInventoryItem(
@@ -52,7 +53,7 @@ public class InventoryController {
     @PatchMapping("/{productId}/restock")
     public ResponseEntity<InventoryResponseDTO> restockInventoryItem(
             @PathVariable UUID productId,
-            @RequestBody RestockInventoryRequestDTO restockInventoryRequestDTO
+            @Valid @RequestBody RestockInventoryRequestDTO restockInventoryRequestDTO
     ){
         //set values to usecase
         InventoryItem toUseCase = restockInventoryUseCase.restockInventoryItem(
