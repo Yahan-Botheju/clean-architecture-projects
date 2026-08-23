@@ -5,13 +5,13 @@ import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.mo
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.usecase.RestockInventoryUseCase;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.web.DTOs.CreateInventoryRequestDTO;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.web.DTOs.InventoryResponseDTO;
+import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.web.DTOs.RestockInventoryRequestDTO;
 import lk.clean.architecture.ecommerce.inventory.and.order.fulfillment.module.modules.inventoryItem.web.webMappers.InventoryWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
@@ -46,5 +46,21 @@ public class InventoryController {
         InventoryResponseDTO responseDTO = inventoryWebMapper.toRecordDTO(toUseCase);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
+    //restock inventory
+    @PatchMapping("/{productId}/restock")
+    public ResponseEntity<InventoryResponseDTO> restockInventoryItem(
+            @PathVariable UUID productId,
+            @RequestBody RestockInventoryRequestDTO restockInventoryRequestDTO
+    ){
+        //set values to usecase
+        InventoryItem toUseCase = restockInventoryUseCase.restockInventoryItem(
+                productId,
+                restockInventoryRequestDTO.getAddedQuantity()
+        );
+        InventoryResponseDTO responseDTO = inventoryWebMapper.toRecordDTO(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 }
