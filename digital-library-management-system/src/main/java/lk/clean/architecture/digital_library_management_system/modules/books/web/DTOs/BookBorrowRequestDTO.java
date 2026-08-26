@@ -13,6 +13,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BookBorrowRequestDTO {
 
+    @NotNull(message = "Book ID is required")
+    private UUID bookId;
+
     @NotNull(message = "User ID is required")
     private UUID userId;
 
