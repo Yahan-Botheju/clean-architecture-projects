@@ -5,7 +5,7 @@ import lk.clean.architecture.digital_library_management_system.modules.books.web
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface UserWebMapper {
+public interface BookWebMapper {
 
     //to user command
     BookBorrowCommand toBookBorrowCommand(BookBorrowRequestDTO bookBorrowRequestDTO);
