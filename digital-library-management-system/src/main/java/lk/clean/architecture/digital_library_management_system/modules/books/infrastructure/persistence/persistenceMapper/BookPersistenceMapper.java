@@ -1,8 +1,15 @@
 package lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.persistenceMapper;
 
+import lk.clean.architecture.digital_library_management_system.modules.books.domain.models.Book;
 import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.entities.BookEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.mapstruct.Mapper;
 
-import java.util.UUID;
+@Mapper(componentModel = "spring")
+public interface BookPersistenceMapper{
 
-public interface BookPersistenceMapper
+    //domain model to entity
+    BookEntity toEntity(Book book);
+
+    //entity to domain model
+    Book toDomainModel(BookEntity bookEntity);
+}
