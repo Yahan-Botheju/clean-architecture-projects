@@ -4,6 +4,8 @@ import lk.clean.architecture.digital_library_management_system.modules.books.dom
 import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.jpa.JpaBookRepository;
 import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.persistenceMapper.BookPersistenceMapper;
 
+import java.util.UUID;
+
 public class BookPersistenceImpl implements BookRepository {
 
     //inject required dependencies
@@ -16,5 +18,10 @@ public class BookPersistenceImpl implements BookRepository {
     ) {
         this.jpaBookRepository = jpaBookRepository;
         this.bookPersistenceMapper = bookPersistenceMapper;
+    }
+
+    //check book by id
+    boolean existsById(UUID bookId) {
+        return jpaBookRepository.existsById(bookId);
     }
 }
