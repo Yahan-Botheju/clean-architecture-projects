@@ -20,6 +20,9 @@ public class BookEntity {
     @Column(name = "book_id")
     private UUID bookId;
 
+    @Column(name = "borrowedByUser_Id", nullable = true)
+    private UUID borrowedByUserId;
+
     @Column(name = "isbn", nullable = false)
     private String isbn;
 
@@ -33,7 +36,4 @@ public class BookEntity {
     @Column(name = "status", nullable = false)
     private BookStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
-    private UserEntity userId;
 }
