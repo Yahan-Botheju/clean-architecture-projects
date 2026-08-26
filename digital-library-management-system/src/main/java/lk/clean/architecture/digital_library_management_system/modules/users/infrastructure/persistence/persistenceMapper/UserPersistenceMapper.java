@@ -1,6 +1,6 @@
-package lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.persistenceMapper;
+package lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.persistenceMapper;
 
-import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.entities.UserEntity;
+import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.entities.UserEntity;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.models.User;
 
 public interface UserPersistenceMapper {

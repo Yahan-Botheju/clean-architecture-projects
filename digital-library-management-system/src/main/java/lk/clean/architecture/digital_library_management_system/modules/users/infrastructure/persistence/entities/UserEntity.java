@@ -1,4 +1,4 @@
-package lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.entities;
+package lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.entities;
 
 import jakarta.persistence.*;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.enums.UserStatus;
