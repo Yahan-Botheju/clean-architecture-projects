@@ -9,4 +9,7 @@ public interface UserRepository {
 
     //get user by id
     Optional<User> getUserById(UUID id);
+
+    //save user
+    User save(User user);
 }
