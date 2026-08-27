@@ -9,4 +9,7 @@ public interface UserDetailsApi {
 
     //user details for external domain usage
     UserSharedDetailsDTO sharedUserDetails(UUID userId);
+
+    //check user activation
+    void checkUserActivation(UUID userId);
 }
