@@ -2,6 +2,7 @@ package lk.clean.architecture.digital_library_management_system.modules.users.in
 
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.models.User;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.repositories.UserRepository;
+import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.entities.UserEntity;
 import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.jpa.JpaUserRepository;
 import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.persistenceMapper.UserPersistenceMapper;
 
@@ -27,5 +28,14 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> getUserById(UUID userId) {
         return jpaUserRepository.findById(userId)
                 .map(userPersistenceMapper::toDomainModel);
+    }
+
+    //save user
+    @Override
+    public User save(User user) {
+        UserEntity toEntity = userPersistenceMapper.toEntity(user);
+        UserEntity savedEntity = jpaUserRepository.save(toEntity);
+
+        return userPersistenceMapper.toDomainModel(savedEntity);
     }
 }
