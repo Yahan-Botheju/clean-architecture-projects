@@ -6,6 +6,7 @@ import lk.clean.architecture.digital_library_management_system.modules.users.dom
 import java.util.UUID;
 
 public class User {
+
     //max book borrow count
     private static final int MAX_BOOK_BORROW_COUNT = 5;
 
@@ -23,6 +24,7 @@ public class User {
 
 
     /* __GETTERS__ */
+
 
     public UUID getUserId() { return userId; }
     public String getUserName() { return userName; }
@@ -43,6 +45,12 @@ public class User {
         }
     }
 
+    //check user activation
+    public void checkUserActivation() {
+        if(this.status != UserStatus.ACTIVE){
+            throw new IllegalStateException("User has not been activated");
+        }
+    }
 
 }
 
