@@ -21,7 +21,9 @@ public class BookPersistenceImpl implements BookRepository {
     }
 
     //check book by id
-    boolean existsById(UUID bookId) {
+    @Override
+    public boolean existsById(UUID bookId) {
         return jpaBookRepository.existsById(bookId);
     }
+
 }
