@@ -1,6 +1,7 @@
 package lk.clean.architecture.digital_library_management_system.modules.users.usecase;
 
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.api.UserDetailsApi;
+import lk.clean.architecture.digital_library_management_system.modules.users.domain.models.User;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.repositories.UserRepository;
 import lk.clean.architecture.digital_library_management_system.shared_domain.records.UserSharedDetailsDTO;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -26,5 +27,15 @@ public class UserDetailsApiImpl implements UserDetailsApi {
                         user.getEmail(),
                         user.getStatus()
                 )).orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+    }
+
+    //check user activation
+    @Override
+    public void checkUserActivation(UUID userId) {
+        //get related user
+        User getUser = userRepository.getUserById(userId)
+                .orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+        //check user activation
+        getUser.checkUserActivation();
     }
 }
