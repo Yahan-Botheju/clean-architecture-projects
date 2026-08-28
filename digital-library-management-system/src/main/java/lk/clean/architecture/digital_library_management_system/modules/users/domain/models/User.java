@@ -14,12 +14,14 @@ public class User {
     private String userName;
     private String email;
     private UserStatus status;
+    private int activeBookCount;
 
-    public User(UUID userId, String userName, String email, UserStatus status) {
+    public User(UUID userId, String userName, String email, UserStatus status, int activeBookCount) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.status = status;
+        this.activeBookCount = activeBookCount;
     }
 
 
@@ -30,6 +32,7 @@ public class User {
     public String getUserName() { return userName; }
     public String getEmail() { return email; }
     public UserStatus getStatus() { return status; }
+    public int getActiveBookCount() { return activeBookCount; }
 
 
     /* __DOMAIN_LOGICS__ */
