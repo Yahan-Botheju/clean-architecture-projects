@@ -12,4 +12,7 @@ public interface BookRepository {
 
     //get book by id
     Book getBookById(UUID bookId);
+
+    //save borrow book
+    Book saveBorrowBook(Book book);
 }
