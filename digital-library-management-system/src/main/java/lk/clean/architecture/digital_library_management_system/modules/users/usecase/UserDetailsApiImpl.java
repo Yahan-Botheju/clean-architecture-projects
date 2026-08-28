@@ -17,25 +17,44 @@ public class UserDetailsApiImpl implements UserDetailsApi {
         this.userRepository = userRepository;
     }
 
+    /* __PRIVATE_METHODS__ */
+
+    //private method get user
+    private User getUser(UUID userId) {
+        return userRepository.getUserById(userId)
+                .orElseThrow(()->new ResourceNotFoundException("User not found!" + ", " +  userId));
+    }
+
+
+    /* __PUBLIC_METHODS__ */
+
+
     //user for other domain usage through record class
     @Override
     public UserSharedDetailsDTO sharedUserDetails(UUID userId) {
-        return userRepository.getUserById(userId)
-                .map(user -> new UserSharedDetailsDTO(
-                        user.getUserId(),
-                        user.getUserName(),
-                        user.getEmail(),
-                        user.getStatus()
-                )).orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+
+        User newUser = getUser(userId);
+
+        return new UserSharedDetailsDTO(
+                        newUser.getUserId(),
+                        newUser.getUserName(),
+                        newUser.getEmail(),
+                        newUser.getStatus());
     }
 
     //check user activation
     @Override
     public void checkUserActivation(UUID userId) {
         //get related user
-        User getUser = userRepository.getUserById(userId)
-                .orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+        User existingUser = getUser(userId);
         //check user activation
-        getUser.checkUserActivation();
+        existingUser.checkUserActivation();
+    }
+
+    //borrow book
+    @Override
+    public void borrowBookByUser(UUID userId, int currentBookBorrowCount) {
+        User existingUser = getUser(userId);
+        existingUser.validateCanBorrow(currentBookBorrowCount);
     }
 }

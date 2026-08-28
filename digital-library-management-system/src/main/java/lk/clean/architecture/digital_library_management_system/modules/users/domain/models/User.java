@@ -1,6 +1,5 @@
 package lk.clean.architecture.digital_library_management_system.modules.users.domain.models;
 
-import lk.clean.architecture.digital_library_management_system.modules.books.domain.models.Book;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.enums.UserStatus;
 
 import java.util.UUID;
@@ -14,6 +13,7 @@ public class User {
     private String userName;
     private String email;
     private UserStatus status;
+
 
     public User(UUID userId, String userName, String email, UserStatus status) {
         this.userId = userId;
@@ -36,7 +36,7 @@ public class User {
 
 
     //user suspending and book limit check
-    public void borrowBook(Book book, int currentBookBorrowCount) {
+    public void validateCanBorrow(int currentBookBorrowCount) {
         if(this.status == UserStatus.SUSPENDED){
             throw new IllegalStateException("User has been suspended");
         }

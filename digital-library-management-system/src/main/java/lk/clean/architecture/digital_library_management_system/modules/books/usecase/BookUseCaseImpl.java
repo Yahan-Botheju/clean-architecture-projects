@@ -1,10 +1,10 @@
 package lk.clean.architecture.digital_library_management_system.modules.books.usecase;
 
+import lk.clean.architecture.digital_library_management_system.modules.books.domain.models.Book;
 import lk.clean.architecture.digital_library_management_system.modules.books.domain.repositories.BookRepository;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowCommand;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.api.UserDetailsApi;
-import lk.clean.architecture.digital_library_management_system.modules.users.domain.models.User;
 import lk.clean.architecture.digital_library_management_system.shared_domain.records.UserSharedDetailsDTO;
 
 public class BookUseCaseImpl implements BookUseCase {
@@ -23,6 +23,27 @@ public class BookUseCaseImpl implements BookUseCase {
         //user external api for get user
         UserSharedDetailsDTO getUser = userDetailsApi.sharedUserDetails(bookBorrowCommand.userId());
 
-        return null;
+        //check user activation through user domain
+        userDetailsApi.checkUserActivation(getUser.userId());
+
+        //check user borrowed book count
+        userDetailsApi.borrowBookByUser(getUser.userId(), getUser.activeBookCount());
+
+        //get book
+        Book getBook = bookRepository.getBookById(bookBorrowCommand.bookId());
+
+        //check book availability
+        getBook.borrowBook(bookBorrowCommand.bookId());
+
+        //save book
+        Book savedBook = bookRepository.saveBorrowBook(getBook);
+
+        return new BookBorrowResult(
+                savedBook.getBookId(),
+                savedBook.getUserId(),
+                savedBook.getIsbn(),
+                savedBook.getTitle(),
+                savedBook.getAuthor()
+        );
     }
 }
