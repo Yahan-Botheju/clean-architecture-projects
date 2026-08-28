@@ -1,6 +1,5 @@
 package lk.clean.architecture.digital_library_management_system.modules.users.domain.models;
 
-import lk.clean.architecture.digital_library_management_system.modules.books.domain.models.Book;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.enums.UserStatus;
 
 import java.util.UUID;

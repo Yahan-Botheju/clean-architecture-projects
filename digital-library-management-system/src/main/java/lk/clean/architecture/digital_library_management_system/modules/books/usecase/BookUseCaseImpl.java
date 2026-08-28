@@ -5,7 +5,6 @@ import lk.clean.architecture.digital_library_management_system.modules.books.dom
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowCommand;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.api.UserDetailsApi;
-import lk.clean.architecture.digital_library_management_system.modules.users.domain.models.User;
 import lk.clean.architecture.digital_library_management_system.shared_domain.records.UserSharedDetailsDTO;
 
 public class BookUseCaseImpl implements BookUseCase {
