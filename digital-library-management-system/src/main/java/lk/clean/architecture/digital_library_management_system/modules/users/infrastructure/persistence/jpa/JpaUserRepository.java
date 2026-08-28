@@ -13,11 +13,6 @@ public interface JpaUserRepository extends JpaRepository<UserEntity, UUID> {
     //user find by id
     Optional<UserEntity> findById(UUID userId);
 
-    @Query(
-            "SELECT COUNT(b) " +
-                    "FROM BookEntity b " +
-                    "WHERE b.borrowedByUser.userId = :userId " +
-                    "AND b.status = 'BORROWED'"
-    )
-    int countActiveBooksByUserId(@Param("userId") UUID userId);
+    @Query("SELECT u.activeBookCount FROM UserEntity u WHERE u.userId = :userId")
+    Optional<Integer> findActiveBookCountByUserId(@Param("userId") UUID userId);
 }
