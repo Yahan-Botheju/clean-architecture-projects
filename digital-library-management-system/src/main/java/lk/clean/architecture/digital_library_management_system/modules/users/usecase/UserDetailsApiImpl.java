@@ -38,4 +38,5 @@ public class UserDetailsApiImpl implements UserDetailsApi {
         //check user activation
         getUser.checkUserActivation();
     }
+
 }
