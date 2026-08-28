@@ -46,6 +46,7 @@ public class User {
         if(currentBookBorrowCount >= MAX_BOOK_BORROW_COUNT) {
             throw new IllegalStateException("User has been reached book borrow limit");
         }
+        this.activeBookCount++;
     }
 
     //check user activation
