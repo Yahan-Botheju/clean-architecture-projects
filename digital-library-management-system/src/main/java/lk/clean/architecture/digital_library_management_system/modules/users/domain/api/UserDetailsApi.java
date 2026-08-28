@@ -13,4 +13,7 @@ public interface UserDetailsApi {
     //check user activation
     void checkUserActivation(UUID userId);
 
+    //borrow a book
+    void borrowBookByUser(UUID userId, int currentBookBorrowCount);
+
 }
