@@ -26,9 +26,6 @@ public class UserDetailsApiImpl implements UserDetailsApi {
     }
 
 
-
-
-
     /* __PUBLIC_METHODS__ */
 
 
@@ -36,21 +33,20 @@ public class UserDetailsApiImpl implements UserDetailsApi {
     @Override
     public UserSharedDetailsDTO sharedUserDetails(UUID userId) {
 
-        return userRepository.getUserById(userId)
-                .map(user -> new UserSharedDetailsDTO(
-                        user.getUserId(),
-                        user.getUserName(),
-                        user.getEmail(),
-                        user.getStatus()
-                )).orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+        User newUser = getUser(userId);
+
+        return new UserSharedDetailsDTO(
+                        newUser.getUserId(),
+                        newUser.getUserName(),
+                        newUser.getEmail(),
+                        newUser.getStatus());
     }
 
     //check user activation
     @Override
     public void checkUserActivation(UUID userId) {
         //get related user
-        User getUser = userRepository.getUserById(userId)
-                .orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+        User getUser = getUser(userId);
         //check user activation
         getUser.checkUserActivation();
     }
