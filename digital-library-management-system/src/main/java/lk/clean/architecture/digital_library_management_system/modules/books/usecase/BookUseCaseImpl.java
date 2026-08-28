@@ -24,15 +24,26 @@ public class BookUseCaseImpl implements BookUseCase {
         UserSharedDetailsDTO getUser = userDetailsApi.sharedUserDetails(bookBorrowCommand.userId());
 
         //check user activation through user domain
-        userDetailsApi.checkUserActivation(bookBorrowCommand.userId());
+        userDetailsApi.checkUserActivation(getUser.userId());
+
+        //check user borrowed book count
+        userDetailsApi.borrowBookByUser(getUser.userId(), getUser.activeBookCount());
 
         //get book
-        Book getBook =  bookRepository.getBookById(bookBorrowCommand.bookId());
+        Book getBook = bookRepository.getBookById(bookBorrowCommand.bookId());
 
         //check book availability
-        getBook.checkBookStatus(bookBorrowCommand.bookId());
+        getBook.borrowBook(bookBorrowCommand.bookId());
 
+        //save book
+        Book savedBook = bookRepository.saveBorrowBook(getBook);
 
-        return null;
+        return new BookBorrowResult(
+                savedBook.getBookId(),
+                savedBook.getUserId(),
+                savedBook.getIsbn(),
+                savedBook.getTitle(),
+                savedBook.getAuthor()
+        );
     }
 }
