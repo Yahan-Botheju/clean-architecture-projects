@@ -28,4 +28,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status")
     private UserStatus status;
+
+    @Column(name = "active_book_count", nullable = false)
+    private int activeBookCount;
 }
