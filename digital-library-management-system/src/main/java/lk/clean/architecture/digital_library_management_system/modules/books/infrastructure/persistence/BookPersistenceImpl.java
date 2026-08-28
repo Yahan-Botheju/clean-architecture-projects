@@ -2,6 +2,7 @@ package lk.clean.architecture.digital_library_management_system.modules.books.in
 
 import lk.clean.architecture.digital_library_management_system.modules.books.domain.models.Book;
 import lk.clean.architecture.digital_library_management_system.modules.books.domain.repositories.BookRepository;
+import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.entities.BookEntity;
 import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.jpa.JpaBookRepository;
 import lk.clean.architecture.digital_library_management_system.modules.books.infrastructure.persistence.persistenceMapper.BookPersistenceMapper;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -34,6 +35,15 @@ public class BookPersistenceImpl implements BookRepository {
        return jpaBookRepository.findById(bookId)
                .map(bookPersistenceMapper::toDomainModel)
                .orElseThrow(() ->  new ResourceNotFoundException("Book not found"));
+    }
+
+    //save borrow book
+    @Override
+    public Book saveBorrowBook(Book book){
+        BookEntity toEntity = bookPersistenceMapper.toEntity(book);
+        BookEntity savedEntity = jpaBookRepository.save(toEntity);
+
+        return bookPersistenceMapper.toDomainModel(savedEntity);
     }
 
 }
