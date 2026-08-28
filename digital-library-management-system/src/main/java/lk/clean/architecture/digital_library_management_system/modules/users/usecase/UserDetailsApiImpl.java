@@ -46,9 +46,9 @@ public class UserDetailsApiImpl implements UserDetailsApi {
     @Override
     public void checkUserActivation(UUID userId) {
         //get related user
-        User getUser = getUser(userId);
+        User existingUser = getUser(userId);
         //check user activation
-        getUser.checkUserActivation();
+        existingUser.checkUserActivation();
     }
 
     //borrow book
