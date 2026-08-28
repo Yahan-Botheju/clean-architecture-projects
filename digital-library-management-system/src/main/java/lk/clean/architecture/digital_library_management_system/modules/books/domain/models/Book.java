@@ -36,7 +36,7 @@ public class Book {
 
 
     //check book status
-    public void checkBookStatus(UUID userId) {
+    public void borrowBook(UUID userId) {
         if(this.status != BookStatus.AVAILABLE) {
             throw new ResourceNotFoundException("Book status is not AVAILABLE");
         }
