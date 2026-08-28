@@ -13,14 +13,13 @@ public class User {
     private String userName;
     private String email;
     private UserStatus status;
-    private int activeBookCount;
 
-    public User(UUID userId, String userName, String email, UserStatus status, int activeBookCount) {
+
+    public User(UUID userId, String userName, String email, UserStatus status) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.status = status;
-        this.activeBookCount = activeBookCount;
     }
 
 
@@ -31,7 +30,6 @@ public class User {
     public String getUserName() { return userName; }
     public String getEmail() { return email; }
     public UserStatus getStatus() { return status; }
-    public int getActiveBookCount() { return activeBookCount; }
 
 
     /* __DOMAIN_LOGICS__ */
@@ -45,7 +43,6 @@ public class User {
         if(currentBookBorrowCount >= MAX_BOOK_BORROW_COUNT) {
             throw new IllegalStateException("User has been reached book borrow limit");
         }
-        this.activeBookCount++;
     }
 
     //check user activation

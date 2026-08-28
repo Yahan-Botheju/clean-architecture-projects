@@ -8,6 +8,5 @@ public record UserSharedDetailsDTO(
         UUID userId,
         String userName,
         String email,
-        UserStatus status,
-        int activeBookCount
+        UserStatus status
 ) {}
