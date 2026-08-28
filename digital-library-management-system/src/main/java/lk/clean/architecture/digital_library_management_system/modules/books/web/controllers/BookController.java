@@ -1,7 +1,6 @@
 package lk.clean.architecture.digital_library_management_system.modules.books.web.controllers;
 
 import jakarta.validation.Valid;
-import lk.clean.architecture.digital_library_management_system.modules.books.domain.models.Book;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.BookUseCase;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowCommand;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
