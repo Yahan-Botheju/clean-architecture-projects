@@ -55,6 +55,6 @@ public class UserDetailsApiImpl implements UserDetailsApi {
     @Override
     public void borrowBookByUser(UUID userId, int currentBookBorrowCount) {
         User existingUser = getUser(userId);
-        existingUser.borrowBook(currentBookBorrowCount);
+        existingUser.validateCanBorrow(currentBookBorrowCount);
     }
 }
