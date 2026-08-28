@@ -39,7 +39,7 @@ public class User {
 
 
     //user suspending and book limit check
-    public void borrowBook(Book book, int currentBookBorrowCount) {
+    public void borrowBook(int currentBookBorrowCount) {
         if(this.status == UserStatus.SUSPENDED){
             throw new IllegalStateException("User has been suspended");
         }
