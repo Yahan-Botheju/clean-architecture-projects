@@ -52,7 +52,9 @@ public class UserDetailsApiImpl implements UserDetailsApi {
     }
 
     //borrow book
-    public void borrowBookByUser(){
-        User get
+    @Override
+    public void borrowBookByUser(UUID userId, int currentBookBorrowCount) {
+        User existingUser = getUser(userId);
+        existingUser.borrowBook(currentBookBorrowCount);
     }
 }
