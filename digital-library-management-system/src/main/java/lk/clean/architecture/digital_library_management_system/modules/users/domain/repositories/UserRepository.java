@@ -12,4 +12,7 @@ public interface UserRepository {
 
     //save user
     User save(User user);
+
+    //count user active book count by user id
+    int userActiveBookCount(UUID userId);
 }
