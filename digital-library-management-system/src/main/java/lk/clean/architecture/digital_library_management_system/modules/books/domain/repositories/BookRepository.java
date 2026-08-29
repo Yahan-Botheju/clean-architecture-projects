@@ -14,4 +14,7 @@ public interface BookRepository {
 
     //save borrow book
     Book saveBorrowBook(Book book);
+
+    //check user has same book to borrow
+    boolean checkUserBorrowedBooks(UUID userId, String title);
 }
