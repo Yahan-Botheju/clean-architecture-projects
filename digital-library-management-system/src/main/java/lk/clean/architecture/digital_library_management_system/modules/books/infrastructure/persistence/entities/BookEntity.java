@@ -2,7 +2,6 @@ package lk.clean.architecture.digital_library_management_system.modules.books.in
 
 import jakarta.persistence.*;
 import lk.clean.architecture.digital_library_management_system.modules.books.domain.enums.BookStatus;
-import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
