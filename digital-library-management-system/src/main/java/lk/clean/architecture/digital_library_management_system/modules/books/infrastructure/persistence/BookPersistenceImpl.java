@@ -46,4 +46,10 @@ public class BookPersistenceImpl implements BookRepository {
         return bookPersistenceMapper.toDomainModel(savedEntity);
     }
 
+    //check user going to borrow same book
+    @Override
+    public boolean checkUserBorrowedBooks(UUID userId, String title) {
+        return jpaBookRepository.checkUserBorrowedBooks(userId, title);
+    }
+
 }
