@@ -58,7 +58,7 @@ public class BookUseCaseImpl implements BookUseCase {
                 savedBook.getAuthor(),
                 borrowDate,
                 dueDate,
-                savedBook.getStatus()
+                savedBook.getBorrowStatus()
         );
     }
 }
