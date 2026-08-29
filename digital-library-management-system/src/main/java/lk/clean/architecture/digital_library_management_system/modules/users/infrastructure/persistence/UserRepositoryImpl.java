@@ -5,6 +5,7 @@ import lk.clean.architecture.digital_library_management_system.modules.users.dom
 import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.entities.UserEntity;
 import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.jpa.JpaUserRepository;
 import lk.clean.architecture.digital_library_management_system.modules.users.infrastructure.persistence.persistenceMapper.UserPersistenceMapper;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -22,6 +23,14 @@ public class UserRepositoryImpl implements UserRepository {
         this.jpaUserRepository = jpaUserRepository;
         this.userPersistenceMapper = userPersistenceMapper;
     }
+
+    //count user active book count by user id
+    @Override
+    public int userActiveBookCount(UUID userId){
+         return jpaUserRepository.findActiveBookCountByUserId(userId)
+                 .orElseThrow(() ->  new ResourceNotFoundException("User not found"));
+    }
+
 
     //get user by id
     @Override
