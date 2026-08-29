@@ -18,6 +18,7 @@ public class BookUseCaseImpl implements BookUseCase {
         this.userDetailsApi = userDetailsApi;
     }
 
+    //borrow a book
     @Override
     public BookBorrowResult bookBorrow(BookBorrowCommand bookBorrowCommand){
         //user external api for get user
@@ -27,7 +28,7 @@ public class BookUseCaseImpl implements BookUseCase {
         userDetailsApi.checkUserActivation(getUser.userId());
 
         //check user borrowed book count
-        userDetailsApi.borrowBookByUser(getUser.userId(), getUser.activeBookCount());
+        userDetailsApi.borrowBookByUser(getUser.userId());
 
         //get book
         Book getBook = bookRepository.getBookById(bookBorrowCommand.bookId());
