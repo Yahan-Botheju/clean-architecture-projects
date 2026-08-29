@@ -30,6 +30,11 @@ public class BookUseCaseImpl implements BookUseCase {
         //check user borrowed book count
         userDetailsApi.borrowBookByUser(getUser.userId());
 
+        //check user has borrow the same book
+        if(bookRepository.checkUserBorrowedBooks(bookBorrowCommand.userId(), bookBorrowCommand.title())){
+            throw new IllegalStateException("User has already been borrowed this book");
+        }
+
         //get book
         Book getBook = bookRepository.getBookById(bookBorrowCommand.bookId());
 
