@@ -53,8 +53,12 @@ public class UserDetailsApiImpl implements UserDetailsApi {
 
     //borrow book
     @Override
-    public void borrowBookByUser(UUID userId, int currentBookBorrowCount) {
+    public void borrowBookByUser(UUID userId) {
+        //get related user
         User existingUser = getUser(userId);
-        existingUser.validateCanBorrow(currentBookBorrowCount);
+        //get user active book count from domain repo
+        int activeBookCount = userRepository.userActiveBookCount(userId);
+        //call domain logic
+        existingUser.validateCanBorrow(activeBookCount);
     }
 }
