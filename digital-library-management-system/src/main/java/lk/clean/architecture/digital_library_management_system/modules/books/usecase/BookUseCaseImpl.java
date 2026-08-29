@@ -7,6 +7,8 @@ import lk.clean.architecture.digital_library_management_system.modules.books.use
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.api.UserDetailsApi;
 import lk.clean.architecture.digital_library_management_system.shared_domain.records.UserSharedDetailsDTO;
 
+import java.time.LocalDate;
+
 public class BookUseCaseImpl implements BookUseCase {
 
     //inject required dependencies
@@ -44,12 +46,17 @@ public class BookUseCaseImpl implements BookUseCase {
         //save book
         Book savedBook = bookRepository.saveBorrowBook(getBook);
 
+        //create due date
+        LocalDate borrowDate = LocalDate.now();
+        LocalDate dueDate = borrowDate.plusDays(14);
+
         return new BookBorrowResult(
                 savedBook.getBookId(),
                 savedBook.getUserId(),
                 savedBook.getIsbn(),
                 savedBook.getTitle(),
-                savedBook.getAuthor()
+                savedBook.getAuthor(),
+
         );
     }
 }
