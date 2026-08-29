@@ -3,7 +3,7 @@ package lk.clean.architecture.digital_library_management_system.modules.books.us
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowCommand;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
 
-public interface BookUseCase {
+public interface BookBorrowUseCase {
 
     //borrow book
     BookBorrowResult bookBorrow(BookBorrowCommand bookBorrowCommand);

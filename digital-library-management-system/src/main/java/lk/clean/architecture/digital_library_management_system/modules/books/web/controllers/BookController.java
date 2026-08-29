@@ -1,7 +1,7 @@
 package lk.clean.architecture.digital_library_management_system.modules.books.web.controllers;
 
 import jakarta.validation.Valid;
-import lk.clean.architecture.digital_library_management_system.modules.books.usecase.BookUseCase;
+import lk.clean.architecture.digital_library_management_system.modules.books.usecase.BookBorrowUseCase;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowCommand;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
 import lk.clean.architecture.digital_library_management_system.modules.books.web.DTOs.BookBorrowRequestDTO;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
     //inject required dependencies
-    private final BookUseCase bookUseCase;
+    private final BookBorrowUseCase bookBorrowUseCase;
     private final BookWebMapper bookWebMapper;
 
-    public BookController(BookUseCase bookUseCase, BookWebMapper bookWebMapper) {
-        this.bookUseCase = bookUseCase;
+    public BookController(BookBorrowUseCase bookBorrowUseCase, BookWebMapper bookWebMapper) {
+        this.bookBorrowUseCase = bookBorrowUseCase;
         this.bookWebMapper = bookWebMapper;
     }
 
@@ -34,7 +34,7 @@ public class BookController {
         //dto -> command
         BookBorrowCommand toBorrowCommand = bookWebMapper.toBookBorrowCommand(bookBorrowRequestDTO);
         //command -> usecase
-        BookBorrowResult toUseCase = bookUseCase.bookBorrow(toBorrowCommand);
+        BookBorrowResult toUseCase = bookBorrowUseCase.bookBorrow(toBorrowCommand);
         //command -> response
         BookBorrowedResponseDTO responseDTO = bookWebMapper.toBookBorrowResponseDTO(toUseCase);
 

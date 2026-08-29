@@ -9,13 +9,13 @@ import lk.clean.architecture.digital_library_management_system.shared_domain.rec
 
 import java.time.LocalDate;
 
-public class BookUseCaseImpl implements BookUseCase {
+public class BookBorrowUseCaseImpl implements BookBorrowUseCase {
 
     //inject required dependencies
     private final BookRepository bookRepository;
     private final UserDetailsApi userDetailsApi;
 
-    public BookUseCaseImpl(BookRepository bookRepository, UserDetailsApi userDetailsApi) {
+    public BookBorrowUseCaseImpl(BookRepository bookRepository, UserDetailsApi userDetailsApi) {
         this.bookRepository = bookRepository;
         this.userDetailsApi = userDetailsApi;
     }
