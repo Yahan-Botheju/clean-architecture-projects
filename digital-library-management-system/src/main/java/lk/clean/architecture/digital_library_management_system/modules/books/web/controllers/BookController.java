@@ -6,7 +6,7 @@ import lk.clean.architecture.digital_library_management_system.modules.books.use
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
 import lk.clean.architecture.digital_library_management_system.modules.books.web.DTOs.BookBorrowRequestDTO;
 import lk.clean.architecture.digital_library_management_system.modules.books.web.DTOs.BookBorrowedResponseDTO;
-import lk.clean.architecture.digital_library_management_system.modules.books.web.webMappers.BookWebMapper;
+import lk.clean.architecture.digital_library_management_system.modules.books.web.webMappers.BookBorrowWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +19,11 @@ public class BookController {
 
     //inject required dependencies
     private final BookBorrowUseCase bookBorrowUseCase;
-    private final BookWebMapper bookWebMapper;
+    private final BookBorrowWebMapper bookBorrowWebMapper;
 
-    public BookController(BookBorrowUseCase bookBorrowUseCase, BookWebMapper bookWebMapper) {
+    public BookController(BookBorrowUseCase bookBorrowUseCase, BookBorrowWebMapper bookBorrowWebMapper) {
         this.bookBorrowUseCase = bookBorrowUseCase;
-        this.bookWebMapper = bookWebMapper;
+        this.bookBorrowWebMapper = bookBorrowWebMapper;
     }
 
     //borrow a book
@@ -32,11 +32,11 @@ public class BookController {
             @Valid BookBorrowRequestDTO bookBorrowRequestDTO
     ){
         //dto -> command
-        BookBorrowCommand toBorrowCommand = bookWebMapper.toBookBorrowCommand(bookBorrowRequestDTO);
+        BookBorrowCommand toBorrowCommand = bookBorrowWebMapper.toBookBorrowCommand(bookBorrowRequestDTO);
         //command -> usecase
         BookBorrowResult toUseCase = bookBorrowUseCase.bookBorrow(toBorrowCommand);
         //command -> response
-        BookBorrowedResponseDTO responseDTO = bookWebMapper.toBookBorrowResponseDTO(toUseCase);
+        BookBorrowedResponseDTO responseDTO = bookBorrowWebMapper.toBookBorrowResponseDTO(toUseCase);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDTO);
     }
