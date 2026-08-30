@@ -56,4 +56,14 @@ public class BookPersistenceImpl implements BookRepository {
         return jpaBookRepository.checkUserBorrowedBooks(userId, checkBookExistence.getTitle());
     }
 
+    //find borrow record and remove
+    @Override
+    public Book findBorrowedBookRecord(UUID userId, UUID bookId) {
+
+        BookEntity checkBorrowBookExistence = jpaBookRepository.findByBookIdAndBorrowedByUserId(bookId, userId)
+                .orElseThrow(() ->  new ResourceNotFoundException("Book not found"));
+
+        return bookPersistenceMapper.toDomainModel(checkBorrowBookExistence);
+    }
+
 }
