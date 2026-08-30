@@ -6,6 +6,7 @@ import lk.clean.architecture.digital_library_management_system.modules.books.use
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowCommand;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookBorrowResult;
 import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookReturnCommand;
+import lk.clean.architecture.digital_library_management_system.modules.books.usecase.records.BookReturnResult;
 import lk.clean.architecture.digital_library_management_system.modules.books.web.DTOs.BookBorrowRequestDTO;
 import lk.clean.architecture.digital_library_management_system.modules.books.web.DTOs.BookBorrowedResponseDTO;
 import lk.clean.architecture.digital_library_management_system.modules.books.web.DTOs.BookReturnRequestDTO;
@@ -59,6 +60,10 @@ public class BookController {
     public ResponseEntity<BookReturnResponseDTO>  returnBook(
             @Valid @RequestBody BookReturnRequestDTO bookReturnRequestDTO
     ){
-        BookReturnCommand toReturnCommand =
+        BookReturnCommand toReturnCommand = bookReturnWebMapper.toBookReturnCommand(bookReturnRequestDTO);
+        BookReturnResult toReturnResult = bookReturnUseCase.returnBook(toReturnCommand);
+        BookReturnResponseDTO toResponseDTO = bookReturnWebMapper.toBookReturnResponseDTO(toReturnResult);
+
+        return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }
 }
