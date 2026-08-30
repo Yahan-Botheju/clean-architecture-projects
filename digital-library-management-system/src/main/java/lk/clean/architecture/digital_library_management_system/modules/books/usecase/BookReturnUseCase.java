@@ -6,5 +6,5 @@ import lk.clean.architecture.digital_library_management_system.modules.books.use
 public interface BookReturnUseCase {
 
     //return a book
-    BookReturnResult returnBook(BookReturnCommand bookReturnRequest);
+    BookReturnResult returnBook(BookReturnCommand bookReturnCommand);
 }
