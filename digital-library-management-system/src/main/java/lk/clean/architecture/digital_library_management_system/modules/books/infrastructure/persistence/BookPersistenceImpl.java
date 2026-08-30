@@ -66,4 +66,15 @@ public class BookPersistenceImpl implements BookRepository {
         return bookPersistenceMapper.toDomainModel(checkBorrowBookExistence);
     }
 
+    //update returned book
+    @Override
+    public Book updateBookReturn(Book book) {
+
+        BookEntity toEntity = bookPersistenceMapper.toEntity(book);
+        BookEntity savedEntity = jpaBookRepository.save(toEntity);
+
+        return bookPersistenceMapper.toDomainModel(savedEntity);
+    }
+
+
 }
