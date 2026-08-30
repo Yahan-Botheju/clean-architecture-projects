@@ -20,4 +20,7 @@ public interface BookRepository {
 
     //find borrow record and remove
     Book findBorrowedBookRecord(UUID userId, UUID bookId);
+
+    //update returned book
+    Book updateBookReturn(Book book);
 }
