@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface JpaBookRepository extends JpaRepository<BookEntity, UUID> {
@@ -21,4 +22,8 @@ public interface JpaBookRepository extends JpaRepository<BookEntity, UUID> {
             @Param("userId") UUID userId,
             @Param("title") String title
     );
+
+
+    //create custom query for get borrow book by book id and user id
+    Optional<BookEntity> findByBookIdAndBorrowedByUserId(UUID bookId, UUID userId);
 }

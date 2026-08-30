@@ -49,4 +49,13 @@ public class Book {
         this.borrowedByUserId = userId;
     }
 
+    //return a book
+    public void returnBook() {
+        if(this.status != BookStatus.BORROWED){
+            throw new IllegalStateException("Book has not BORROWED");
+        }
+        this.status = BookStatus.AVAILABLE;
+        this.borrowStatus = BorrowStatus.RETURNED;
+        this.borrowedByUserId = null;
+    }
 }

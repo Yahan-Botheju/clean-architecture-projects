@@ -48,8 +48,33 @@ public class BookPersistenceImpl implements BookRepository {
 
     //check user going to borrow same book
     @Override
-    public boolean checkUserBorrowedBooks(UUID userId, String title) {
-        return jpaBookRepository.checkUserBorrowedBooks(userId, title);
+    public boolean checkUserBorrowedBooks(UUID userId, UUID bookId) {
+
+        BookEntity checkBookExistence = jpaBookRepository.findById(bookId)
+                .orElseThrow(() ->  new ResourceNotFoundException("Book not found"));
+
+        return jpaBookRepository.checkUserBorrowedBooks(userId, checkBookExistence.getTitle());
     }
+
+    //find borrow record and remove
+    @Override
+    public Book findBorrowedBookRecord(UUID userId, UUID bookId) {
+
+        BookEntity checkBorrowBookExistence = jpaBookRepository.findByBookIdAndBorrowedByUserId(bookId, userId)
+                .orElseThrow(() ->  new ResourceNotFoundException("Book not found"));
+
+        return bookPersistenceMapper.toDomainModel(checkBorrowBookExistence);
+    }
+
+    //update returned book
+    @Override
+    public Book updateBookReturn(Book book) {
+
+        BookEntity toEntity = bookPersistenceMapper.toEntity(book);
+        BookEntity savedEntity = jpaBookRepository.save(toEntity);
+
+        return bookPersistenceMapper.toDomainModel(savedEntity);
+    }
+
 
 }

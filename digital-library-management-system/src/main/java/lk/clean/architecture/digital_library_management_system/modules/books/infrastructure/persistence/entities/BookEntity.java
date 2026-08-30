@@ -2,6 +2,7 @@ package lk.clean.architecture.digital_library_management_system.modules.books.in
 
 import jakarta.persistence.*;
 import lk.clean.architecture.digital_library_management_system.modules.books.domain.enums.BookStatus;
+import lk.clean.architecture.digital_library_management_system.modules.books.domain.enums.BorrowStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,11 @@ public class BookEntity {
     private String author;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "book_status", nullable = false)
     private BookStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "borrow_status", nullable = false)
+    private BorrowStatus borrowStatus;
 
 }
