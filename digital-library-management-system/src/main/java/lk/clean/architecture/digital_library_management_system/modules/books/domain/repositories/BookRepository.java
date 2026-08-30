@@ -17,4 +17,7 @@ public interface BookRepository {
 
     //check user has same book to borrow
     boolean checkUserBorrowedBooks(UUID userId, UUID bookId);
+
+    //find borrow record and remove
+    Book findBorrowedBookRecord(UUID userId, UUID bookId);
 }
