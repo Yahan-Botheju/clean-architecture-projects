@@ -4,8 +4,6 @@ import java.util.UUID;
 
 public record BookBorrowCommand(
         UUID bookId,
-        UUID userId,
-        String title,
-        String author
+        UUID userId
 ) {
 }
