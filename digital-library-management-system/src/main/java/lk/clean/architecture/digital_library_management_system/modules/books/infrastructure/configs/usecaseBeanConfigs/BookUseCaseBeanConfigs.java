@@ -8,8 +8,10 @@ import lk.clean.architecture.digital_library_management_system.modules.books.use
 import lk.clean.architecture.digital_library_management_system.modules.users.domain.api.UserDetailsApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 public class BookUseCaseBeanConfigs {
 
     //book borrow usecase impl
