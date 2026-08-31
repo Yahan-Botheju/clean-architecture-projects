@@ -6,7 +6,7 @@ public record BookReturnResult(
         UUID bookId,
         String title,
         UUID userId,
-        String userName,
-        String email,
-        String isbn
+        String isbn,
+        String status,
+        String borrowStatus
 ) {}
