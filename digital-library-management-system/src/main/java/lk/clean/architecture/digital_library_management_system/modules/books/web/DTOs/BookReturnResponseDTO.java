@@ -13,7 +13,7 @@ public class BookReturnResponseDTO {
     private UUID bookId;
     private String title;
     private UUID userId;
-    private String userName;
-    private String email;
     private String isbn;
+    private String status;
+    private String borrowStatus;
 }
