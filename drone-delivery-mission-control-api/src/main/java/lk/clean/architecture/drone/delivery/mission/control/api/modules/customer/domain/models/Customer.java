@@ -22,4 +22,14 @@ public class Customer {
     public String getCustomerEmail() { return customerEmail; }
     public CustomerStatus getCustomerStatus() { return customerStatus; }
 
+
+    /* __DOMAIN_LOGICS__ */
+
+    //check customer suspendable
+    public void deliveryRequest(){
+        if(this.customerStatus == CustomerStatus.SUSPENDED){
+            throw new IllegalStateException("Customer is suspended");
+        }
+    }
+
 }
