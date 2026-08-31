@@ -1,5 +1,8 @@
 package lk.clean.architecture.digital_library_management_system.modules.books.usecase.records;
 
+import lk.clean.architecture.digital_library_management_system.modules.books.domain.enums.BookStatus;
+import lk.clean.architecture.digital_library_management_system.modules.books.domain.enums.BorrowStatus;
+
 import java.util.UUID;
 
 public record BookReturnResult(
@@ -7,6 +10,6 @@ public record BookReturnResult(
         String title,
         UUID userId,
         String isbn,
-        String status,
-        String borrowStatus
+        BookStatus status,
+        BorrowStatus borrowStatus
 ) {}
