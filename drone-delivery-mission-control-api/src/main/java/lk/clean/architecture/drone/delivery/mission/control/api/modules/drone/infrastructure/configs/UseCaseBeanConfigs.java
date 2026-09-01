@@ -1,8 +1,10 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.infrastructure.configs;
 
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneAssignApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneTaskCompleteApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.repositories.DroneRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.usecase.api.DroneAssignApiImpl;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.usecase.api.DroneTaskCompleteApiImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,5 +17,13 @@ public class UseCaseBeanConfigs {
             DroneRepository droneRepository
     ) {
         return new DroneAssignApiImpl(droneRepository);
+    }
+
+    //external usage api
+    @Bean
+    public DroneTaskCompleteApi droneTaskCompleteApi(
+            DroneRepository droneRepository
+    ){
+        return new DroneTaskCompleteApiImpl(droneRepository);
     }
 }
