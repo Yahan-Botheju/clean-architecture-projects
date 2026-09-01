@@ -1,4 +1,4 @@
-package lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.usecase;
+package lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.usecase.api;
 
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneAssignApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.models.Drone;
