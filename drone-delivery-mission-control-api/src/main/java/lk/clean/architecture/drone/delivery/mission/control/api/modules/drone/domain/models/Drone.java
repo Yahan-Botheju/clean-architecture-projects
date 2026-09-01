@@ -32,8 +32,9 @@ public class Drone {
     /* __DOMAIN_LOGIC__ */
 
 
+
     //check drone for package delivery
-    public void checkDrone(double packageWeight) {
+    public void checkDroneAvailability(double packageWeight) {
         //check drone availability
         if(this.droneStatus != DroneStatus.AVAILABLE){
             throw new ResourceNotFoundException("DroneStatus not available");
@@ -49,5 +50,13 @@ public class Drone {
         if(this.batteryPercentage < requiredBatteryPercentage){
             throw new IllegalStateException("Battery percentage exceeds");
         }
+    }
+
+    //assign drone
+    public void markAsAssignDrone(){
+        if(this.droneStatus != DroneStatus.AVAILABLE){
+            throw new ResourceNotFoundException("Drone not available");
+        }
+        this.droneStatus = DroneStatus.ON_MISSION;
     }
 }
