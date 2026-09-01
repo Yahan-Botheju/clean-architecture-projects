@@ -26,8 +26,8 @@ public class DroneEntity {
     @Enumerated(EnumType.STRING)
     private DroneStatus droneStatus;
 
-    @Column(name = "pay_loading_KG")
-    private double payloadingKg;
+    @Column(name = "max_payloadingKg")
+    private double maxPayloadingKg;
 
     @Column(name = "battery_percentage", nullable = false)
     private double batteryPercentage;
