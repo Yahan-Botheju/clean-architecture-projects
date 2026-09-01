@@ -32,15 +32,22 @@ public class Drone {
     /* __DOMAIN_LOGIC__ */
 
 
-    //check delivery pay load
-    public void checkDrone(){
+    //check drone for package delivery
+    public void checkDrone(double packageWeight) {
         //check drone availability
         if(this.droneStatus != DroneStatus.AVAILABLE){
             throw new ResourceNotFoundException("DroneStatus not available");
         }
+        //check max payload
+        if(this.maxPayloadingKg <= packageWeight){
+            throw new IllegalStateException("Pay loading KG exceeds");
+        }
 
-        if(){
-            throw new IllegalStateException("Pay loading KG exceeds maximum allowed");
+        //check battery percentage
+        double requiredBatteryPercentage = 20 + (packageWeight * 5);
+
+        if(this.batteryPercentage < requiredBatteryPercentage){
+            throw new IllegalStateException("Battery percentage exceeds");
         }
     }
 }
