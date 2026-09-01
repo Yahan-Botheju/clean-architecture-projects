@@ -9,4 +9,7 @@ public interface DroneRepository {
 
     //drone find by id
     Optional<Drone> droneFindById(UUID uuid);
+
+    //save drone
+    Drone saveDrone(Drone drone);
 }
