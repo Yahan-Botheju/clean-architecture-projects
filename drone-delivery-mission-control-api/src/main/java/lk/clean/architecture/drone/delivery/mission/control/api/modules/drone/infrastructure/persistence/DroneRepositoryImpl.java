@@ -28,7 +28,18 @@ public class DroneRepositoryImpl implements DroneRepository {
     //drone find by id
     @Override
     public Optional<Drone> droneFindById(UUID uuid){
+
         return jpaDroneRepository.findById(uuid)
                 .map(dronePersistenceMapper::toDomainModel);
+    }
+
+    //save drone
+    @Override
+    public Drone saveDrone(Drone drone){
+
+        DroneEntity toDroneEntity = dronePersistenceMapper.toEntity(drone);
+        DroneEntity savedDroneEntity = jpaDroneRepository.save(toDroneEntity);
+
+        return dronePersistenceMapper.toDomainModel(savedDroneEntity);
     }
 }
