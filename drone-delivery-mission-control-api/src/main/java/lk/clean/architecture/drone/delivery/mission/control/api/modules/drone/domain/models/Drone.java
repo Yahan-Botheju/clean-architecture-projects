@@ -59,4 +59,18 @@ public class Drone {
         }
         this.droneStatus = DroneStatus.ON_MISSION;
     }
+
+    //drone usage complete
+    public void markAsCompleteDroneMission(){
+        switch (this.droneStatus){
+            case MAINTENANCE ->
+                throw new IllegalStateException("DroneStatus MAINTENANCE");
+            case OFFLINE ->
+                throw new IllegalStateException("DroneStatus OFFLINE");
+            case AVAILABLE ->
+                throw new IllegalStateException("DroneStatus ON_MISSION");
+            case  ON_MISSION ->
+                this.droneStatus = DroneStatus.AVAILABLE;
+        }
+    }
 }
