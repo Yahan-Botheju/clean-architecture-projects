@@ -17,12 +17,13 @@ public class Delivery {
     private LocalDateTime scheduledAt;
     private LocalDateTime completedAt;
     private LocalDateTime failedAt;
+    private LocalDateTime cancelledAt;
 
     public Delivery(
             UUID deliveryId, UUID customerId, UUID assignedDroneId,
             double packageWeightKg, String pickupLocation, String deliveryLocation,
             DeliveryStatus deliveryStatus, LocalDateTime requestedAt,
-            LocalDateTime scheduledAt, LocalDateTime completedAt, LocalDateTime failedAt
+            LocalDateTime scheduledAt, LocalDateTime completedAt, LocalDateTime failedAt, LocalDateTime cancelledAt
     ) {
         this.deliveryId = deliveryId;
         this.customerId = customerId;
@@ -35,6 +36,7 @@ public class Delivery {
         this.scheduledAt = scheduledAt;
         this.completedAt = completedAt;
         this.failedAt = failedAt;
+        this.cancelledAt = cancelledAt;
     }
 
     public UUID getDeliveryId() { return deliveryId; }
@@ -48,6 +50,7 @@ public class Delivery {
     public LocalDateTime getScheduledAt() { return scheduledAt; }
     public LocalDateTime getCompletedAt() { return completedAt; }
     public LocalDateTime getFailedAt() { return failedAt; }
+    public LocalDateTime getCancelledAt() { return cancelledAt; }
 
 
 
