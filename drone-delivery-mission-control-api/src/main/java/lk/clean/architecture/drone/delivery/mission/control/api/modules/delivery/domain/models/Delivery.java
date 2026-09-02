@@ -15,27 +15,26 @@ public class Delivery {
     private DeliveryStatus deliveryStatus;
     private LocalDateTime requestedAt;
     private LocalDateTime scheduledAt;
+    private LocalDateTime completedAt;
+    private LocalDateTime failedAt;
 
     public Delivery(
-            LocalDateTime scheduledAt,
-            LocalDateTime requestedAt,
-            DeliveryStatus deliveryStatus,
-            String deliveryLocation,
-            String pickupLocation,
-            double packageWeightKg,
-            UUID assignedDroneId,
-            UUID customerId,
-            UUID deliveryId
+            UUID deliveryId, UUID customerId, UUID assignedDroneId,
+            double packageWeightKg, String pickupLocation, String deliveryLocation,
+            DeliveryStatus deliveryStatus, LocalDateTime requestedAt,
+            LocalDateTime scheduledAt, LocalDateTime completedAt, LocalDateTime failedAt
     ) {
-        this.scheduledAt = scheduledAt;
-        this.requestedAt = requestedAt;
-        this.deliveryStatus = deliveryStatus;
-        this.deliveryLocation = deliveryLocation;
-        this.pickupLocation = pickupLocation;
-        this.packageWeightKg = packageWeightKg;
-        this.assignedDroneId = assignedDroneId;
-        this.customerId = customerId;
         this.deliveryId = deliveryId;
+        this.customerId = customerId;
+        this.assignedDroneId = assignedDroneId;
+        this.packageWeightKg = packageWeightKg;
+        this.pickupLocation = pickupLocation;
+        this.deliveryLocation = deliveryLocation;
+        this.deliveryStatus = deliveryStatus;
+        this.requestedAt = requestedAt;
+        this.scheduledAt = scheduledAt;
+        this.completedAt = completedAt;
+        this.failedAt = failedAt;
     }
 
     public UUID getDeliveryId() { return deliveryId; }
@@ -47,5 +46,13 @@ public class Delivery {
     public DeliveryStatus getDeliveryStatus() { return deliveryStatus; }
     public LocalDateTime getRequestedAt() { return requestedAt; }
     public LocalDateTime getScheduledAt() { return scheduledAt; }
+    public LocalDateTime getCompletedAt() { return completedAt; }
+    public LocalDateTime getFailedAt() { return failedAt; }
+
+
+
+    /* __DOMAIN_LOGIC__ */
+
+
 
 }
