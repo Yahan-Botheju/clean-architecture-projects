@@ -8,34 +8,35 @@ import java.util.UUID;
 public class Delivery {
     private final UUID deliveryId;
     private final UUID customerId;
-    private final UUID assignedDroneId;
+    private UUID assignedDroneId;
     private double packageWeightKg;
     private String pickupLocation;
     private String deliveryLocation;
     private DeliveryStatus deliveryStatus;
     private LocalDateTime requestedAt;
     private LocalDateTime scheduledAt;
+    private LocalDateTime completedAt;
+    private LocalDateTime failedAt;
+    private LocalDateTime cancelledAt;
 
     public Delivery(
-            LocalDateTime scheduledAt,
-            LocalDateTime requestedAt,
-            DeliveryStatus deliveryStatus,
-            String deliveryLocation,
-            String pickupLocation,
-            double packageWeightKg,
-            UUID assignedDroneId,
-            UUID customerId,
-            UUID deliveryId
+            UUID deliveryId, UUID customerId, UUID assignedDroneId,
+            double packageWeightKg, String pickupLocation, String deliveryLocation,
+            DeliveryStatus deliveryStatus, LocalDateTime requestedAt,
+            LocalDateTime scheduledAt, LocalDateTime completedAt, LocalDateTime failedAt, LocalDateTime cancelledAt
     ) {
-        this.scheduledAt = scheduledAt;
-        this.requestedAt = requestedAt;
-        this.deliveryStatus = deliveryStatus;
-        this.deliveryLocation = deliveryLocation;
-        this.pickupLocation = pickupLocation;
-        this.packageWeightKg = packageWeightKg;
-        this.assignedDroneId = assignedDroneId;
-        this.customerId = customerId;
         this.deliveryId = deliveryId;
+        this.customerId = customerId;
+        this.assignedDroneId = assignedDroneId;
+        this.packageWeightKg = packageWeightKg;
+        this.pickupLocation = pickupLocation;
+        this.deliveryLocation = deliveryLocation;
+        this.deliveryStatus = deliveryStatus;
+        this.requestedAt = requestedAt;
+        this.scheduledAt = scheduledAt;
+        this.completedAt = completedAt;
+        this.failedAt = failedAt;
+        this.cancelledAt = cancelledAt;
     }
 
     public UUID getDeliveryId() { return deliveryId; }
@@ -47,5 +48,80 @@ public class Delivery {
     public DeliveryStatus getDeliveryStatus() { return deliveryStatus; }
     public LocalDateTime getRequestedAt() { return requestedAt; }
     public LocalDateTime getScheduledAt() { return scheduledAt; }
+    public LocalDateTime getCompletedAt() { return completedAt; }
+    public LocalDateTime getFailedAt() { return failedAt; }
+    public LocalDateTime getCancelledAt() { return cancelledAt; }
+
+
+
+    /* __DOMAIN_LOGIC__ */
+
+    /*
+    *
+    * REQUESTED -> CANCEL || SCHEDULE
+    * SCHEDULE -> CANCEL || IN_PROGRESS
+    * IN_PROGRESS ->  DELIVERY || FAILED
+    *
+    * */
+
+    //assign a drone for delivery
+    public void assignDrone(UUID droneId, LocalDateTime requestedTime) {
+        //check incoming id is null
+        if(droneId == null) {
+            throw new IllegalStateException("Drone ID cannot be null");
+        }
+        //check allocation variable in null
+        if(this.assignedDroneId != null){
+            throw new IllegalStateException("assignedDroneId is already active");
+        }
+        //mutate the state
+        this.assignedDroneId = droneId;
+        this.deliveryStatus = DeliveryStatus.REQUESTED;
+        this.requestedAt = requestedTime;
+    }
+
+    //schedule the drone
+    public void scheduleDrone(LocalDateTime scheduledTime) {
+        if(this.deliveryStatus != DeliveryStatus.REQUESTED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to schedule");
+        }
+        this.deliveryStatus = DeliveryStatus.SCHEDULED;
+        this.scheduledAt = scheduledTime;
+    }
+
+    //set drone to in progress
+    public void inProgressDrone(LocalDateTime inProgressTime) {
+        if(this.deliveryStatus != DeliveryStatus.SCHEDULED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to inprogress");
+        }
+        this.deliveryStatus = DeliveryStatus.IN_PROGRESS;
+        this.completedAt = inProgressTime;
+    }
+
+    //delivered by drone
+    public void deliveredByDrone(LocalDateTime deliveredTime) {
+        if(this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Drone is not in requested state, unable to deliver");
+        }
+        this.deliveryStatus = DeliveryStatus.DELIVERED;
+        this.completedAt = deliveredTime;
+    }
+
+    public void deliveryFailedByDrone(LocalDateTime failedTime) {
+        if(this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Drone is not in requested state");
+        }
+        this.deliveryStatus = DeliveryStatus.FAILED;
+        this.failedAt = failedTime;
+    }
+
+    //cancel the drone
+    public void cancelDrone(LocalDateTime cancelledTime) {
+        if(this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to cancel");
+        }
+        this.deliveryStatus = DeliveryStatus.CANCELLED;
+        this.cancelledAt = cancelledTime;
+    }
 
 }

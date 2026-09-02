@@ -39,9 +39,15 @@ public class DeliveryEntity {
     @Column(name = "delivery_status")
     private DeliveryStatus deliveryStatus;
 
-    @Column(name = "requested_at")
+    @Column(name = "requested_at", nullable = true)
     private LocalDateTime requestedAt;
 
-    @Column(name = "scheduled_at")
+    @Column(name = "scheduled_at", nullable = true)
     private LocalDateTime scheduledAt;
+
+    @Column(name = "completed_at", nullable = true)
+    private LocalDateTime completedAt;
+
+    @Column(name = "failed_at", nullable = true)
+    private LocalDateTime failedAt;
 }
