@@ -72,10 +72,18 @@ public class Delivery {
 
     //cancel the drone
     public void cancelDrone(LocalDateTime cancelledTime) {
-        if(this.deliveryStatus != DeliveryStatus.REQUESTED) {
+       if(this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to cancel");
         }
         this.deliveryStatus = DeliveryStatus.CANCELLED;
-        this.failedAt = cancelledTime;
+    }
+
+    //schedule the drone
+    public void scheduleDrone(LocalDateTime scheduledTime) {
+        if(this.deliveryStatus != DeliveryStatus.REQUESTED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to schedule");
+        }
+        this.deliveryStatus = DeliveryStatus.SCHEDULED;
+        this.scheduledAt = scheduledTime;
     }
 }
