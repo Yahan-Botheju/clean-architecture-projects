@@ -99,4 +99,13 @@ public class Delivery {
         this.deliveryStatus = DeliveryStatus.IN_PROGRESS;
         this.completedAt = inProgressTime;
     }
+
+    //delivered by drone
+    public void deliveredByDrone(LocalDateTime deliveredTime) {
+        if(this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Drone is not in requested state, unable to deliver");
+        }
+        this.deliveryStatus = DeliveryStatus.DELIVERED;
+        this.completedAt = deliveredTime;
+    }
 }
