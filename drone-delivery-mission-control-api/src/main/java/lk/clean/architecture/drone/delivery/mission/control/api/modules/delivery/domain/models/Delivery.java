@@ -70,4 +70,12 @@ public class Delivery {
         this.requestedAt = requestedTime;
     }
 
+    //cancel the drone
+    public void cancelDrone(LocalDateTime cancelledTime) {
+        if(this.deliveryStatus != DeliveryStatus.REQUESTED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to cancel");
+        }
+        this.deliveryStatus = DeliveryStatus.CANCELLED;
+        this.failedAt = cancelledTime;
+    }
 }
