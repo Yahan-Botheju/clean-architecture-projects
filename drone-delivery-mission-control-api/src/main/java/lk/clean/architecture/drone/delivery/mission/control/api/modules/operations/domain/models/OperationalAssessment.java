@@ -3,30 +3,27 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.operati
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.enums.AirSpaceStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.enums.WeatherCondition;
 
-public record OperationalAssessment(
-        WeatherCondition weatherCondition,
-        AirSpaceStatus airSpaceStatus,
-        boolean allowed,
-        String reason
-) {
+public class OperationalAssessment {
+    private WeatherCondition weatherCondition;
+    private AirSpaceStatus airSpaceStatus;
+    private boolean allowed;
+    private String reason;
 
-
-
-    //check weather and air is okay to fly the drone
-    public void checkFlightSafety(){
-        if(this.weatherCondition == WeatherCondition.STORM
-                && (this.airSpaceStatus == AirSpaceStatus.CLOSED
-                || this.airSpaceStatus == AirSpaceStatus.RESTRICTED)
-        ){
-            throw new IllegalArgumentException("Cannot continue mission under these condition");
-        }
+    public OperationalAssessment(
+            WeatherCondition weatherCondition,
+            AirSpaceStatus airSpaceStatus,
+            boolean allowed, String reason
+    ) {
+        this.weatherCondition = weatherCondition;
+        this.airSpaceStatus = airSpaceStatus;
+        this.allowed = allowed;
+        this.reason = reason;
     }
 
-    //check battery level in rainy weather for fly
-    public void checkBatteryLevelInRainyWeather(double batteryPercentage){
-        boolean batteryPercentageCheck = batteryPercentage > 50;
-        if(this.weatherCondition == WeatherCondition.RAINY && !batteryPercentageCheck){
-            throw new IllegalArgumentException("Cannot continue mission under these condition");
-        }
-    }
+    public WeatherCondition getWeatherCondition() { return weatherCondition; }
+    public AirSpaceStatus getAirSpaceStatus() { return airSpaceStatus; }
+    public boolean isAllowed() { return allowed; }
+    public String getReason() { return reason; }
+
+
 }
