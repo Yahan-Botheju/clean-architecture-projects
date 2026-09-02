@@ -15,5 +15,9 @@ public abstract class AbstractDroneFindSupport {
         this.droneRepository = droneRepository;
     }
 
-
+    //get drone by it id
+    protected Drone getDroneById(UUID droneId) {
+        return droneRepository.droneFindById(droneId)
+                .orElseThrow(() -> new ResourceNotFoundException("Drone not found with id " + droneId));
+    }
 }
