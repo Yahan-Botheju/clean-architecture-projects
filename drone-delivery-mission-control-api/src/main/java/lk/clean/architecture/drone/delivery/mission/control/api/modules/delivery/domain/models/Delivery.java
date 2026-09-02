@@ -56,7 +56,13 @@ public class Delivery {
 
     /* __DOMAIN_LOGIC__ */
 
-
+    /*
+    *
+    * REQUESTED -> CANCEL || SCHEDULE
+    * SCHEDULE -> CANCEL || IN_PROGRESS
+    * IN_PROGRESS ->  DELIVERY || FAILED
+    *
+    * */
 
     //assign a drone for delivery
     public void assignDrone(UUID droneId, LocalDateTime requestedTime) {
@@ -71,15 +77,6 @@ public class Delivery {
         //mutate the state
         this.assignedDroneId = droneId;
         this.requestedAt = requestedTime;
-    }
-
-    //cancel the drone
-    public void cancelDrone(LocalDateTime cancelledTime) {
-       if(this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
-            throw new IllegalStateException("Drone is not in requested state, unable to cancel");
-        }
-       this.deliveryStatus = DeliveryStatus.CANCELLED;
-       this.cancelledAt = cancelledTime;
     }
 
     //schedule the drone
@@ -108,4 +105,22 @@ public class Delivery {
         this.deliveryStatus = DeliveryStatus.DELIVERED;
         this.completedAt = deliveredTime;
     }
+
+    public void deliveryFailedByDrone(LocalDateTime failedTime) {
+        if(this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Drone is not in requested state");
+        }
+        this.deliveryStatus = DeliveryStatus.FAILED;
+        this.failedAt = failedTime;
+    }
+
+    //cancel the drone
+    public void cancelDrone(LocalDateTime cancelledTime) {
+        if(this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to cancel");
+        }
+        this.deliveryStatus = DeliveryStatus.CANCELLED;
+        this.cancelledAt = cancelledTime;
+    }
+
 }
