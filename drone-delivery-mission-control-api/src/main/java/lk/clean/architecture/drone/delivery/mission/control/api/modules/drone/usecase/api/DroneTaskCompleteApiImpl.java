@@ -17,7 +17,8 @@ public class DroneTaskCompleteApiImpl extends AbstractDroneFindSupport implement
     @Override
     public void droneTaskComplete(UUID droneId){
 
-
+        //check drone existence
+        Drone getDrone = getDroneById(droneId);
 
         //call domain method
         getDrone.markAsCompleteDroneMission();
