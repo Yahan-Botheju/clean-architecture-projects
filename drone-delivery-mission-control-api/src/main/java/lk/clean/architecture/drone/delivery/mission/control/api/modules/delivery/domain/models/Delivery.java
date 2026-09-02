@@ -76,6 +76,7 @@ public class Delivery {
         }
         //mutate the state
         this.assignedDroneId = droneId;
+        this.deliveryStatus = DeliveryStatus.REQUESTED;
         this.requestedAt = requestedTime;
     }
 
