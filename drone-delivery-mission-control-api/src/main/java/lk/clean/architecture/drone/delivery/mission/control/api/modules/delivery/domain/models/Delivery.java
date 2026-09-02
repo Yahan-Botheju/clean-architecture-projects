@@ -78,7 +78,8 @@ public class Delivery {
        if(this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to cancel");
         }
-        this.deliveryStatus = DeliveryStatus.CANCELLED;
+       this.deliveryStatus = DeliveryStatus.CANCELLED;
+       this.cancelledAt = cancelledTime;
     }
 
     //schedule the drone
@@ -88,5 +89,14 @@ public class Delivery {
         }
         this.deliveryStatus = DeliveryStatus.SCHEDULED;
         this.scheduledAt = scheduledTime;
+    }
+
+    //set drone to in progress
+    public void inProgressDrone(LocalDateTime inProgressTime) {
+        if(this.deliveryStatus != DeliveryStatus.SCHEDULED) {
+            throw new IllegalStateException("Drone is not in requested state, unable to inprogress");
+        }
+        this.deliveryStatus = DeliveryStatus.IN_PROGRESS;
+        this.completedAt = inProgressTime;
     }
 }
