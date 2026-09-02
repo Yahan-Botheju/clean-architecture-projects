@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Delivery {
     private final UUID deliveryId;
     private final UUID customerId;
-    private final UUID assignedDroneId;
+    private UUID assignedDroneId;
     private double packageWeightKg;
     private String pickupLocation;
     private String deliveryLocation;
@@ -54,5 +54,20 @@ public class Delivery {
     /* __DOMAIN_LOGIC__ */
 
 
+
+    //assign a drone for delivery
+    public void assignDrone(UUID droneId, LocalDateTime requestedTime) {
+        //check incoming id is null
+        if(droneId == null) {
+            throw new IllegalStateException("Drone ID cannot be null");
+        }
+        //check allocation variable in null
+        if(this.assignedDroneId != null){
+            throw new IllegalStateException("assignedDroneId is already active");
+        }
+        //mutate the state
+        this.assignedDroneId = droneId;
+        this.requestedAt = requestedTime;
+    }
 
 }
