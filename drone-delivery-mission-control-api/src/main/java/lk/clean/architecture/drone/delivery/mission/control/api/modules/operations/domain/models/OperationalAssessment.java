@@ -10,12 +10,22 @@ public record OperationalAssessment(
         String reason
 ) {
 
+
+
     //check weather and air is okay to fly the drone
     public void checkFlightSafety(){
         if(this.weatherCondition == WeatherCondition.STORM
                 && (this.airSpaceStatus == AirSpaceStatus.CLOSED
                 || this.airSpaceStatus == AirSpaceStatus.RESTRICTED)
         ){
+            throw new IllegalArgumentException("Cannot continue mission under these condition");
+        }
+    }
+
+    //check battery level in rainy weather for fly
+    public void checkBatteryLevelInRainyWeather(double batteryPercentage){
+        boolean batteryPercentageCheck = batteryPercentage > 50;
+        if(this.weatherCondition == WeatherCondition.RAINY && !batteryPercentageCheck){
             throw new IllegalArgumentException("Cannot continue mission under these condition");
         }
     }
