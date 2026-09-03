@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryRequestDTO {
+public class CreateDeliveryRequestDTO {
     @NotNull(message = "Customer ID cannot be empty")
     private UUID customerId;
 
