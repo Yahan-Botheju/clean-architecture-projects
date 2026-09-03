@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryResponseDTO {
+public class CreateDeliveryResponseDTO {
     private UUID deliveryId;
     private UUID customerId;
     private UUID assignedDroneId;

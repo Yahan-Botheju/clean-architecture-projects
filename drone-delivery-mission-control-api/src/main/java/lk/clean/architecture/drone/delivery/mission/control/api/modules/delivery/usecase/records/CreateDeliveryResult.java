@@ -5,7 +5,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record DeliveryResult(
+public record CreateDeliveryResult(
         UUID deliveryId,
         UUID customerId,
         UUID assignedDroneId,

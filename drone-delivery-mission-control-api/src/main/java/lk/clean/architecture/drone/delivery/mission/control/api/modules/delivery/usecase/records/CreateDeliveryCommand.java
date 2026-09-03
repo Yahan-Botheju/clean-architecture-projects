@@ -2,7 +2,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import java.util.UUID;
 
-public record DeliveryCommand(
+public record CreateDeliveryCommand(
         UUID customerId,
         double packageWeightKg,
         String pickupLocation,
