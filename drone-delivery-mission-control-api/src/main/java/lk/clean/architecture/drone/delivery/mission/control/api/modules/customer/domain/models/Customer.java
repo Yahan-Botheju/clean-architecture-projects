@@ -32,4 +32,9 @@ public class Customer {
         }
     }
 
+    //check customer status is active
+    public boolean isActive(){
+        return this.customerStatus == CustomerStatus.ACTIVE;
+    }
+
 }
