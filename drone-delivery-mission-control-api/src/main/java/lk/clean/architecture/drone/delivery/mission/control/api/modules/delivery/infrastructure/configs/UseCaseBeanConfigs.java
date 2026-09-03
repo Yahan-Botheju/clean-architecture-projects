@@ -1,5 +1,6 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.infrastructure.configs;
 
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCaseImpl;
@@ -12,8 +13,9 @@ public class UseCaseBeanConfigs {
     //create delivery usecase impl
     @Bean
     public CreateDeliveryUseCase createDeliveryUseCase(
-            DeliveryRepository deliveryRepository
+            DeliveryRepository deliveryRepository,
+            CustomerCheckApi customerCheckApi
     ){
-        return new CreateDeliveryUseCaseImpl(deliveryRepository);
+        return new CreateDeliveryUseCaseImpl(deliveryRepository, customerCheckApi);
     }
 }
