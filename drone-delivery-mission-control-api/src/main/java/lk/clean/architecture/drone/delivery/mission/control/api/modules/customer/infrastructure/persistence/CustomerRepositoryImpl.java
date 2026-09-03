@@ -24,7 +24,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     //get customer by id
     @Override
-    public Optional<Customer> getCustomer(UUID customerId) {
+    public Optional<Customer> getCustomerById(UUID customerId) {
         return jpaCustomerRepository.findById(customerId)
                 .map(customerPersistenceMapper::toDomainModel);
     }

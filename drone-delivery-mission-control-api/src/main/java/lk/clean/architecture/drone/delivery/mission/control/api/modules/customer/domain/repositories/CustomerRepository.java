@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface CustomerRepository {
 
     //check customer existence and get
-    Optional<Customer> getCustomer(UUID customerId);
+    Optional<Customer> getCustomerById(UUID customerId);
 }
