@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public interface CustomerStatusCheckApi {
 
-    public boolean checkCustomerStatus(UUID customerId);
+    boolean checkCustomerStatus(UUID customerId);
 }
