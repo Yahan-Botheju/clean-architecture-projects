@@ -53,25 +53,24 @@ public class Delivery {
     public LocalDateTime getCancelledAt() { return cancelledAt; }
 
 
-
     /* __DOMAIN_LOGIC__ */
 
     /*
-    *
-    * REQUESTED -> CANCEL || SCHEDULE
-    * SCHEDULE -> CANCEL || IN_PROGRESS
-    * IN_PROGRESS ->  DELIVERY || FAILED
-    *
-    * */
+     *
+     * REQUESTED -> CANCEL || SCHEDULE
+     * SCHEDULE -> CANCEL || IN_PROGRESS
+     * IN_PROGRESS ->  DELIVERY || FAILED
+     *
+     * */
 
     //assign a drone for delivery
     public void assignDrone(UUID droneId, LocalDateTime requestedTime) {
         //check incoming id is null
-        if(droneId == null) {
+        if (droneId == null) {
             throw new IllegalStateException("Drone ID cannot be null");
         }
         //check allocation variable in null
-        if(this.assignedDroneId != null){
+        if (this.assignedDroneId != null) {
             throw new IllegalStateException("assignedDroneId is already active");
         }
         //mutate the state
@@ -82,7 +81,7 @@ public class Delivery {
 
     //schedule the drone
     public void scheduleDrone(LocalDateTime scheduledTime) {
-        if(this.deliveryStatus != DeliveryStatus.REQUESTED) {
+        if (this.deliveryStatus != DeliveryStatus.REQUESTED) {
             throw new IllegalStateException("Drone is not in requested state, unable to schedule");
         }
         this.deliveryStatus = DeliveryStatus.SCHEDULED;
@@ -91,7 +90,7 @@ public class Delivery {
 
     //set drone to in progress
     public void inProgressDrone(LocalDateTime inProgressTime) {
-        if(this.deliveryStatus != DeliveryStatus.SCHEDULED) {
+        if (this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to inprogress");
         }
         this.deliveryStatus = DeliveryStatus.IN_PROGRESS;
@@ -100,7 +99,7 @@ public class Delivery {
 
     //delivered by drone
     public void deliveredByDrone(LocalDateTime deliveredTime) {
-        if(this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
+        if (this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
             throw new IllegalStateException("Drone is not in requested state, unable to deliver");
         }
         this.deliveryStatus = DeliveryStatus.DELIVERED;
@@ -108,7 +107,7 @@ public class Delivery {
     }
 
     public void deliveryFailedByDrone(LocalDateTime failedTime) {
-        if(this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
+        if (this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
             throw new IllegalStateException("Drone is not in requested state");
         }
         this.deliveryStatus = DeliveryStatus.FAILED;
@@ -117,11 +116,36 @@ public class Delivery {
 
     //cancel the drone
     public void cancelDrone(LocalDateTime cancelledTime) {
-        if(this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
+        if (this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to cancel");
         }
         this.deliveryStatus = DeliveryStatus.CANCELLED;
         this.cancelledAt = cancelledTime;
     }
 
+
+    /* __FACTORY_METHOD__ */
+
+    //create new delivery model
+    public static Delivery createNewDelivery(
+            UUID orderId, UUID customerId, UUID assignedDroneId, double packageWeightKg,
+            String pickupLocation, String deliveryLocation, DeliveryStatus deliveryStatus,
+            LocalDateTime requestedAt, LocalDateTime scheduledAt, LocalDateTime completedAt,
+            LocalDateTime failedAt, LocalDateTime cancelledAt
+    ) {
+        return new Delivery(
+                orderId,
+                customerId,
+                assignedDroneId,
+                packageWeightKg,
+                pickupLocation,
+                deliveryLocation,
+                deliveryStatus,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+    }
 }
