@@ -3,9 +3,11 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import jakarta.validation.Valid;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.AssignDroneRequestDTO;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.AssignDroneResponseDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryRequestDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryResponseDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.AssignDroneWebMapper;
@@ -39,12 +41,12 @@ public class DeliveryController {
         this.assignDroneWebMapper = assignDroneWebMapper;
     }
 
+
     //create delivery
     @PostMapping
     public ResponseEntity<CreateDeliveryResponseDTO> createDelivery(
             @Valid @RequestBody CreateDeliveryRequestDTO createDeliveryRequestDTO
-            ){
-
+    ){
         CreateDeliveryCommand toCommand = createDeliveryWebMapper.toDeliveryCommand(createDeliveryRequestDTO);
         CreateDeliveryResult toUseCase = createDeliveryUseCase.createDelivery(toCommand);
         CreateDeliveryResponseDTO responseDTO = createDeliveryWebMapper.toDeliveryResponseDTO(toUseCase);
@@ -54,11 +56,13 @@ public class DeliveryController {
 
     //assign a drone
     @PostMapping("/{deliveryId}/assign-drone")
-    public ResponseEntity<CreateDeliveryResponseDTO> assignDrone(
+    public ResponseEntity<AssignDroneResponseDTO> assignDrone(
             @Valid @RequestBody AssignDroneRequestDTO assignDroneRequestDTO
     ){
+        AssignDroneResult toUseCase = assignDroneUseCase.assignDrone(assignDroneRequestDTO.getDroneId());
+        AssignDroneResponseDTO toResponseDTO = assignDroneWebMapper.toResponseDTO(toUseCase);
 
-
-
+        return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }
+
 }
