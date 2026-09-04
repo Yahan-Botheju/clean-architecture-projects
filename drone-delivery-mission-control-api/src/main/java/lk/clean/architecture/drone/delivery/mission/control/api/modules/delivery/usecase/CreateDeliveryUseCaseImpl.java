@@ -29,7 +29,19 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
 
         //check customer existence
         customerCheckApi.getCustomerCheck(createDeliveryCommand.customerId());
+        //check customer status is active
+        customerStatusCheckApi.checkCustomerStatus(createDeliveryCommand.customerId());
+
+        //check package weight is more than 0
+        if(!checkPackageWeight(createDeliveryCommand.packageWeightKg())){
+            throw new IllegalStateException("package weight must be greater than zero.");
+        }
 
         return null;
+    }
+
+    //check package weight
+    private boolean checkPackageWeight(double packageWeightKg) {
+        return packageWeightKg > 0;
     }
 }
