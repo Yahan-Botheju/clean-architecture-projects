@@ -23,6 +23,25 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
         this.customerStatusCheckApi = customerStatusCheckApi;
     }
 
+    /* __HELPER_METHODS_ */
+
+
+    //check package weight
+    private void checkPackageWeight(double packageWeightKg) {
+        if(packageWeightKg < 0.0) {
+            throw new IllegalArgumentException("package weight must be greater than 0");
+        }
+    }
+
+    private void checkLocation(String pickupLocation, String deliveryLocation) {
+        if(pickupLocation == null || deliveryLocation == null){
+            throw new IllegalArgumentException("Locations cannot be empty");
+        }
+    }
+
+    /* __PUBLIC_METHODS_ */
+
+
     //create delivery
     @Override
     public CreateDeliveryResult createDelivery(CreateDeliveryCommand createDeliveryCommand) {
@@ -33,15 +52,14 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
         customerStatusCheckApi.checkCustomerStatus(createDeliveryCommand.customerId());
 
         //check package weight is more than 0
-        if(!checkPackageWeight(createDeliveryCommand.packageWeightKg())){
-            throw new IllegalStateException("package weight must be greater than zero.");
-        }
+
+
+        checkLocation(createDeliveryCommand.deliveryLocation(), createDeliveryCommand.deliveryLocation());
 
         return null;
     }
 
-    //check package weight
-    private boolean checkPackageWeight(double packageWeightKg) {
-        return packageWeightKg > 0;
-    }
+
+
+
 }
