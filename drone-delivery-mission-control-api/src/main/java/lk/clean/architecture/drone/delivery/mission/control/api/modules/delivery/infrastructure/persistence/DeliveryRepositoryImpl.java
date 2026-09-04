@@ -2,18 +2,19 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.infrastructure.persistence.jpa.JpaDeliveryRepository;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.infrastructure.persistence.persistenceMappers.DeliveryPersistenceMapper;
 
 public class DeliveryRepositoryImpl implements DeliveryRepository {
 
     //inject required dependencies
-    private final DeliveryRepository deliveryRepository;
     private final JpaDeliveryRepository jpaDeliveryRepository;
+    private final DeliveryPersistenceMapper deliveryPersistenceMapper;
 
     public DeliveryRepositoryImpl(
-            DeliveryRepository deliveryRepository,
-            JpaDeliveryRepository jpaDeliveryRepository
+           JpaDeliveryRepository jpaDeliveryRepository,
+           DeliveryPersistenceMapper deliveryPersistenceMapper
     ) {
-        this.deliveryRepository = deliveryRepository;
         this.jpaDeliveryRepository = jpaDeliveryRepository;
+        this.deliveryPersistenceMapper = deliveryPersistenceMapper;
     }
 }
