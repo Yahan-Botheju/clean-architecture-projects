@@ -1,4 +1,7 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records;
 
-public record AssignDroneCommand() {
-}
+import java.util.UUID;
+
+public record AssignDroneCommand(
+        UUID droneId
+) {}
