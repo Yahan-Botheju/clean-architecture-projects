@@ -1,4 +1,8 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api;
 
-public interface CustomerStatusCheckApiImpl {
+import java.util.UUID;
+
+public interface CustomerStatusCheckApi {
+
+    boolean checkCustomerStatus(UUID customerId);
 }
