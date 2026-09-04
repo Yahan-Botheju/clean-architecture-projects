@@ -2,9 +2,15 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerStatusCheckApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.enums.DeliveryStatus;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryResult;
+import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.CustomerCheckApiDTO;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
 
@@ -49,19 +55,55 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
     public CreateDeliveryResult createDelivery(CreateDeliveryCommand createDeliveryCommand) {
 
         //check customer existence
-        customerCheckApi.getCustomerCheck(createDeliveryCommand.customerId());
+
+        CustomerCheckApiDTO customer = customerCheckApi.getCustomerCheck(createDeliveryCommand.customerId());
         //check customer status is active
-        customerStatusCheckApi.checkCustomerStatus(createDeliveryCommand.customerId());
+        customerStatusCheckApi.checkCustomerStatus(customer.customerId());
 
         //check package weight is more than 0
         checkPackageWeight(createDeliveryCommand.packageWeightKg());
         //check pickup location
         checkLocation(createDeliveryCommand.deliveryLocation(), createDeliveryCommand.deliveryLocation());
 
-        return null;
+        //create order id and current time
+        UUID orderId = UUID.randomUUID();
+        LocalDateTime requestedAt = LocalDateTime.now();
+
+        //create new model
+        Delivery newDelivery = new Delivery(
+                orderId,
+                customer.customerId(),
+                null,
+                createDeliveryCommand.packageWeightKg(),
+                createDeliveryCommand.pickupLocation(),
+                createDeliveryCommand.deliveryLocation(),
+                DeliveryStatus.REQUESTED,
+                requestedAt,
+                null,
+                null,
+                null,
+                null
+        );
+
+        //save delivery
+        deliveryRepository.save(newDelivery);
+
+
+        return new CreateDeliveryResult(
+                newDelivery.getDeliveryId(),
+                newDelivery.getCustomerId(),
+                newDelivery.getAssignedDroneId(),
+                newDelivery.getPackageWeightKg(),
+                newDelivery.getPickupLocation(),
+                newDelivery.getDeliveryLocation(),
+                newDelivery.getDeliveryStatus(),
+                newDelivery.getRequestedAt(),
+                newDelivery.getScheduledAt(),
+                newDelivery.getCompletedAt(),
+                newDelivery.getFailedAt(),
+                newDelivery.getCancelledAt()
+        );
     }
-
-
 
 
 }
