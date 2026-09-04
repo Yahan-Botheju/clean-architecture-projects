@@ -33,8 +33,10 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
         }
     }
 
+    //check pickup locations are available
     private void checkLocation(String pickupLocation, String deliveryLocation) {
-        if(pickupLocation == null || deliveryLocation == null){
+        if(pickupLocation == null || pickupLocation.isBlank() ||
+                 deliveryLocation == null || deliveryLocation.isBlank()){
             throw new IllegalArgumentException("Locations cannot be empty");
         }
     }
@@ -52,8 +54,8 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
         customerStatusCheckApi.checkCustomerStatus(createDeliveryCommand.customerId());
 
         //check package weight is more than 0
-
-
+        checkPackageWeight(createDeliveryCommand.packageWeightKg());
+        //check pickup location
         checkLocation(createDeliveryCommand.deliveryLocation(), createDeliveryCommand.deliveryLocation());
 
         return null;
