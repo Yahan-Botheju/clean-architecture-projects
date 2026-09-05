@@ -4,6 +4,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DronePackageWeightCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.enums.DroneStatus;
@@ -18,15 +19,18 @@ public class AssignDroneUseCaseImpl implements AssignDroneUseCase {
     private final DeliveryRepository deliveryRepository;
     private final DroneExistenceCheckApi droneExistenceCheckApi;
     private final DronePackageWeightCheckApi dronePackageWeightCheckApi;
+    private final DroneBatteryCheckApi droneBatteryCheckApi;
 
     public AssignDroneUseCaseImpl(
             DeliveryRepository deliveryRepository,
             DroneExistenceCheckApi droneExistenceCheckApi,
-            DronePackageWeightCheckApi dronePackageWeightCheckApi
+            DronePackageWeightCheckApi dronePackageWeightCheckApi,
+            DroneBatteryCheckApi droneBatteryCheckApi
     ) {
         this.deliveryRepository = deliveryRepository;
         this.droneExistenceCheckApi = droneExistenceCheckApi;
         this.dronePackageWeightCheckApi = dronePackageWeightCheckApi;
+        this.droneBatteryCheckApi = droneBatteryCheckApi;
     }
 
     //assign a drone
@@ -51,6 +55,10 @@ public class AssignDroneUseCaseImpl implements AssignDroneUseCase {
         if(!isDroneAvailable) {
             throw new IllegalStateException("Drone is not available");
         }
+
+        //check drone payload
+        dronePackageWeightCheckApi.checkDronePackageWeight(checkDrone.droneId(), deliveryExistence.getPackageWeightKg());
+
 
     }
 }
