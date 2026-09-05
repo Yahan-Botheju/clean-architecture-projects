@@ -34,23 +34,33 @@ public class Drone {
 
 
     //check drone for package delivery
-    public void checkDroneAvailability(double packageWeight) {
+    public void checkDroneAvailability() {
         //check drone availability
         if(this.droneStatus != DroneStatus.AVAILABLE){
             throw new ResourceNotFoundException("DroneStatus not available");
         }
+    }
+
+    //check drone package weight
+    public void checkDronePackageWeight(double packageWeight) {
         //check max payload
         if(this.maxPayloadingKg <= packageWeight){
             throw new IllegalStateException("Pay loading KG exceeds");
         }
+    }
+
+
+    //check drone battery
+    public void checkDroneBattery(double packageWeight) {
 
         //check battery percentage
         double requiredBatteryPercentage = 20 + (packageWeight * 5);
-
         if(this.batteryPercentage < requiredBatteryPercentage){
             throw new IllegalStateException("Battery percentage exceeds");
         }
+
     }
+
 
     //assign drone
     public void markAsAssignDrone(){
