@@ -7,7 +7,6 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCaseImpl;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCaseImpl;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.repositories.DroneRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,8 +26,8 @@ public class UseCaseBeanConfigs {
     //assign drone usecase impl
     @Bean
     public AssignDroneUseCase assignDroneUseCase(
-            DroneRepository droneRepository
+            DeliveryRepository deliveryRepository
     ){
-        return new AssignDroneUseCaseImpl(droneRepository);
+        return new AssignDroneUseCaseImpl(deliveryRepository);
     }
 }
