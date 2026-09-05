@@ -44,13 +44,20 @@ public class Drone {
             throw new IllegalStateException("Pay loading KG exceeds");
         }
 
+
+    }
+
+    //check drone battery
+    public void checkDroneBattery(double packageWeight) {
+
         //check battery percentage
         double requiredBatteryPercentage = 20 + (packageWeight * 5);
-
         if(this.batteryPercentage < requiredBatteryPercentage){
             throw new IllegalStateException("Battery percentage exceeds");
         }
+
     }
+
 
     //assign drone
     public void markAsAssignDrone(){
