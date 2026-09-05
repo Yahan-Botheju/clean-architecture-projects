@@ -6,6 +6,9 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.infrastructure.persistence.jpa.JpaDeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.infrastructure.persistence.persistenceMappers.DeliveryPersistenceMapper;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public class DeliveryRepositoryImpl implements DeliveryRepository {
 
     //inject required dependencies
@@ -18,6 +21,13 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
     ) {
         this.jpaDeliveryRepository = jpaDeliveryRepository;
         this.deliveryPersistenceMapper = deliveryPersistenceMapper;
+    }
+
+    //check delivery existence
+    @Override
+    public Optional<Delivery> getDeliveryById(UUID deliveryId){
+        return jpaDeliveryRepository.findByDeliveryId(deliveryId)
+                .map(deliveryPersistenceMapper::toDomainModel);
     }
 
     //save delivery
