@@ -21,7 +21,7 @@ public class DronePackageWeightCheckApiImpl extends AbstractDroneFindSupport imp
         //check drone
         Drone checkDrone = getDroneById(droneId);
         //use domain logic
-        checkDrone.checkDroneAvailability(packageWeightKg);
+        checkDrone.checkDronePackageWeight(packageWeightKg);
 
         return  new DronePackageWeightCheckApiDTO(
                 checkDrone.getDroneId(),
