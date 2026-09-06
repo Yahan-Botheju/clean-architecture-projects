@@ -1,11 +1,13 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.infrastructure.configs;
 
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeather;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.BatteryLevelCheckRainyWeatherImpl;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule1Impl;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule2Impl;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeatherApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1Api;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2Api;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.repositories.AirStatusOperationAssessmentRepository;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.repositories.WeatherConditionOperationAssessmentRepository;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.BatteryLevelCheckRainyWeatherApiImpl;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule1ApiImpl;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule2ApiImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,19 +16,22 @@ public class UseCaseBeanConfigs {
 
     //flight safety rule 1
     @Bean
-    public CheckFlightSafetyRule1 checkFlightSafetyRule1(){
-        return new CheckFlightSafetyRule1Impl();
+    public CheckFlightSafetyRule1Api checkFlightSafetyRule1(
+            WeatherConditionOperationAssessmentRepository weatherConditionOperationAssessmentRepository,
+            AirStatusOperationAssessmentRepository airStatusOperationAssessmentRepository
+    ){
+        return new CheckFlightSafetyRule1ApiImpl(weatherConditionOperationAssessmentRepository, airStatusOperationAssessmentRepository);
     }
 
     //flight safety rule 2
     @Bean
-    public CheckFlightSafetyRule2 checkFlightSafetyRule2(){
-        return new CheckFlightSafetyRule2Impl();
+    public CheckFlightSafetyRule2Api checkFlightSafetyRule2(){
+        return new CheckFlightSafetyRule2ApiImpl();
     }
 
     //flight check in rainy weather
     @Bean
-    public BatteryLevelCheckRainyWeather batteryLevelCheckRainyWeather(){
-        return new BatteryLevelCheckRainyWeatherImpl();
+    public BatteryLevelCheckRainyWeatherApi batteryLevelCheckRainyWeather(){
+        return new BatteryLevelCheckRainyWeatherApiImpl();
     }
 }
