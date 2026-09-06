@@ -1,7 +1,9 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.infrastructure.configs;
 
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeather;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.BatteryLevelCheckRainyWeatherImpl;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule1Impl;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule2Impl;
 import org.springframework.context.annotation.Bean;
@@ -20,5 +22,11 @@ public class UseCaseBeanConfigs {
     @Bean
     public CheckFlightSafetyRule2 checkFlightSafetyRule2(){
         return new CheckFlightSafetyRule2Impl();
+    }
+
+    //flight check in rainy weather
+    @Bean
+    public BatteryLevelCheckRainyWeather batteryLevelCheckRainyWeather(){
+        return new BatteryLevelCheckRainyWeatherImpl();
     }
 }
