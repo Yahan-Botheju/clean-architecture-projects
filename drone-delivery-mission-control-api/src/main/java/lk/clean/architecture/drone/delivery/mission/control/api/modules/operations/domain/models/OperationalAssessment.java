@@ -30,7 +30,7 @@ public class OperationalAssessment {
 
 
     //check weather and air is okay to fly the drone
-    public void checkFlightSafety(){
+    public void checkFlightSafetyRule1(){
         if(this.weatherCondition == WeatherCondition.STORM
                 && (this.airSpaceStatus == AirSpaceStatus.CLOSED
                 || this.airSpaceStatus == AirSpaceStatus.RESTRICTED)
@@ -50,7 +50,7 @@ public class OperationalAssessment {
     }
 
     //check weather and air is ok to fly the drone
-    public void checkFlightSafety_2(){
+    public void checkFlightSafetyRule2(){
        boolean weatherConditionCheck = (this.weatherCondition == WeatherCondition.CLEAR
                || weatherCondition == WeatherCondition.CLOUDY);
        boolean airSpaceStatusCheck = (this.airSpaceStatus == AirSpaceStatus.OPEN);
