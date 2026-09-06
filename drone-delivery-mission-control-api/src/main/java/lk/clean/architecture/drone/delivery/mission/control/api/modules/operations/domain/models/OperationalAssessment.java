@@ -36,6 +36,7 @@ public class OperationalAssessment {
         ){
             throw new IllegalArgumentException("Cannot continue mission under these condition");
         }
+        this.reason = "Flight safety condition first rule passed";
         this.allowed = true;
     }
 
@@ -45,6 +46,7 @@ public class OperationalAssessment {
         if(this.weatherCondition == WeatherCondition.RAINY && !batteryPercentageCheck){
             throw new IllegalArgumentException("Cannot continue mission under these condition");
         }
+        this.reason = "Flight can safely fly in rainy weather condition";
         this.allowed = true;
     }
 
@@ -57,6 +59,7 @@ public class OperationalAssessment {
        if(!weatherConditionCheck || !airSpaceStatusCheck){
            throw new IllegalArgumentException("Cannot continue mission under these condition");
        }
+       this.reason = "Flight safety condition second rule passed";
        this.allowed = true;
     }
 
