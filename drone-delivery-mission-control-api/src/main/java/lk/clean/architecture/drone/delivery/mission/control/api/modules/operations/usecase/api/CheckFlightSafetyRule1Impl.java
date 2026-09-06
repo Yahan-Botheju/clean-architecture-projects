@@ -13,11 +13,12 @@ public class CheckFlightSafetyRule1Impl implements CheckFlightSafetyRule1 {
             WeatherCondition weatherCondition,
             AirSpaceStatus airSpaceStatus
     ){
-        //create model
-        OperationalAssessment newOperation =  new OperationalAssessment(
+        //create model using factor method
+        OperationalAssessment newOperation =  OperationalAssessment.createOperationalAssessment(
                 weatherCondition,
                 airSpaceStatus
         );
+
 
         //check domain logic
         newOperation.checkFlightSafetyRule1();

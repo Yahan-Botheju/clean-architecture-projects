@@ -13,8 +13,8 @@ public class CheckFlightSafetyRule2Impl implements CheckFlightSafetyRule2 {
             WeatherCondition weatherCondition,
             AirSpaceStatus airSpaceStatus
     ) {
-        //create object
-        OperationalAssessment newOperation = new OperationalAssessment(
+        //create domain model using factory method
+        OperationalAssessment newOperation = OperationalAssessment.createOperationalAssessment(
                 weatherCondition,
                 airSpaceStatus
         );
