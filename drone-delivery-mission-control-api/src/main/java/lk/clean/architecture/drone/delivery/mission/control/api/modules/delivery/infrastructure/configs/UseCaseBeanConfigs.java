@@ -10,6 +10,9 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DronePackageWeightCheckApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeather;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,8 +35,19 @@ public class UseCaseBeanConfigs {
             DeliveryRepository deliveryRepository,
             DroneExistenceCheckApi droneExistenceCheckApi,
             DronePackageWeightCheckApi dronePackageWeightCheckApi,
-            DroneBatteryCheckApi droneBatteryCheckApi
+            DroneBatteryCheckApi droneBatteryCheckApi,
+            BatteryLevelCheckRainyWeather batteryLevelCheckRainyWeatherApi,
+            CheckFlightSafetyRule1 checkFlightSafetyRule1Api,
+            CheckFlightSafetyRule2 checkFlightSafetyRule2Api
     ){
-        return new AssignDroneUseCaseImpl(deliveryRepository, droneExistenceCheckApi, dronePackageWeightCheckApi, droneBatteryCheckApi);
+        return new AssignDroneUseCaseImpl(
+                deliveryRepository,
+                droneExistenceCheckApi,
+                dronePackageWeightCheckApi,
+                droneBatteryCheckApi,
+                batteryLevelCheckRainyWeatherApi,
+                checkFlightSafetyRule1Api,
+                checkFlightSafetyRule2Api
+        );
     }
 }
