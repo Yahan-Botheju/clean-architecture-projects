@@ -1,7 +1,9 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.infrastructure.configs;
 
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule1Impl;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api.CheckFlightSafetyRule2Impl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,5 +14,11 @@ public class UseCaseBeanConfigs {
     @Bean
     public CheckFlightSafetyRule1 checkFlightSafetyRule1(){
         return new CheckFlightSafetyRule1Impl();
+    }
+
+    //flight safety rule 2
+    @Bean
+    public CheckFlightSafetyRule2 checkFlightSafetyRule2(){
+        return new CheckFlightSafetyRule2Impl();
     }
 }
