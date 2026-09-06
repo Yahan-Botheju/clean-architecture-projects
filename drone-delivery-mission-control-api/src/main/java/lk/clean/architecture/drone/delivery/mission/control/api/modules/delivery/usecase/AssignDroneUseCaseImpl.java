@@ -8,6 +8,9 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.ap
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DronePackageWeightCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.enums.DroneStatus;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeather;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
 import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneExistenceCheckApiDTO;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
@@ -20,17 +23,26 @@ public class AssignDroneUseCaseImpl implements AssignDroneUseCase {
     private final DroneExistenceCheckApi droneExistenceCheckApi;
     private final DronePackageWeightCheckApi dronePackageWeightCheckApi;
     private final DroneBatteryCheckApi droneBatteryCheckApi;
+    private final BatteryLevelCheckRainyWeather batteryLevelCheckRainyWeather;
+    private final CheckFlightSafetyRule1 checkFlightSafetyRule1;
+    private final CheckFlightSafetyRule2 checkFlightSafetyRule2;
 
     public AssignDroneUseCaseImpl(
             DeliveryRepository deliveryRepository,
             DroneExistenceCheckApi droneExistenceCheckApi,
             DronePackageWeightCheckApi dronePackageWeightCheckApi,
-            DroneBatteryCheckApi droneBatteryCheckApi
+            DroneBatteryCheckApi droneBatteryCheckApi,
+            BatteryLevelCheckRainyWeather batteryLevelCheckRainyWeather,
+            CheckFlightSafetyRule1 checkFlightSafetyRule1,
+            CheckFlightSafetyRule2 checkFlightSafetyRule2
     ) {
         this.deliveryRepository = deliveryRepository;
         this.droneExistenceCheckApi = droneExistenceCheckApi;
         this.dronePackageWeightCheckApi = dronePackageWeightCheckApi;
         this.droneBatteryCheckApi = droneBatteryCheckApi;
+        this.batteryLevelCheckRainyWeather = batteryLevelCheckRainyWeather;
+        this.checkFlightSafetyRule1 = checkFlightSafetyRule1;
+        this.checkFlightSafetyRule2 = checkFlightSafetyRule2;
     }
 
     //assign a drone
@@ -58,6 +70,9 @@ public class AssignDroneUseCaseImpl implements AssignDroneUseCase {
 
         //check drone payload
         dronePackageWeightCheckApi.checkDronePackageWeight(checkDrone.droneId(), deliveryExistence.getPackageWeightKg());
+
+        //check drone battery status
+        droneBatteryCheckApi.checkDroneBatteryStatus(checkDrone.droneId(), deliveryExistence.getPackageWeightKg());
 
 
     }
