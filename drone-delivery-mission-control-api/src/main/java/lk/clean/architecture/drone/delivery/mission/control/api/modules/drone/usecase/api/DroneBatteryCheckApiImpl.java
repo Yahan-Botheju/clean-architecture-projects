@@ -10,7 +10,7 @@ import java.util.UUID;
 public class DroneBatteryCheckApiImpl extends AbstractDroneFindSupport implements DroneBatteryCheckApi {
 
     //inject abstract class
-    protected DroneBatteryCheckApiImpl(DroneRepository droneRepository) {
+    public DroneBatteryCheckApiImpl(DroneRepository droneRepository) {
         super(droneRepository);
     }
 
