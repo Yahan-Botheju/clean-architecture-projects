@@ -11,13 +11,12 @@ public class OperationalAssessment {
 
     public OperationalAssessment(
             WeatherCondition weatherCondition,
-            AirSpaceStatus airSpaceStatus,
-            String reason
+            AirSpaceStatus airSpaceStatus
     ) {
         this.weatherCondition = weatherCondition;
         this.airSpaceStatus = airSpaceStatus;
         this.allowed = false;
-        this.reason = reason;
+        this.reason = "Pending assessment";
     }
 
     public WeatherCondition getWeatherCondition() { return weatherCondition; }
@@ -30,13 +29,14 @@ public class OperationalAssessment {
 
 
     //check weather and air is okay to fly the drone
-    public void checkFlightSafety(){
+    public void checkFlightSafetyRule1(){
         if(this.weatherCondition == WeatherCondition.STORM
                 && (this.airSpaceStatus == AirSpaceStatus.CLOSED
                 || this.airSpaceStatus == AirSpaceStatus.RESTRICTED)
         ){
             throw new IllegalArgumentException("Cannot continue mission under these condition");
         }
+        this.reason = "Flight safety condition first rule passed";
         this.allowed = true;
     }
 
@@ -46,11 +46,12 @@ public class OperationalAssessment {
         if(this.weatherCondition == WeatherCondition.RAINY && !batteryPercentageCheck){
             throw new IllegalArgumentException("Cannot continue mission under these condition");
         }
+        this.reason = "Flight can safely fly in rainy weather condition";
         this.allowed = true;
     }
 
     //check weather and air is ok to fly the drone
-    public void checkFlightSafety_2(){
+    public void checkFlightSafetyRule2(){
        boolean weatherConditionCheck = (this.weatherCondition == WeatherCondition.CLEAR
                || weatherCondition == WeatherCondition.CLOUDY);
        boolean airSpaceStatusCheck = (this.airSpaceStatus == AirSpaceStatus.OPEN);
@@ -58,6 +59,17 @@ public class OperationalAssessment {
        if(!weatherConditionCheck || !airSpaceStatusCheck){
            throw new IllegalArgumentException("Cannot continue mission under these condition");
        }
+       this.reason = "Flight safety condition second rule passed";
        this.allowed = true;
+    }
+
+
+    //create factory method
+
+    public static OperationalAssessment createOperationalAssessment(
+            WeatherCondition weatherCondition,
+            AirSpaceStatus airSpaceStatus
+    ){
+        return new OperationalAssessment(weatherCondition,airSpaceStatus);
     }
 }

@@ -43,9 +43,16 @@ public class UseCaseBeanConfigs {
 
     //external usage api
     @Bean
-    public DroneExistenceCheck droneExistenceCheck(
+    public DroneExistenceCheckApi droneExistenceCheck(
             DroneRepository droneRepository
     ){
-        return new DroneExistenceCheckApiImpl(droneRepository);
+        return new DroneExistenceCheckApiApiImpl(droneRepository);
+    }
+
+    @Bean
+    public DroneBatteryCheckApi droneBatteryCheckApi(
+            DroneRepository droneRepository
+    ){
+        return new DroneBatteryCheckApiImpl(droneRepository);
     }
 }

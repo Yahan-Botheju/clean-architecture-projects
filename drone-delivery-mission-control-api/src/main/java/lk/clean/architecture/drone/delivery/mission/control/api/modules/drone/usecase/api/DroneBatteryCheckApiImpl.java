@@ -10,17 +10,17 @@ import java.util.UUID;
 public class DroneBatteryCheckApiImpl extends AbstractDroneFindSupport implements DroneBatteryCheckApi {
 
     //inject abstract class
-    protected DroneBatteryCheckApiImpl(DroneRepository droneRepository) {
+    public DroneBatteryCheckApiImpl(DroneRepository droneRepository) {
         super(droneRepository);
     }
 
     //check drone battery status
     @Override
-    public DroneBatteryCheckApiDTO checkDroneBatteryStatus(UUID droneId, double batteryPercentage){
+    public DroneBatteryCheckApiDTO checkDroneBatteryStatus(UUID droneId, double packageWeightKg){
         //check drone existence
         Drone checkDrone = getDroneById(droneId);
         //use domain battery check logic
-        checkDrone.checkDroneBattery(batteryPercentage);
+        checkDrone.checkDroneBattery(packageWeightKg);
 
         return new DroneBatteryCheckApiDTO(
                 checkDrone.getDroneId(),
