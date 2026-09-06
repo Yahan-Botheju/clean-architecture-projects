@@ -25,20 +25,35 @@ public class CheckFlightSafetyRule1ApiImpl implements CheckFlightSafetyRule1Api 
     public boolean checkFlightSafetyRule1(String pickUpLocation, String deliveryLocation){
 
         //pick operation assessment
+        OperationalAssessment pickupWeatherCondition =
+                weatherConditionOperationAssessmentRepository.getPickUpLocationWeatherCondition(pickUpLocation);
+        OperationalAssessment pickUpAirStatus =
+                airStatusOperationAssessmentRepository.getPickUpLocationAirStatus(pickUpLocation);
 
+        //delivery operation assessment
+        OperationalAssessment deliveryWeatherCondition =
+                weatherConditionOperationAssessmentRepository.getDropOffLocationWeatherCondition(deliveryLocation);
 
+        OperationalAssessment deliveryAirStatus =
+                airStatusOperationAssessmentRepository.getDropOffLocationAirStatus(deliveryLocation);
 
+        //pickup domain model
+        OperationalAssessment pickUpAssessmentOperation =  OperationalAssessment.createOperationalAssessment(
+                pickupWeatherCondition.getWeatherCondition(),
+                pickUpAirStatus.getAirSpaceStatus()
+        );
 
-        //create model using factor method
-        OperationalAssessment newOperation =  OperationalAssessment.createOperationalAssessment(
-                weatherCondition,
-                airSpaceStatus
+        //delivery domain model
+        OperationalAssessment deliveryAssessmentOperation =  OperationalAssessment.createOperationalAssessment(
+                deliveryWeatherCondition.getWeatherCondition(),
+                deliveryAirStatus.getAirSpaceStatus()
         );
 
 
         //check domain logic
-        newOperation.checkFlightSafetyRule1();
+        pickUpAssessmentOperation.checkFlightSafetyRule1();
+        deliveryAssessmentOperation.checkFlightSafetyRule1();
 
-        return newOperation.isAllowed();
+        return pickUpAssessmentOperation.isAllowed() && deliveryAssessmentOperation.isAllowed();
     }
 }
