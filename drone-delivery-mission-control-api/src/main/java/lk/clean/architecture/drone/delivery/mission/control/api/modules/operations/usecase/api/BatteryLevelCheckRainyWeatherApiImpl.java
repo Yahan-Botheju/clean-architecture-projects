@@ -1,25 +1,27 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.usecase.api;
 
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeatherApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.enums.AirSpaceStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.enums.WeatherCondition;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.models.OperationalAssessment;
 
-public class CheckFlightSafetyRule2Impl implements CheckFlightSafetyRule2 {
+public class BatteryLevelCheckRainyWeatherApiImpl implements BatteryLevelCheckRainyWeatherApi {
 
-    //check flight safety rule 2
-    @Override
-    public boolean checkFlightSafetyRule2(
+
+    //check current battery level in rainy weather
+    public boolean batteryLevelCheckRainyWeather(
             WeatherCondition weatherCondition,
-            AirSpaceStatus airSpaceStatus
-    ) {
-        //create domain model using factory method
+            AirSpaceStatus airSpaceStatus,
+            double currentBatteryLevel
+    ){
+
+        //create domain model
         OperationalAssessment newOperation = OperationalAssessment.createOperationalAssessment(
                 weatherCondition,
                 airSpaceStatus
         );
-        //call domain logic
-        newOperation.checkFlightSafetyRule2();
+        //use domain logic
+        newOperation.checkBatteryLevelInRainyWeather(currentBatteryLevel);
 
         return newOperation.isAllowed();
     }
