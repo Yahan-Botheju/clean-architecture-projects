@@ -11,13 +11,12 @@ public class OperationalAssessment {
 
     public OperationalAssessment(
             WeatherCondition weatherCondition,
-            AirSpaceStatus airSpaceStatus,
-            String reason
+            AirSpaceStatus airSpaceStatus
     ) {
         this.weatherCondition = weatherCondition;
         this.airSpaceStatus = airSpaceStatus;
         this.allowed = false;
-        this.reason = reason;
+        this.reason = "Pending assessment";
     }
 
     public WeatherCondition getWeatherCondition() { return weatherCondition; }
@@ -59,5 +58,15 @@ public class OperationalAssessment {
            throw new IllegalArgumentException("Cannot continue mission under these condition");
        }
        this.allowed = true;
+    }
+
+
+    //create factory method
+
+    public static OperationalAssessment createOperationalAssessment(
+            WeatherCondition weatherCondition,
+            AirSpaceStatus airSpaceStatus
+    ){
+        return new OperationalAssessment(weatherCondition,airSpaceStatus);
     }
 }
