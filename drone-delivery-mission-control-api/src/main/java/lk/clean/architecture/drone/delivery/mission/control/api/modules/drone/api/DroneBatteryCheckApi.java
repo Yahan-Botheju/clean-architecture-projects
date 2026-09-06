@@ -7,5 +7,5 @@ import java.util.UUID;
 public interface DroneBatteryCheckApi {
 
     //check drone battery status
-    DroneBatteryCheckApiDTO checkDroneBatteryStatus(UUID droneId, double batteryPercentage);
+    DroneBatteryCheckApiDTO checkDroneBatteryStatus(UUID droneId, double packageWeightKg);
 }
