@@ -4,8 +4,17 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.operatio
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.enums.AirSpaceStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.enums.WeatherCondition;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.models.OperationalAssessment;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.domain.repositories.OperationAssementRepository;
 
 public class CheckFlightSafetyRule1ApiImpl implements CheckFlightSafetyRule1Api {
+
+    //inject required dependencies
+    private final OperationAssementRepository operationAssementRepository;
+
+    public CheckFlightSafetyRule1ApiImpl(OperationAssementRepository operationAssementRepository) {
+        this.operationAssementRepository = operationAssementRepository;
+    }
+
 
     //check flight safety rule 1
     @Override
