@@ -3,16 +3,14 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerStatusCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCase;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCaseImpl;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCaseImpl;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.*;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneAssignApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DronePackageWeightCheckApi;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeather;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeatherApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1Api;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2Api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,9 +34,9 @@ public class UseCaseBeanConfigs {
             DroneExistenceCheckApi droneExistenceCheckApi,
             DronePackageWeightCheckApi dronePackageWeightCheckApi,
             DroneBatteryCheckApi droneBatteryCheckApi,
-            BatteryLevelCheckRainyWeather batteryLevelCheckRainyWeatherApi,
-            CheckFlightSafetyRule1 checkFlightSafetyRule1Api,
-            CheckFlightSafetyRule2 checkFlightSafetyRule2Api
+            BatteryLevelCheckRainyWeatherApi batteryLevelCheckRainyWeatherApi,
+            CheckFlightSafetyRule1Api checkFlightSafetyRule1Api,
+            CheckFlightSafetyRule2Api checkFlightSafetyRule2Api
     ){
         return new AssignDroneUseCaseImpl(
                 deliveryRepository,
@@ -49,5 +47,14 @@ public class UseCaseBeanConfigs {
                 checkFlightSafetyRule1Api,
                 checkFlightSafetyRule2Api
         );
+    }
+
+    //mission start usecase impl
+    @Bean
+    public StartMissionUseCase startMissionUseCase(
+            DeliveryRepository deliveryRepository,
+            DroneAssignApi droneAssignApi
+    ){
+        return new StartMissionUseCaseImpl(deliveryRepository, droneAssignApi);
     }
 }
