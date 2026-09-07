@@ -30,6 +30,12 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
                 .map(deliveryPersistenceMapper::toDomainModel);
     }
 
+    //check delivery existence by boolean
+    @Override
+    public boolean checkDeliveryExists(UUID deliveryId){
+        return jpaDeliveryRepository.existsById(deliveryId);
+    }
+
     //save delivery
     @Override
     public Delivery save(Delivery delivery) {
