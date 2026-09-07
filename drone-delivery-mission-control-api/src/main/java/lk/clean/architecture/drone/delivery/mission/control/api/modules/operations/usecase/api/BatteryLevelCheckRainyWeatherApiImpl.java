@@ -22,14 +22,32 @@ public class BatteryLevelCheckRainyWeatherApiImpl implements BatteryLevelCheckRa
     //check current battery level in rainy weather
     public boolean batteryLevelCheckRainyWeather(String pickUpLocation, String deliveryLocation, double currentBatteryLevel){
 
-        //create domain model
-        OperationalAssessment newOperation = OperationalAssessment.createOperationalAssessment(
-                weatherCondition,
-                airSpaceStatus
-        );
-        //use domain logic
-        newOperation.checkBatteryLevelInRainyWeather(currentBatteryLevel);
 
-        return newOperation.isAllowed();
+        //check pickup weather condition check
+        OperationalAssessment pickUpWeather = weatherConditionOperationAssessmentRepository.getPickUpLocationWeatherCondition(pickUpLocation);
+        OperationalAssessment pickUpAirStatus = airStatusOperationAssessmentRepository.getPickUpLocationAirStatus(pickUpLocation);
+
+        //check drop off weather condition check
+        OperationalAssessment deliveryWeather = weatherConditionOperationAssessmentRepository.getDropOffLocationWeatherCondition(deliveryLocation);
+        OperationalAssessment deliveryAirStatus = airStatusOperationAssessmentRepository.getDropOffLocationAirStatus(deliveryLocation);
+
+        //pickup domain model
+        OperationalAssessment pickupOperation = OperationalAssessment.createOperationalAssessment(
+                pickUpWeather.getWeatherCondition(),
+                pickUpAirStatus.getAirSpaceStatus()
+        );
+
+        //delivery domain model
+        OperationalAssessment deliveryOperation = OperationalAssessment.createOperationalAssessment(
+                deliveryWeather.getWeatherCondition(),
+                deliveryAirStatus.getAirSpaceStatus()
+        );
+
+
+        //use domain logic
+        pickupOperation.checkBatteryLevelInRainyWeather(currentBatteryLevel);
+        deliveryOperation.checkBatteryLevelInRainyWeather(currentBatteryLevel);
+
+        return pickupOperation.isAllowed() && deliveryOperation.isAllowed();
     }
 }
