@@ -25,17 +25,30 @@ public class CheckFlightSafetyRule2ApiImpl implements CheckFlightSafetyRule2Api 
     public boolean checkFlightSafetyRule2(String  pickUpLocation, String deliveryLocation) {
 
 
+        //check pickup weather condition check
+        OperationalAssessment pickUpWeather = weatherConditionOperationAssessmentRepository.getPickUpLocationWeatherCondition(pickUpLocation);
+        OperationalAssessment pickUpAirStatus = airStatusOperationAssessmentRepository.getPickUpLocationAirStatus(pickUpLocation);
 
+        //check drop off weather condition check
+        OperationalAssessment deliveryWeather = weatherConditionOperationAssessmentRepository.getDropOffLocationWeatherCondition(deliveryLocation);
+        OperationalAssessment deliveryAirStatus = airStatusOperationAssessmentRepository.getDropOffLocationAirStatus(deliveryLocation);
 
-
-        //create domain model using factory method
-        OperationalAssessment newOperation = OperationalAssessment.createOperationalAssessment(
-                weatherCondition,
-                airSpaceStatus
+        //pickup domain model
+        OperationalAssessment pickupOperation = OperationalAssessment.createOperationalAssessment(
+                pickUpWeather.getWeatherCondition(),
+                pickUpAirStatus.getAirSpaceStatus()
         );
-        //call domain logic
-        newOperation.checkFlightSafetyRule2();
 
-        return newOperation.isAllowed();
+        //delivery domain model
+        OperationalAssessment deliveryOperation = OperationalAssessment.createOperationalAssessment(
+                deliveryWeather.getWeatherCondition(),
+                deliveryAirStatus.getAirSpaceStatus()
+        );
+
+        //call domain logic
+        pickupOperation.checkFlightSafetyRule2();
+        deliveryOperation.checkFlightSafetyRule2();
+
+        return pickupOperation.isAllowed() && deliveryOperation.isAllowed();
     }
 }
