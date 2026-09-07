@@ -34,7 +34,10 @@ public class UseCaseBeanConfigs {
 
     //flight check in rainy weather
     @Bean
-    public BatteryLevelCheckRainyWeatherApi batteryLevelCheckRainyWeather(){
-        return new BatteryLevelCheckRainyWeatherApiImpl();
+    public BatteryLevelCheckRainyWeatherApi batteryLevelCheckRainyWeather(
+            WeatherConditionOperationAssessmentRepository weatherConditionOperationAssessmentRepository,
+            AirStatusOperationAssessmentRepository airStatusOperationAssessmentRepository
+    ){
+        return new BatteryLevelCheckRainyWeatherApiImpl(weatherConditionOperationAssessmentRepository, airStatusOperationAssessmentRepository);
     }
 }
