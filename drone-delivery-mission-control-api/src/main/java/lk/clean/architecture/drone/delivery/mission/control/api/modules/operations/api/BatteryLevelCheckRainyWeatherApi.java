@@ -6,5 +6,5 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.operatio
 public interface BatteryLevelCheckRainyWeatherApi {
 
     //check current battery level in rainy weather
-    public boolean batteryLevelCheckRainyWeather(WeatherCondition weatherCondition, AirSpaceStatus airSpaceStatus, double currentBatteryLevel);
+    public boolean batteryLevelCheckRainyWeather(String pickUpLocation, String deliveryLocation, double currentBatteryLevel);
 }
