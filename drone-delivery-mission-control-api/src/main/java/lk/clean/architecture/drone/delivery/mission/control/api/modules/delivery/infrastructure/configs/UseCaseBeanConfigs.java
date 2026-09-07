@@ -4,6 +4,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerStatusCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.*;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneAssignApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DronePackageWeightCheckApi;
@@ -51,8 +52,9 @@ public class UseCaseBeanConfigs {
     //mission start usecase impl
     @Bean
     public StartMissionUseCase startMissionUseCase(
-            DeliveryRepository deliveryRepository
+            DeliveryRepository deliveryRepository,
+            DroneAssignApi droneAssignApi
     ){
-        return new StartMissionUseCaseImpl(deliveryRepository);
+        return new StartMissionUseCaseImpl(deliveryRepository, droneAssignApi);
     }
 }
