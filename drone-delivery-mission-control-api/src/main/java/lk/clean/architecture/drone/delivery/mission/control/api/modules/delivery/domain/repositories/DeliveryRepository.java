@@ -7,6 +7,10 @@ import java.util.UUID;
 
 public interface DeliveryRepository {
 
+    //check delivery existence by boolean
+    boolean checkDeliveryExists(UUID deliveryId);
+
+
     //check delivery existence
     Optional<Delivery> getDeliveryById(UUID deliveryId);
 
