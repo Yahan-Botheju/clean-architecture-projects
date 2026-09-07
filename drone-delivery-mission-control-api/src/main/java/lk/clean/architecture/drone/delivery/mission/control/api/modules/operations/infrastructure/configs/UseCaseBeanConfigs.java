@@ -25,8 +25,11 @@ public class UseCaseBeanConfigs {
 
     //flight safety rule 2
     @Bean
-    public CheckFlightSafetyRule2Api checkFlightSafetyRule2(){
-        return new CheckFlightSafetyRule2ApiImpl();
+    public CheckFlightSafetyRule2Api checkFlightSafetyRule2(
+            WeatherConditionOperationAssessmentRepository weatherConditionOperationAssessmentRepository,
+            AirStatusOperationAssessmentRepository airStatusOperationAssessmentRepository
+    ){
+        return new CheckFlightSafetyRule2ApiImpl(weatherConditionOperationAssessmentRepository, airStatusOperationAssessmentRepository);
     }
 
     //flight check in rainy weather
