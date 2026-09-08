@@ -7,6 +7,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryResult;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.StartMissionResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.AssignDroneWebMapper;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.CreateDeliveryWebMapper;
@@ -73,6 +74,11 @@ public class DeliveryController {
     //start mission
     @PostMapping("/start-mission")
     public ResponseEntity<StartMissionResponseDTO> startMission(
-            @Valid @RequestBody S
-    ){}
+            @Valid @RequestBody StartMissionRequestDTO startMissionRequestDTO
+    ){
+        StartMissionResult toUseCase = startMissionUseCase.startMission(startMissionRequestDTO.getDeliveryId());
+        StartMissionResponseDTO toResponse = startMissionWebMapper.toResponse(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(toResponse);
+    }
 }
