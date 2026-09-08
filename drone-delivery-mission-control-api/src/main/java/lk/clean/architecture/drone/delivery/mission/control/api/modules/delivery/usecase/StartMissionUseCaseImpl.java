@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.enums.DeliveryStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.StartMissionResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneAssignApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.enums.DroneStatus;
@@ -11,6 +12,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.operatio
 import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneExistenceCheckApiDTO;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class StartMissionUseCaseImpl implements StartMissionUseCase {
@@ -37,8 +39,9 @@ public class StartMissionUseCaseImpl implements StartMissionUseCase {
         this.checkFlightSafetyRule2Api=checkFlightSafetyRule2Api;
     }
 
+    //delivery starts
     @Override
-    public void startMission(UUID deliveryId) {
+    public StartMissionResult startMission(UUID deliveryId) {
 
         Delivery getDelivery = deliveryRepository.getDeliveryById(deliveryId)
                 .orElseThrow(()->new ResourceNotFoundException("Delivery Not Found"));
@@ -64,5 +67,36 @@ public class StartMissionUseCaseImpl implements StartMissionUseCase {
         if(!isDroneAvailable){
             throw new IllegalStateException("cannot process drone under this status");
         }
+
+        //check weather condition again
+        checkFlightSafetyRule1Api.checkFlightSafetyRule1(getDelivery.getPickupLocation(), getDelivery.getDeliveryLocation());
+        checkFlightSafetyRule2Api.checkFlightSafetyRule2(getDelivery.getPickupLocation(), getDelivery.getDeliveryLocation());
+
+        /*
+        * call domain logic for state mutate
+        * */
+
+        LocalDateTime startTime = LocalDateTime.now();
+        getDelivery.inProgressDrone(startTime);
+        //assign drone for mission (ON_MISSION)
+        droneAssignApi.droneAssignForMission(getDelivery.getAssignedDroneId());
+
+        deliveryRepository.save(getDelivery);
+
+        return new StartMissionResult(
+                getDelivery.getDeliveryId(),
+                getDelivery.getCustomerId(),
+                getDelivery.getAssignedDroneId(),
+                getDelivery.getPackageWeightKg(),
+                getDelivery.getPickupLocation(),
+                getDelivery.getDeliveryLocation(),
+                getDelivery.getDeliveryStatus(),
+                getDelivery.getRequestedAt(),
+                getDelivery.getScheduledAt(),
+                getDelivery.getStartedAt(),
+                getDelivery.getCompletedAt(),
+                getDelivery.getFailedAt(),
+                getDelivery.getCancelledAt()
+        );
     }
 }
