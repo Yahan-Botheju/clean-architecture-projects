@@ -82,6 +82,7 @@ public class CreateDeliveryUseCaseImpl implements CreateDeliveryUseCase {
                 null,
                 null,
                 null,
+                null,
                 null
         );
 
