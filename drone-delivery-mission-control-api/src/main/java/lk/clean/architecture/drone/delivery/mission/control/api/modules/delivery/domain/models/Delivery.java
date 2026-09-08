@@ -15,6 +15,7 @@ public class Delivery {
     private DeliveryStatus deliveryStatus;
     private LocalDateTime requestedAt;
     private LocalDateTime scheduledAt;
+    private LocalDateTime startedAt;
     private LocalDateTime completedAt;
     private LocalDateTime failedAt;
     private LocalDateTime cancelledAt;
@@ -23,7 +24,7 @@ public class Delivery {
             UUID deliveryId, UUID customerId, UUID assignedDroneId,
             double packageWeightKg, String pickupLocation, String deliveryLocation,
             DeliveryStatus deliveryStatus, LocalDateTime requestedAt,
-            LocalDateTime scheduledAt, LocalDateTime completedAt, LocalDateTime failedAt, LocalDateTime cancelledAt
+            LocalDateTime scheduledAt,LocalDateTime startedAt ,LocalDateTime completedAt, LocalDateTime failedAt, LocalDateTime cancelledAt
     ) {
         this.deliveryId = deliveryId;
         this.customerId = customerId;
@@ -34,6 +35,7 @@ public class Delivery {
         this.deliveryStatus = deliveryStatus;
         this.requestedAt = requestedAt;
         this.scheduledAt = scheduledAt;
+        this.startedAt = startedAt;
         this.completedAt = completedAt;
         this.failedAt = failedAt;
         this.cancelledAt = cancelledAt;
@@ -48,6 +50,7 @@ public class Delivery {
     public DeliveryStatus getDeliveryStatus() { return deliveryStatus; }
     public LocalDateTime getRequestedAt() { return requestedAt; }
     public LocalDateTime getScheduledAt() { return scheduledAt; }
+    public LocalDateTime getStartedAt() { return startedAt; }
     public LocalDateTime getCompletedAt() { return completedAt; }
     public LocalDateTime getFailedAt() { return failedAt; }
     public LocalDateTime getCancelledAt() { return cancelledAt; }
@@ -89,12 +92,12 @@ public class Delivery {
     }
 
     //set drone to in progress
-    public void inProgressDrone(LocalDateTime inProgressTime) {
+    public void inProgressDrone(LocalDateTime startingTime) {
         if (this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to inprogress");
         }
         this.deliveryStatus = DeliveryStatus.IN_PROGRESS;
-        this.completedAt = inProgressTime;
+        this.startedAt = startingTime;
     }
 
     //delivered by drone
@@ -130,7 +133,7 @@ public class Delivery {
     public static Delivery createNewDelivery(
             UUID orderId, UUID customerId, UUID assignedDroneId, double packageWeightKg,
             String pickupLocation, String deliveryLocation, DeliveryStatus deliveryStatus,
-            LocalDateTime requestedAt, LocalDateTime scheduledAt, LocalDateTime completedAt,
+            LocalDateTime requestedAt, LocalDateTime scheduledAt, LocalDateTime startedAt, LocalDateTime completedAt,
             LocalDateTime failedAt, LocalDateTime cancelledAt
     ) {
         return new Delivery(
@@ -141,6 +144,7 @@ public class Delivery {
                 pickupLocation,
                 deliveryLocation,
                 deliveryStatus,
+                null,
                 null,
                 null,
                 null,
