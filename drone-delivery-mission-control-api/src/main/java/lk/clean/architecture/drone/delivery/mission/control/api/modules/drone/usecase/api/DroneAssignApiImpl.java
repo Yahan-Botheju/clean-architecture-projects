@@ -40,4 +40,22 @@ public class DroneAssignApiImpl extends AbstractDroneFindSupport implements Dron
                 getDrone.getBatteryPercentage()
         );
     }
+
+    //assign a drone for mission
+    @Override
+    public DroneAssignApiDTO droneAssignForMission(UUID droneId) {
+
+        Drone getDrone = getDroneById(droneId);
+        getDrone.assignDroneOnMission();
+
+        droneRepository.saveDrone(getDrone);
+
+        return new DroneAssignApiDTO(
+                getDrone.getDroneId(),
+                getDrone.getSerialNumber(),
+                getDrone.getDroneStatus(),
+                getDrone.getMaxPayloadingKg(),
+                getDrone.getBatteryPercentage()
+        );
+    }
 }

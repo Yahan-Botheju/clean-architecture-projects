@@ -3,15 +3,15 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import jakarta.validation.Valid;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.StartMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryResult;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.AssignDroneRequestDTO;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.AssignDroneResponseDTO;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryRequestDTO;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryResponseDTO;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.StartMissionResult;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.AssignDroneWebMapper;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.CreateDeliveryWebMapper;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.StartMissionWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,17 +28,23 @@ public class DeliveryController {
     private final CreateDeliveryWebMapper createDeliveryWebMapper;
     private final AssignDroneUseCase assignDroneUseCase;
     private final AssignDroneWebMapper assignDroneWebMapper;
+    private final StartMissionUseCase  startMissionUseCase;
+    private final StartMissionWebMapper startMissionWebMapper;
 
     public DeliveryController(
             CreateDeliveryUseCase createDeliveryUseCase,
             CreateDeliveryWebMapper createDeliveryWebMapper,
             AssignDroneUseCase assignDroneUseCase,
-            AssignDroneWebMapper assignDroneWebMapper
+            AssignDroneWebMapper assignDroneWebMapper,
+            StartMissionUseCase startMissionUseCase,
+            StartMissionWebMapper startMissionWebMapper
     ) {
         this.createDeliveryUseCase = createDeliveryUseCase;
         this.createDeliveryWebMapper = createDeliveryWebMapper;
         this.assignDroneUseCase = assignDroneUseCase;
         this.assignDroneWebMapper = assignDroneWebMapper;
+        this.startMissionUseCase = startMissionUseCase;
+        this.startMissionWebMapper = startMissionWebMapper;
     }
 
 
@@ -55,7 +61,7 @@ public class DeliveryController {
     }
 
     //assign a drone
-    @PostMapping("/{deliveryId}/assign-drone")
+    @PostMapping("/assign-drone")
     public ResponseEntity<AssignDroneResponseDTO> assignDrone(
             @Valid @RequestBody AssignDroneRequestDTO assignDroneRequestDTO
     ){
@@ -65,4 +71,14 @@ public class DeliveryController {
         return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }
 
+    //start mission
+    @PostMapping("/start-mission")
+    public ResponseEntity<StartMissionResponseDTO> startMission(
+            @Valid @RequestBody StartMissionRequestDTO startMissionRequestDTO
+    ){
+        StartMissionResult toUseCase = startMissionUseCase.startMission(startMissionRequestDTO.getDeliveryId());
+        StartMissionResponseDTO toResponse = startMissionWebMapper.toResponse(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(toResponse);
+    }
 }

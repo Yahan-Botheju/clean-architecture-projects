@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.d
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.enums.DroneStatus;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Drone {
@@ -49,23 +50,26 @@ public class Drone {
         }
     }
 
-
     //check drone battery
     public void checkDroneBattery(double packageWeight) {
-
         //check battery percentage
         double requiredBatteryPercentage = 20 + (packageWeight * 5);
         if(this.batteryPercentage < requiredBatteryPercentage){
             throw new IllegalStateException("Battery percentage exceeds");
         }
-
     }
-
 
     //assign drone
     public void markAsAssignDrone(){
         if(this.droneStatus != DroneStatus.AVAILABLE){
             throw new ResourceNotFoundException("Drone not available");
+        }
+    }
+
+    //assign drone for mission
+    public void assignDroneOnMission(){
+        if(this.droneStatus != DroneStatus.AVAILABLE){
+            throw new IllegalStateException("Drone not available");
         }
         this.droneStatus = DroneStatus.ON_MISSION;
     }

@@ -10,6 +10,9 @@ public interface DroneRepository {
     //drone find by id
     Optional<Drone> droneFindById(UUID uuid);
 
+    //check drone existence
+    boolean droneExist(UUID droneId);
+
     //save drone
     Drone saveDrone(Drone drone);
 }
