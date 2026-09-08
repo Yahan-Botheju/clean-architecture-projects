@@ -7,5 +7,8 @@ import java.util.UUID;
 public interface DroneAssignApi {
 
     //inject required dependencies
-    public DroneAssignApiDTO droneAssign(UUID droneId, double packageWeight);
+    DroneAssignApiDTO droneAssign(UUID droneId, double packageWeight);
+
+    //assign drone for mission
+    DroneAssignApiDTO droneAssignForMission(UUID droneId);
 }
