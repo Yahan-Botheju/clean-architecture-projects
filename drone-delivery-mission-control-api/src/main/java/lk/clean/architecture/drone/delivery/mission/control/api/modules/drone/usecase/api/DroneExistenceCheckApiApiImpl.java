@@ -4,6 +4,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.ap
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.models.Drone;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.repositories.DroneRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneExistenceCheckApiDTO;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.util.UUID;
 
@@ -32,4 +33,14 @@ public class DroneExistenceCheckApiApiImpl extends AbstractDroneFindSupport impl
         );
     }
 
+    //check drone existence by id
+    @Override
+    public boolean checkDroneExistenceById(UUID droneId) {
+
+        boolean isDroneExist = droneRepository.droneExist(droneId);
+        if(!isDroneExist){
+            throw new ResourceNotFoundException("Drone is not found with id: " + droneId);
+        }
+        return true;
+    }
 }
