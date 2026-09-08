@@ -53,8 +53,9 @@ public class UseCaseBeanConfigs {
     @Bean
     public StartMissionUseCase startMissionUseCase(
             DeliveryRepository deliveryRepository,
-            DroneAssignApi droneAssignApi
+            DroneAssignApi droneAssignApi,
+            DroneExistenceCheckApi droneExistenceCheckApi
     ){
-        return new StartMissionUseCaseImpl(deliveryRepository, droneAssignApi);
+        return new StartMissionUseCaseImpl(deliveryRepository, droneAssignApi, droneExistenceCheckApi);
     }
 }
