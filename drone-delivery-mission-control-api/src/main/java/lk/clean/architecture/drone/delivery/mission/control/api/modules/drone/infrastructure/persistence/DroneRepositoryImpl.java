@@ -5,7 +5,6 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.do
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.infrastructure.persistence.entities.DroneEntity;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.infrastructure.persistence.jpa.JpaDroneRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.infrastructure.persistence.persistenceMappers.DronePersistenceMapper;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -31,6 +30,12 @@ public class DroneRepositoryImpl implements DroneRepository {
 
         return jpaDroneRepository.findById(uuid)
                 .map(dronePersistenceMapper::toDomainModel);
+    }
+
+    //check drone existence by id
+    @Override
+    public boolean droneExist(UUID droneId){
+        return jpaDroneRepository.existsById(droneId);
     }
 
     //save drone
