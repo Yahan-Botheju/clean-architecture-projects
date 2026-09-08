@@ -66,4 +66,12 @@ public class UseCaseBeanConfigs {
                 checkFlightSafetyRule2Api
         );
     }
+
+    //complete mission usecase impl
+    @Bean
+    public CompleteMissionUseCase completeMissionUseCase(
+            DeliveryRepository deliveryRepository
+    ){
+        return new CompleteMissionUseCaseImpl(deliveryRepository);
+    }
 }
