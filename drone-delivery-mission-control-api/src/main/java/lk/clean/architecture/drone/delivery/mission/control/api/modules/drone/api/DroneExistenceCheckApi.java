@@ -6,5 +6,10 @@ import java.util.UUID;
 
 public interface DroneExistenceCheckApi {
 
+    //get drone details related to its id
     DroneExistenceCheckApiDTO checkDroneExistence(UUID droneId);
+
+
+    //check drone existence by id
+    boolean checkDroneExistenceById(UUID droneId);
 }
