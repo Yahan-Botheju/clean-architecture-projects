@@ -70,8 +70,9 @@ public class UseCaseBeanConfigs {
     //complete mission usecase impl
     @Bean
     public CompleteMissionUseCase completeMissionUseCase(
-            DeliveryRepository deliveryRepository
+            DeliveryRepository deliveryRepository,
+            DroneExistenceCheckApi droneExistenceCheckApi
     ){
-        return new CompleteMissionUseCaseImpl(deliveryRepository);
+        return new CompleteMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi);
     }
 }
