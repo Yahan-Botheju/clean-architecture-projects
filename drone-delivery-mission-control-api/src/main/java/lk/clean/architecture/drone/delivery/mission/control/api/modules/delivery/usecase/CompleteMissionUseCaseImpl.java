@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.enums.DeliveryStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CompleteMissionResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryConsumptionCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneTaskCompleteApi;
@@ -35,7 +36,7 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
 
     //complete mission
     @Override
-    public void completeMission(UUID deliveryId) {
+    public CompleteMissionResult completeMission(UUID deliveryId) {
 
         Delivery getDelivery = deliveryRepository.getDeliveryById(deliveryId)
                 .orElseThrow(() -> new RuntimeException("delivery not found"));
@@ -66,5 +67,24 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
 
         //set dron status to AVAILABLE
         droneTaskCompleteApi.droneTaskComplete(getDrone.droneId());
+
+        //save delivery
+        deliveryRepository.save(getDelivery);
+
+        return new CompleteMissionResult(
+                getDelivery.getDeliveryId(),
+                getDelivery.getCustomerId(),
+                getDelivery.getAssignedDroneId(),
+                getDelivery.getPackageWeightKg(),
+                getDelivery.getPickupLocation(),
+                getDelivery.getDeliveryLocation(),
+                getDelivery.getDeliveryStatus(),
+                getDelivery.getRequestedAt(),
+                getDelivery.getScheduledAt(),
+                getDelivery.getStartedAt(),
+                getDelivery.getCompletedAt(),
+                getDelivery.getFailedAt(),
+                getDelivery.getCancelledAt()
+        );
     }
 }
