@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UseCaseBeanConfigs {
 
-    //externally usage api
+     /*
+     * externally usage api
+     * */
     @Bean
     public DroneAssignApi droneAssignApi(
             DroneRepository droneRepository
@@ -17,7 +19,7 @@ public class UseCaseBeanConfigs {
         return new DroneAssignApiImpl(droneRepository);
     }
 
-    //external usage api
+
     @Bean
     public DroneTaskCompleteApi droneTaskCompleteApi(
             DroneRepository droneRepository
@@ -25,7 +27,7 @@ public class UseCaseBeanConfigs {
         return new DroneTaskCompleteApiImpl(droneRepository);
     }
 
-    //external usage api
+
     @Bean
     public DroneTaskFailApi droneTaskFailApi(
             DroneRepository droneRepository
@@ -33,7 +35,7 @@ public class UseCaseBeanConfigs {
         return new DroneTaskFailApiImpl(droneRepository);
     }
 
-    //external usage api
+
     @Bean
     public DronePackageWeightCheckApi dronePackageWeightCheckApi(
             DroneRepository droneRepository
@@ -41,7 +43,7 @@ public class UseCaseBeanConfigs {
         return new DronePackageWeightCheckApiImpl(droneRepository);
     }
 
-    //external usage api
+
     @Bean
     public DroneExistenceCheckApi droneExistenceCheck(
             DroneRepository droneRepository
@@ -49,10 +51,18 @@ public class UseCaseBeanConfigs {
         return new DroneExistenceCheckApiApiImpl(droneRepository);
     }
 
+
     @Bean
     public DroneBatteryCheckApi droneBatteryCheckApi(
             DroneRepository droneRepository
     ){
         return new DroneBatteryCheckApiImpl(droneRepository);
+    }
+
+    @Bean
+    public DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi(
+            DroneRepository droneRepository
+    ){
+        return new DroneBatteryConsumptionCheckApiImpl(droneRepository);
     }
 }
