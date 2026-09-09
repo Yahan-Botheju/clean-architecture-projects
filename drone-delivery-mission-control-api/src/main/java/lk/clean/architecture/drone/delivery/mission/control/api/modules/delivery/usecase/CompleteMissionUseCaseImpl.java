@@ -38,6 +38,14 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
             throw new IllegalStateException("delivery is not in progress");
         }
 
+        //check drone status ON_MISSION
+        DroneExistenceCheckApiDTO getDrone = droneExistenceCheckApi.checkDroneExistence(getDelivery.getAssignedDroneId());
+
+        boolean isDroneOnMission = getDrone.droneStatus() == DroneStatus.ON_MISSION;
+
+        if(!isDroneOnMission){
+            throw new IllegalStateException("drone is not required progress to continue the mission");
+        }
 
 
     }
