@@ -5,9 +5,11 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryConsumptionCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneTaskCompleteApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.enums.DroneStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneExistenceCheckApiDTO;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
@@ -16,16 +18,19 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
     private final DeliveryRepository deliveryRepository;
     private final DroneExistenceCheckApi droneExistenceCheckApi;
     private final DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi;
+    private final DroneTaskCompleteApi droneTaskCompleteApi;
 
     public CompleteMissionUseCaseImpl(
             DeliveryRepository deliveryRepository,
             DroneExistenceCheckApi droneExistenceCheckApi,
-            DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi
+            DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi,
+            DroneTaskCompleteApi droneTaskCompleteApi
 
     ) {
         this.deliveryRepository = deliveryRepository;
         this.droneExistenceCheckApi = droneExistenceCheckApi;
         this.droneBatteryConsumptionCheckApi = droneBatteryConsumptionCheckApi;
+        this.droneTaskCompleteApi = droneTaskCompleteApi;
     }
 
     //complete mission
@@ -53,6 +58,11 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
 
         //mutate drone battery consumption
         droneBatteryConsumptionCheckApi.droneBatteryConsumptionCheckApi(getDrone.droneId(), getDelivery.getPackageWeightKg());
+
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        //mutate delivery status to DELIVERED
+        getDelivery.deliveredByDrone(currentTime);
 
     }
 }
