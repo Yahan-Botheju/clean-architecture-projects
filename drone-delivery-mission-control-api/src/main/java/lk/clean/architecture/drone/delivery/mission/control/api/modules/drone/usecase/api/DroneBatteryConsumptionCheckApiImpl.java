@@ -30,7 +30,7 @@ public class DroneBatteryConsumptionCheckApiImpl extends AbstractDroneFindSuppor
                 getDrone.getDroneId(),
                 getDrone.getSerialNumber(),
                 getDrone.getDroneStatus(),
-                getDrone.getBatteryPercentage(),
+                getDrone.getBatteryPercentage()
         );
     }
 }
