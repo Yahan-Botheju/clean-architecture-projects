@@ -69,8 +69,15 @@ public class UseCaseBeanConfigs {
     public CompleteMissionUseCase completeMissionUseCase(
             DeliveryRepository deliveryRepository,
             DroneExistenceCheckApi droneExistenceCheckApi,
-            DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi
+            DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi,
+            DroneTaskCompleteApi droneTaskCompleteApi
     ){
-        return new CompleteMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi, droneBatteryConsumptionCheckApi);
+        return new CompleteMissionUseCaseImpl(
+                deliveryRepository,
+                droneExistenceCheckApi,
+                droneBatteryConsumptionCheckApi,
+                droneTaskCompleteApi
+
+        );
     }
 }
