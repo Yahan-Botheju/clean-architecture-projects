@@ -2,6 +2,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import jakarta.validation.Valid;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCase;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CompleteMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.StartMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
@@ -10,6 +11,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.StartMissionResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.AssignDroneWebMapper;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.CompleteMissionWebMapper;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.CreateDeliveryWebMapper;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.StartMissionWebMapper;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,8 @@ public class DeliveryController {
     private final AssignDroneWebMapper assignDroneWebMapper;
     private final StartMissionUseCase  startMissionUseCase;
     private final StartMissionWebMapper startMissionWebMapper;
+    private final CompleteMissionUseCase completeMissionUseCase;
+    private final CompleteMissionWebMapper completeMissionWebMapper;
 
     public DeliveryController(
             CreateDeliveryUseCase createDeliveryUseCase,
@@ -37,7 +41,9 @@ public class DeliveryController {
             AssignDroneUseCase assignDroneUseCase,
             AssignDroneWebMapper assignDroneWebMapper,
             StartMissionUseCase startMissionUseCase,
-            StartMissionWebMapper startMissionWebMapper
+            StartMissionWebMapper startMissionWebMapper,
+            CompleteMissionUseCase completeMissionUseCase,
+            CompleteMissionWebMapper completeMissionWebMapper
     ) {
         this.createDeliveryUseCase = createDeliveryUseCase;
         this.createDeliveryWebMapper = createDeliveryWebMapper;
@@ -45,6 +51,8 @@ public class DeliveryController {
         this.assignDroneWebMapper = assignDroneWebMapper;
         this.startMissionUseCase = startMissionUseCase;
         this.startMissionWebMapper = startMissionWebMapper;
+        this.completeMissionUseCase = completeMissionUseCase;
+        this.completeMissionWebMapper = completeMissionWebMapper;
     }
 
 
@@ -81,4 +89,8 @@ public class DeliveryController {
 
         return ResponseEntity.status(HttpStatus.OK).body(toResponse);
     }
+
+    //complete mission
+    @PostMapping("/complete")
+    public ResponseEntity<Com>
 }
