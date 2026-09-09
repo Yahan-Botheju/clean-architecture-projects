@@ -64,5 +64,7 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
         //mutate delivery status to DELIVERED
         getDelivery.deliveredByDrone(currentTime);
 
+        //set dron status to AVAILABLE
+        droneTaskCompleteApi.droneTaskComplete(getDrone.droneId());
     }
 }
