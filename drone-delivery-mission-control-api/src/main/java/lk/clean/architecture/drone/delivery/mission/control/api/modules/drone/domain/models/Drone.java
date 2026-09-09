@@ -60,7 +60,7 @@ public class Drone {
     }
 
     //drone battery reduce when mission is completed
-    public void reduceBattery(double packageWeight) {
+    public void reduceDroneBattery(double packageWeight) {
         if(this.droneStatus != DroneStatus.ON_MISSION){
             throw new IllegalStateException("Cannot reduce battery in wrong state");
         }
