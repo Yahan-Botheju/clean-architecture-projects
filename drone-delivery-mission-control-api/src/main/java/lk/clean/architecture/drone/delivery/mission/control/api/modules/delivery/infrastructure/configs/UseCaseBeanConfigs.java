@@ -4,10 +4,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.customer.api.CustomerStatusCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.*;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneAssignApi;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryCheckApi;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DronePackageWeightCheckApi;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.BatteryLevelCheckRainyWeatherApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule1Api;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.operations.api.CheckFlightSafetyRule2Api;
@@ -71,8 +68,9 @@ public class UseCaseBeanConfigs {
     @Bean
     public CompleteMissionUseCase completeMissionUseCase(
             DeliveryRepository deliveryRepository,
-            DroneExistenceCheckApi droneExistenceCheckApi
+            DroneExistenceCheckApi droneExistenceCheckApi,
+            DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi
     ){
-        return new CompleteMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi);
+        return new CompleteMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi, droneBatteryConsumptionCheckApi);
     }
 }
