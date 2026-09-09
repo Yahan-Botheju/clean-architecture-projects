@@ -1,6 +1,5 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.usecase.api;
 
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryConsumptionCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.models.Drone;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.repositories.DroneRepository;
@@ -21,10 +20,13 @@ public class DroneBatteryConsumptionCheckApiImpl extends AbstractDroneFindSuppor
             UUID droneId,
             double packageWeightKg
     ) {
-
+        //get drone
         Drone getDrone = getDroneById(droneId);
         //call domain logic
         getDrone.reduceDroneBattery(packageWeightKg);
+
+        //save drone status changes
+        droneRepository.saveDrone(getDrone);
 
         return new DroneBatteryCheckApiDTO(
                 getDrone.getDroneId(),
