@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.enums.DeliveryStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneBatteryConsumptionCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.enums.DroneStatus;
 import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneExistenceCheckApiDTO;
@@ -14,14 +15,17 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
     //inject required dependencies
     private final DeliveryRepository deliveryRepository;
     private final DroneExistenceCheckApi droneExistenceCheckApi;
+    private final DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi;
 
     public CompleteMissionUseCaseImpl(
             DeliveryRepository deliveryRepository,
-            DroneExistenceCheckApi droneExistenceCheckApi
+            DroneExistenceCheckApi droneExistenceCheckApi,
+            DroneBatteryConsumptionCheckApi droneBatteryConsumptionCheckApi
 
     ) {
         this.deliveryRepository = deliveryRepository;
         this.droneExistenceCheckApi = droneExistenceCheckApi;
+        this.droneBatteryConsumptionCheckApi = droneBatteryConsumptionCheckApi;
     }
 
     //complete mission
