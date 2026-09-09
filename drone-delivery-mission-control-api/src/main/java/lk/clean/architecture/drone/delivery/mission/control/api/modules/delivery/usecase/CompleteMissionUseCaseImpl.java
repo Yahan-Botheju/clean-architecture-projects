@@ -51,6 +51,8 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
             throw new IllegalStateException("drone is not required progress to continue the mission");
         }
 
+        //mutate drone battery consumption
+        droneBatteryConsumptionCheckApi.droneBatteryConsumptionCheckApi(getDrone.droneId(), getDelivery.getPackageWeightKg());
 
     }
 }
