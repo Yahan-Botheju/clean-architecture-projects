@@ -2,6 +2,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import jakarta.validation.Valid;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CompleteMissionUseCase;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.FailedMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.StartMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
@@ -20,15 +21,18 @@ public class DeliveryMissionController {
     //inject required dependencies
     private final StartMissionUseCase  startMissionUseCase;
     private final CompleteMissionUseCase completeMissionUseCase;
+    private final FailedMissionUseCase failedMissionUseCase;
     private final DeliveryMissionWebMapper deliveryMissionWebMapper;
 
     public DeliveryMissionController(
             StartMissionUseCase startMissionUseCase,
             CompleteMissionUseCase completeMissionUseCase,
+            FailedMissionUseCase failedMissionUseCase,
             DeliveryMissionWebMapper deliveryMissionWebMapper
     ) {
         this.startMissionUseCase = startMissionUseCase;
         this.completeMissionUseCase = completeMissionUseCase;
+        this.failedMissionUseCase = failedMissionUseCase;
         this.deliveryMissionWebMapper = deliveryMissionWebMapper;
     }
 
