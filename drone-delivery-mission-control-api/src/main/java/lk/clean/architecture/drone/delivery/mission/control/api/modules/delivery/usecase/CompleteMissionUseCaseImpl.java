@@ -63,7 +63,7 @@ public class CompleteMissionUseCaseImpl implements CompleteMissionUseCase {
         LocalDateTime currentTime = LocalDateTime.now();
 
         //mutate delivery status to DELIVERED
-        getDelivery.deliveredByDrone(currentTime);
+        getDelivery.deliveredDelivery(currentTime);
 
         //set dron status to AVAILABLE
         droneTaskCompleteApi.droneTaskComplete(getDrone.droneId());

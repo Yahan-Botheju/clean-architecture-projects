@@ -90,10 +90,10 @@ public class AssignDroneUseCaseImpl implements AssignDroneUseCase {
         LocalDateTime currentTime = LocalDateTime.now();
 
         //set delivery to SCHEDULE
-        delivery.scheduleDrone(currentTime);
+        delivery.scheduleDelivery(currentTime);
 
         //assign a drone
-        delivery.assignDrone(drone.droneId(), currentTime);
+        delivery.assignDelivery(drone.droneId(), currentTime);
 
 
         return new AssignDroneResult(

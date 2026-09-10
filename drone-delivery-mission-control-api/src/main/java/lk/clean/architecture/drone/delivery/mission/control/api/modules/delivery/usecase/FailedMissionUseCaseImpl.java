@@ -49,7 +49,7 @@ public class FailedMissionUseCaseImpl implements FailedMissionUseCase{
 
         LocalDateTime currentTime = LocalDateTime.now();
         //call domain model logic
-        delivery.deliveryFailedByDrone(currentTime);
+        delivery.deliveryFailedDelivery(currentTime);
 
         //check drone existence
         droneExistenceCheckApi.checkDroneExistenceById(delivery.getAssignedDroneId());

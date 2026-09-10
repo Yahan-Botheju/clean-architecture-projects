@@ -67,7 +67,7 @@ public class Delivery {
      * */
 
     //assign a drone for delivery
-    public void assignDrone(UUID droneId, LocalDateTime requestedTime) {
+    public void assignDelivery(UUID droneId, LocalDateTime requestedTime) {
         //check incoming id is null
         if (droneId == null) {
             throw new IllegalStateException("Drone ID cannot be null");
@@ -83,7 +83,7 @@ public class Delivery {
     }
 
     //schedule the drone
-    public void scheduleDrone(LocalDateTime scheduledTime) {
+    public void scheduleDelivery(LocalDateTime scheduledTime) {
         if (this.deliveryStatus != DeliveryStatus.REQUESTED) {
             throw new IllegalStateException("Drone is not in requested state, unable to schedule");
         }
@@ -92,7 +92,7 @@ public class Delivery {
     }
 
     //set drone to in progress
-    public void inProgressDrone(LocalDateTime startingTime) {
+    public void inProgressDelivery(LocalDateTime startingTime) {
         if (this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to inprogress");
         }
@@ -101,7 +101,7 @@ public class Delivery {
     }
 
     //delivered by drone
-    public void deliveredByDrone(LocalDateTime deliveredTime) {
+    public void deliveredDelivery(LocalDateTime deliveredTime) {
         if (this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
             throw new IllegalStateException("Drone is not in requested state, unable to deliver");
         }
@@ -109,7 +109,7 @@ public class Delivery {
         this.completedAt = deliveredTime;
     }
 
-    public void deliveryFailedByDrone(LocalDateTime failedTime) {
+    public void deliveryFailedDelivery(LocalDateTime failedTime) {
         if (this.deliveryStatus != DeliveryStatus.IN_PROGRESS) {
             throw new IllegalStateException("Drone is not in requested state");
         }
@@ -118,7 +118,7 @@ public class Delivery {
     }
 
     //cancel the drone
-    public void cancelDrone(LocalDateTime cancelledTime) {
+    public void cancelDelivery(LocalDateTime cancelledTime) {
         if (this.deliveryStatus != DeliveryStatus.REQUESTED && this.deliveryStatus != DeliveryStatus.SCHEDULED) {
             throw new IllegalStateException("Drone is not in requested state, unable to cancel");
         }
