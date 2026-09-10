@@ -90,4 +90,12 @@ public class UseCaseBeanConfigs {
     ){
         return new FailedMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi, droneTaskFailApi);
     }
+
+    //cancel delivery usecase impl
+    @Bean
+    public CancelDeliveryUseCase cancelDeliveryUseCase(
+            DeliveryRepository deliveryRepository
+    ){
+        return new CancelDeliveryUseCaseImpl(deliveryRepository);
+    }
 }
