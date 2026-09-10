@@ -1,4 +1,4 @@
-package lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.enums;
+package lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.enums;
 
 public enum FailureReasonStatus {
     BATTERY_CRITICAL,
