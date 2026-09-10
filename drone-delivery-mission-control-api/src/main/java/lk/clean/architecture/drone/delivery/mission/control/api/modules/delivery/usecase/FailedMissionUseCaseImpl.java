@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.enums.FailureReasonStatus;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.FailedMissionResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneTaskFailApi;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -28,7 +29,8 @@ public class FailedMissionUseCaseImpl implements FailedMissionUseCase{
         this.droneTaskFailApi = droneTaskFailApi;
     }
 
-    public void failedMission(UUID deliveryId, FailureReasonStatus failureReason){
+    @Override
+    public FailedMissionResult failedMission(UUID deliveryId, FailureReasonStatus failureReason){
 
         //check correct failure is initiated state
         if(
@@ -47,9 +49,25 @@ public class FailedMissionUseCaseImpl implements FailedMissionUseCase{
         //call domain model logic
         delivery.deliveryFailedByDrone(currentTime);
 
-        //get the drone
+        //check drone existence
+        droneExistenceCheckApi.checkDroneExistenceById(delivery.getAssignedDroneId());
+        //mutate the drone status
+        droneTaskFailApi.droneTaskFail(delivery.getAssignedDroneId());
 
 
-
+        return  new FailedMissionResult(
+                delivery.getDeliveryId(),
+                delivery.getCustomerId(),
+                delivery.getAssignedDroneId(),
+                delivery.getPackageWeightKg(),
+                delivery.getPickupLocation(),
+                delivery.getDeliveryLocation(),
+                delivery.getDeliveryStatus(),
+                delivery.getRequestedAt(),
+                delivery.getScheduledAt(),
+                delivery.getCompletedAt(),
+                delivery.getFailedAt(),
+                delivery.getCancelledAt()
+        );
     }
 }
