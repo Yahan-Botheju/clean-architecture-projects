@@ -80,4 +80,12 @@ public class UseCaseBeanConfigs {
 
         );
     }
+
+    //failed mission usecase impl
+    @Bean
+    public FailedMissionUseCase failedMissionUseCase(
+            DeliveryRepository deliveryRepository
+    ){
+        return new FailedMissionUseCaseImpl(deliveryRepository);
+    }
 }
