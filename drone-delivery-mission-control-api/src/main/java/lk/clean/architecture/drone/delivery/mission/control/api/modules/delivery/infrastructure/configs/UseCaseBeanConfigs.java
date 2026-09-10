@@ -84,8 +84,9 @@ public class UseCaseBeanConfigs {
     //failed mission usecase impl
     @Bean
     public FailedMissionUseCase failedMissionUseCase(
-            DeliveryRepository deliveryRepository
+            DeliveryRepository deliveryRepository,
+            DroneTaskFailApi droneTaskFailApi
     ){
-        return new FailedMissionUseCaseImpl(deliveryRepository);
+        return new FailedMissionUseCaseImpl(deliveryRepository, droneTaskFailApi);
     }
 }
