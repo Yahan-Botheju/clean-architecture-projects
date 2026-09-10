@@ -94,8 +94,9 @@ public class UseCaseBeanConfigs {
     //cancel delivery usecase impl
     @Bean
     public CancelDeliveryUseCase cancelDeliveryUseCase(
-            DeliveryRepository deliveryRepository
+            DeliveryRepository deliveryRepository,
+            DroneExistenceCheckApi droneExistenceCheckApi
     ){
-        return new CancelDeliveryUseCaseImpl(deliveryRepository);
+        return new CancelDeliveryUseCaseImpl(deliveryRepository, droneExistenceCheckApi);
     }
 }
