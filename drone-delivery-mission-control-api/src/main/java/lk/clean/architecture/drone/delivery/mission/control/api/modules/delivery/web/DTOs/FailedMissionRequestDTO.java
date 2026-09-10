@@ -6,10 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class FailedMissionRequestDTO {
+
+    @NotNull(message = "Delivery ID cannot be empty")
+    private UUID deliveryId;
+
     @NotNull(message = "Reason cannot be empty")
     private FailureReasonStatus failureReasonStatus;
 }
