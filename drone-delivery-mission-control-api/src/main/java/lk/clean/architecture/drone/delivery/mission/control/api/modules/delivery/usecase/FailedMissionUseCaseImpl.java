@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.enums.FailureReasonStatus;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.FailedMissionCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.FailedMissionResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneTaskFailApi;
@@ -29,21 +30,22 @@ public class FailedMissionUseCaseImpl implements FailedMissionUseCase{
         this.droneTaskFailApi = droneTaskFailApi;
     }
 
+    //failed mission functionality
     @Override
-    public FailedMissionResult failedMission(UUID deliveryId, FailureReasonStatus failureReason){
+    public FailedMissionResult failedMission(FailedMissionCommand  failedMissionCommand) {
 
         //check correct failure is initiated state
         if(
-                failureReason != FailureReasonStatus.BATTERY_CRITICAL
-                && failureReason != FailureReasonStatus.WEATHER_DETERIORATED
-                && failureReason != FailureReasonStatus.DRONE_MALFUNCTION
-                && failureReason != FailureReasonStatus.OTHER
+                failedMissionCommand.failureReasonStatus() != FailureReasonStatus.BATTERY_CRITICAL
+                && failedMissionCommand.failureReasonStatus() != FailureReasonStatus.WEATHER_DETERIORATED
+                && failedMissionCommand.failureReasonStatus() != FailureReasonStatus.DRONE_MALFUNCTION
+                && failedMissionCommand.failureReasonStatus() != FailureReasonStatus.OTHER
         ){
             throw new IllegalStateException("Failure reason has not been initiated state, try again with correct state");
         }
 
-        Delivery delivery = deliveryRepository.getDeliveryById(deliveryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Delivery with id " + deliveryId + " not found"));
+        Delivery delivery = deliveryRepository.getDeliveryById(failedMissionCommand.deliveryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Delivery with id " + failedMissionCommand.deliveryId() + " not found"));
 
         LocalDateTime currentTime = LocalDateTime.now();
         //call domain model logic
