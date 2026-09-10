@@ -1,13 +1,23 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers;
 
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryResult;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.AssignDroneResponseDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryRequestDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryResponseDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface CreateDeliveryWebMapper {
+@Mapper(componentModel ="spring" )
+public interface DeliveryManagementWebMapper {
+
+    /* __ASSIGN_DRONE__ */
+
+    //domain model to responseDTO
+    AssignDroneResponseDTO toAssignResponseDTO(AssignDroneResult assignDroneResult);
+
+
+    /* __CREATE_DELIVERY__ */
 
     //dto to command
     CreateDeliveryCommand toDeliveryCommand(CreateDeliveryRequestDTO createDeliveryRequestDTO);
