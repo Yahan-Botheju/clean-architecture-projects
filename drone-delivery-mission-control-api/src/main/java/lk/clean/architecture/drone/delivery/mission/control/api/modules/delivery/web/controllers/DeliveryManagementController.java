@@ -5,8 +5,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.AssignDroneWebMapper;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.CreateDeliveryWebMapper;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.DeliveryManagementWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +19,18 @@ public class DeliveryManagementController {
 
     //inject required dependencies
     private final CreateDeliveryUseCase createDeliveryUseCase;
-    private final CreateDeliveryWebMapper createDeliveryWebMapper;
     private final AssignDroneUseCase assignDroneUseCase;
-    private final AssignDroneWebMapper assignDroneWebMapper;
+    private final DeliveryManagementWebMapper deliveryManagementWebMapper;
+
 
     public DeliveryManagementController(
             CreateDeliveryUseCase createDeliveryUseCase,
-            CreateDeliveryWebMapper createDeliveryWebMapper,
-            AssignDroneUseCase assignDroneUseCase,
-            AssignDroneWebMapper assignDroneWebMapper
+            DeliveryManagementWebMapper deliveryManagementWebMapper,
+            AssignDroneUseCase assignDroneUseCase
     ) {
         this.createDeliveryUseCase = createDeliveryUseCase;
-        this.createDeliveryWebMapper = createDeliveryWebMapper;
+        this.deliveryManagementWebMapper = deliveryManagementWebMapper;
         this.assignDroneUseCase = assignDroneUseCase;
-        this.assignDroneWebMapper = assignDroneWebMapper;
     }
 
     //create delivery
@@ -41,9 +38,9 @@ public class DeliveryManagementController {
     public ResponseEntity<CreateDeliveryResponseDTO> createDelivery(
             @Valid @RequestBody CreateDeliveryRequestDTO createDeliveryRequestDTO
     ){
-        CreateDeliveryCommand toCommand = createDeliveryWebMapper.toDeliveryCommand(createDeliveryRequestDTO);
+        CreateDeliveryCommand toCommand = deliveryManagementWebMapper.toDeliveryCommand(createDeliveryRequestDTO);
         CreateDeliveryResult toUseCase = createDeliveryUseCase.createDelivery(toCommand);
-        CreateDeliveryResponseDTO responseDTO = createDeliveryWebMapper.toDeliveryResponseDTO(toUseCase);
+        CreateDeliveryResponseDTO responseDTO = deliveryManagementWebMapper.toDeliveryResponseDTO(toUseCase);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
@@ -54,7 +51,7 @@ public class DeliveryManagementController {
             @Valid @RequestBody AssignDroneRequestDTO assignDroneRequestDTO
     ){
         AssignDroneResult toUseCase = assignDroneUseCase.assignDrone(assignDroneRequestDTO.getDroneId());
-        AssignDroneResponseDTO toResponseDTO = assignDroneWebMapper.toResponseDTO(toUseCase);
+        AssignDroneResponseDTO toResponseDTO = deliveryManagementWebMapper.toAssignResponseDTO(toUseCase);
 
         return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }

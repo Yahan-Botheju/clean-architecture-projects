@@ -77,7 +77,7 @@ public class StartMissionUseCaseImpl implements StartMissionUseCase {
         * */
 
         LocalDateTime startTime = LocalDateTime.now();
-        getDelivery.inProgressDrone(startTime);
+        getDelivery.inProgressDelivery(startTime);
         //assign drone for mission (ON_MISSION)
         droneAssignApi.droneAssignForMission(getDelivery.getAssignedDroneId());
 

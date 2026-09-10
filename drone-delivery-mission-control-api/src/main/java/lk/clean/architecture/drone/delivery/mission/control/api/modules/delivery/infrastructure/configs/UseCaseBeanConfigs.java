@@ -80,4 +80,23 @@ public class UseCaseBeanConfigs {
 
         );
     }
+
+    //failed mission usecase impl
+    @Bean
+    public FailedMissionUseCase failedMissionUseCase(
+            DeliveryRepository deliveryRepository,
+            DroneExistenceCheckApi droneExistenceCheckApi,
+            DroneTaskFailApi droneTaskFailApi
+    ){
+        return new FailedMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi, droneTaskFailApi);
+    }
+
+    //cancel delivery usecase impl
+    @Bean
+    public CancelDeliveryUseCase cancelDeliveryUseCase(
+            DeliveryRepository deliveryRepository,
+            DroneExistenceCheckApi droneExistenceCheckApi
+    ){
+        return new CancelDeliveryUseCaseImpl(deliveryRepository, droneExistenceCheckApi);
+    }
 }

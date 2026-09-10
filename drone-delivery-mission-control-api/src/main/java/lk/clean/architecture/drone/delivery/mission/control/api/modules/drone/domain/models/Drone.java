@@ -70,7 +70,7 @@ public class Drone {
     }
 
     //assign drone
-    public void markAsAssignDrone(){
+    public void checkDroneAvailable() {
         if(this.droneStatus != DroneStatus.AVAILABLE){
             throw new ResourceNotFoundException("Drone not available");
         }

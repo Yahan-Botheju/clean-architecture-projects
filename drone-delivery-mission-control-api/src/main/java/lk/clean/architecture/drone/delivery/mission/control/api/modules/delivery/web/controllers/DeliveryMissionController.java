@@ -2,17 +2,16 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import jakarta.validation.Valid;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CompleteMissionUseCase;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.FailedMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.StartMissionUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.CompleteMissionWebMapper;
-import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.StartMissionWebMapper;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.DeliveryMissionWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/deliveries/missions")
@@ -20,20 +19,20 @@ public class DeliveryMissionController {
 
     //inject required dependencies
     private final StartMissionUseCase  startMissionUseCase;
-    private final StartMissionWebMapper startMissionWebMapper;
     private final CompleteMissionUseCase completeMissionUseCase;
-    private final CompleteMissionWebMapper completeMissionWebMapper;
+    private final FailedMissionUseCase failedMissionUseCase;
+    private final DeliveryMissionWebMapper deliveryMissionWebMapper;
 
     public DeliveryMissionController(
             StartMissionUseCase startMissionUseCase,
-            StartMissionWebMapper startMissionWebMapper,
             CompleteMissionUseCase completeMissionUseCase,
-            CompleteMissionWebMapper completeMissionWebMapper
+            FailedMissionUseCase failedMissionUseCase,
+            DeliveryMissionWebMapper deliveryMissionWebMapper
     ) {
         this.startMissionUseCase = startMissionUseCase;
-        this.startMissionWebMapper = startMissionWebMapper;
         this.completeMissionUseCase = completeMissionUseCase;
-        this.completeMissionWebMapper = completeMissionWebMapper;
+        this.failedMissionUseCase = failedMissionUseCase;
+        this.deliveryMissionWebMapper = deliveryMissionWebMapper;
     }
 
 
@@ -43,7 +42,7 @@ public class DeliveryMissionController {
             @Valid @RequestBody StartMissionRequestDTO startMissionRequestDTO
     ){
         StartMissionResult toUseCase = startMissionUseCase.startMission(startMissionRequestDTO.getDeliveryId());
-        StartMissionResponseDTO toResponse = startMissionWebMapper.toResponse(toUseCase);
+        StartMissionResponseDTO toResponse = deliveryMissionWebMapper.toStartMissionResponse(toUseCase);
 
         return ResponseEntity.status(HttpStatus.OK).body(toResponse);
     }
@@ -54,8 +53,21 @@ public class DeliveryMissionController {
             @Valid @RequestBody CompleteMissionRequestDTO completeMissionRequestDTO
     ){
         CompleteMissionResult toUseCase = completeMissionUseCase.completeMission(completeMissionRequestDTO.getDeliveryId());
-        CompleteMissionResponseDTO toResponse = completeMissionWebMapper.toResponse(toUseCase);
+        CompleteMissionResponseDTO toResponse = deliveryMissionWebMapper.toCompleteMissionResponse(toUseCase);
 
         return ResponseEntity.status(HttpStatus.OK).body(toResponse);
+    }
+
+    //failed mission
+    @PostMapping("/failed-mission")
+    public ResponseEntity<FailedMissionResponseDTO> failedMission(
+            @Valid @RequestBody FailedMissionRequestDTO failedMissionRequestDTO
+    ){
+
+        FailedMissionCommand toCommand = deliveryMissionWebMapper.toFailedMissionCommand(failedMissionRequestDTO);
+        FailedMissionResult toUseCase = failedMissionUseCase.failedMission(toCommand);
+        FailedMissionResponseDTO toResponseDTO = deliveryMissionWebMapper.toFailedMissionResponseDto(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }
 }
