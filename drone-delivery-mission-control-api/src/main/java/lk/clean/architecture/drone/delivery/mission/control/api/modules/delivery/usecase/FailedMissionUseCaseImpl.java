@@ -3,6 +3,7 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.models.Delivery;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.domain.repositories.DeliveryRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.enums.FailureReasonStatus;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneExistenceCheckApi;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.api.DroneTaskFailApi;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
@@ -13,14 +14,17 @@ public class FailedMissionUseCaseImpl implements FailedMissionUseCase{
 
     //inject required dependencies
     private final DeliveryRepository  deliveryRepository;
+    private final DroneExistenceCheckApi droneExistenceCheckApi;
     private final DroneTaskFailApi droneTaskFailApi;
 
     public FailedMissionUseCaseImpl(
             DeliveryRepository deliveryRepository,
+            DroneExistenceCheckApi droneExistenceCheckApi,
             DroneTaskFailApi droneTaskFailApi
 
     ) {
         this.deliveryRepository = deliveryRepository;
+        this.droneExistenceCheckApi = droneExistenceCheckApi;
         this.droneTaskFailApi = droneTaskFailApi;
     }
 
@@ -42,6 +46,9 @@ public class FailedMissionUseCaseImpl implements FailedMissionUseCase{
         LocalDateTime currentTime = LocalDateTime.now();
         //call domain model logic
         delivery.deliveryFailedByDrone(currentTime);
+
+        //get the drone
+
 
 
     }

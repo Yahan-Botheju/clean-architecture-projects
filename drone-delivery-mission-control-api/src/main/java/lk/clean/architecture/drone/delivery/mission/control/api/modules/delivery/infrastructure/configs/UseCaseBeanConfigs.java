@@ -85,8 +85,9 @@ public class UseCaseBeanConfigs {
     @Bean
     public FailedMissionUseCase failedMissionUseCase(
             DeliveryRepository deliveryRepository,
+            DroneExistenceCheckApi droneExistenceCheckApi,
             DroneTaskFailApi droneTaskFailApi
     ){
-        return new FailedMissionUseCaseImpl(deliveryRepository, droneTaskFailApi);
+        return new FailedMissionUseCaseImpl(deliveryRepository, droneExistenceCheckApi, droneTaskFailApi);
     }
 }
