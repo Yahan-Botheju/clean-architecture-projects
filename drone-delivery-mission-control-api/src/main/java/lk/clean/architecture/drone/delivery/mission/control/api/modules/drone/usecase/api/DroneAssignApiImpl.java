@@ -27,7 +27,7 @@ public class DroneAssignApiImpl extends AbstractDroneFindSupport implements Dron
          * assign drone
          */
         getDrone.checkDroneAvailability();
-        getDrone.markAsAssignDrone();
+        getDrone.checkDroneAvailable();
 
         //save drone
         droneRepository.saveDrone(getDrone);
