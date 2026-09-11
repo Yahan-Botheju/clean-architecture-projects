@@ -1,9 +1,11 @@
 package lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers;
 
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.AssignDroneResult;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CancelDeliveryResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryCommand;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.CreateDeliveryResult;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.AssignDroneResponseDTO;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CancelDeliveryResponseDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryRequestDTO;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.CreateDeliveryResponseDTO;
 import org.mapstruct.Mapper;
@@ -24,4 +26,10 @@ public interface DeliveryManagementWebMapper {
 
     //domain model to response
     CreateDeliveryResponseDTO toDeliveryResponseDTO(CreateDeliveryResult createDeliveryResult);
+
+
+    /* __CANCEL_DELIVERY__ */
+
+    CancelDeliveryResponseDTO  toCancelDeliveryResponseDTO(CancelDeliveryResult cancelDeliveryResult);
 }
+/* __#13 COMMIT -> create cancel delivery web mapper__   DeliveryManagementWebMapper.java */

@@ -95,8 +95,8 @@ public class UseCaseBeanConfigs {
     @Bean
     public CancelDeliveryUseCase cancelDeliveryUseCase(
             DeliveryRepository deliveryRepository,
-            DroneExistenceCheckApi droneExistenceCheckApi
+            DroneAssignApi droneAssignApi
     ){
-        return new CancelDeliveryUseCaseImpl(deliveryRepository, droneExistenceCheckApi);
+        return new CancelDeliveryUseCaseImpl(deliveryRepository, droneAssignApi);
     }
 }
