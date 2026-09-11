@@ -59,5 +59,20 @@ public class DroneAssignApiImpl extends AbstractDroneFindSupport implements Dron
         );
     }
 
+    //drone set back to available
+    @Override
+    public DroneStatusApiDTO droneBackToAvailable(UUID droneId) {
 
+        Drone getDrone = getDroneById(droneId);
+        getDrone.setBackToAvailable();
+        droneRepository.saveDrone(getDrone);
+
+        return new DroneStatusApiDTO(
+                getDrone.getDroneId(),
+                getDrone.getSerialNumber(),
+                getDrone.getDroneStatus(),
+                getDrone.getMaxPayloadingKg(),
+                getDrone.getBatteryPercentage()
+        );
+    }
 }
