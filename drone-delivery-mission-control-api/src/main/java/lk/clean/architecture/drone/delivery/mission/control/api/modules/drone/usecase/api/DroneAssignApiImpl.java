@@ -4,6 +4,7 @@ import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.ap
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.models.Drone;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.drone.domain.repositories.DroneRepository;
 import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneAssignApiDTO;
+import lk.clean.architecture.drone.delivery.mission.control.api.shared_domain.customer.DroneStatusApiDTO;
 
 import java.util.UUID;
 
@@ -26,8 +27,7 @@ public class DroneAssignApiImpl extends AbstractDroneFindSupport implements Dron
          * check drone availability
          * assign drone
          */
-        getDrone.checkDroneAvailability();
-        getDrone.checkDroneAvailable();
+        getDrone.assignDrone();
 
         //save drone
         droneRepository.saveDrone(getDrone);
@@ -58,4 +58,6 @@ public class DroneAssignApiImpl extends AbstractDroneFindSupport implements Dron
                 getDrone.getBatteryPercentage()
         );
     }
+
+
 }
