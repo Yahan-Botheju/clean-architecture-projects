@@ -78,6 +78,14 @@ public class Drone {
         this.droneStatus = DroneStatus.ON_MISSION;
     }
 
+    //drone status back to AVAILABLE
+    public void setBackToAvailable(){
+        if(this.droneStatus != DroneStatus.ASSIGNED){
+            throw new IllegalStateException("Drone not in required state to make available");
+        }
+        this.droneStatus = DroneStatus.AVAILABLE;
+    }
+
     //drone usage complete
     public void markAsCompleteDroneMission(){
         switch (this.droneStatus){
