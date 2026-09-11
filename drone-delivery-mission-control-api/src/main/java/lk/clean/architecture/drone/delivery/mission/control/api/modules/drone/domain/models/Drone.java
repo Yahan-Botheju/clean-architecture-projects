@@ -35,11 +35,12 @@ public class Drone {
 
 
     //check drone for package delivery
-    public void checkDroneAvailability() {
+    public void assignDrone() {
         //check drone availability
         if(this.droneStatus != DroneStatus.AVAILABLE){
             throw new ResourceNotFoundException("DroneStatus not available");
         }
+        this.droneStatus = DroneStatus.ASSIGNED;  /* __#5 COMMIT -> set to dron assigned */
     }
 
     //check drone package weight
@@ -67,13 +68,6 @@ public class Drone {
 
         double batteryUsed = 10 + (packageWeight * 2);
         this.batteryPercentage -= batteryUsed;
-    }
-
-    //assign drone
-    public void checkDroneAvailable() {
-        if(this.droneStatus != DroneStatus.AVAILABLE){
-            throw new ResourceNotFoundException("Drone not available");
-        }
     }
 
     //assign drone for mission
