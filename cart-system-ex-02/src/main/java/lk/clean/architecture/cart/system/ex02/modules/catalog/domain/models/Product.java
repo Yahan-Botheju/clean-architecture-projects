@@ -27,5 +27,15 @@ public class Product {
 
 
 
+    /* __DOMAIN_LOGIC__ */
+
+
+    //check enough stock available for buy
+    public void hasEnoughStock(int requestedQuantity) {
+        if(this.stockQuantity < requestedQuantity){
+            throw  new IllegalArgumentException("Not enough stock available");
+        }
+        this.stockQuantity -= requestedQuantity;
+    }
 
 }
