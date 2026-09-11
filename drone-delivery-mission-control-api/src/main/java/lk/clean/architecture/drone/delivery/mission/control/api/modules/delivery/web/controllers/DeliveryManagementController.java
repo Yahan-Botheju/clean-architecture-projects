@@ -2,16 +2,16 @@ package lk.clean.architecture.drone.delivery.mission.control.api.modules.deliver
 
 import jakarta.validation.Valid;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.AssignDroneUseCase;
+import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CancelDeliveryUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.CreateDeliveryUseCase;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.usecase.records.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.DTOs.*;
 import lk.clean.architecture.drone.delivery.mission.control.api.modules.delivery.web.webMappers.DeliveryManagementWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/delivery-management")
@@ -20,16 +20,19 @@ public class DeliveryManagementController {
     //inject required dependencies
     private final CreateDeliveryUseCase createDeliveryUseCase;
     private final AssignDroneUseCase assignDroneUseCase;
+    private final CancelDeliveryUseCase cancelDeliveryUseCase;
     private final DeliveryManagementWebMapper deliveryManagementWebMapper;
 
 
     public DeliveryManagementController(
             CreateDeliveryUseCase createDeliveryUseCase,
             DeliveryManagementWebMapper deliveryManagementWebMapper,
+            CancelDeliveryUseCase cancelDeliveryUseCase,
             AssignDroneUseCase assignDroneUseCase
     ) {
         this.createDeliveryUseCase = createDeliveryUseCase;
         this.deliveryManagementWebMapper = deliveryManagementWebMapper;
+        this.cancelDeliveryUseCase = cancelDeliveryUseCase;
         this.assignDroneUseCase = assignDroneUseCase;
     }
 
@@ -55,4 +58,6 @@ public class DeliveryManagementController {
 
         return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }
+
+
 }
