@@ -59,5 +59,14 @@ public class DeliveryManagementController {
         return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
     }
 
+    //cancel a delivery
+    @PostMapping("/{deliveryId}/cancel")
+    public ResponseEntity<CancelDeliveryResponseDTO> cancelDelivery(
+            @PathVariable UUID deliveryId
+    ){
+        CancelDeliveryResult  toUseCase = cancelDeliveryUseCase.cancelDelivery(deliveryId);
+        CancelDeliveryResponseDTO toResponseDTO = deliveryManagementWebMapper.toCancelDeliveryResponseDTO(toUseCase);
 
+        return ResponseEntity.status(HttpStatus.OK).body(toResponseDTO);
+    }
 }
