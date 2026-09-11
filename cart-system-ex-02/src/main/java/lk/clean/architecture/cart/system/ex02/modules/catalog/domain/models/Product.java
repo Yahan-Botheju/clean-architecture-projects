@@ -38,4 +38,18 @@ public class Product {
         this.stockQuantity -= requestedQuantity;
     }
 
+    //add new quantity for stock
+    public void replenishStock(int addNewQuantity) {
+        this.stockQuantity += addNewQuantity;
+    }
+
+    //product DISCONTINUED
+    public void deactivateProduct() {
+        if(this.productStatus != ProductStatus.ACTIVE
+            && this.productStatus != ProductStatus.OUT_OF_STOCK
+        ){
+            throw  new IllegalArgumentException("Product is not in required state to DISCONTINUED");
+        }
+        this.productStatus = ProductStatus.DISCONTINUED;
+    }
 }
