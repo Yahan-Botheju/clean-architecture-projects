@@ -25,5 +25,37 @@ public class CancelDeliveryUseCaseImpl implements CancelDeliveryUseCase {
         this.droneAssignApi = droneAssignApi;
     }
 
+    //create cancel delivery
+    @Override
+    public CancelDeliveryResult cancelDelivery(UUID deliveryId) {
 
+        Delivery delivery = deliveryRepository.getDeliveryById(deliveryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Delivery "+deliveryId+" not found"));
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        //call domain cancel logic
+        delivery.cancelDelivery(currentTime);
+
+        //drone set back to available
+        droneAssignApi.droneBackToAvailable(delivery.getAssignedDroneId());
+
+        //save delivery
+        deliveryRepository.save(delivery);
+
+        return new CancelDeliveryResult(
+                delivery.getDeliveryId(),
+                delivery.getCustomerId(),
+                delivery.getAssignedDroneId(),
+                delivery.getPackageWeightKg(),
+                delivery.getPickupLocation(),
+                delivery.getDeliveryLocation(),
+                delivery.getDeliveryStatus(),
+                delivery.getRequestedAt(),
+                delivery.getScheduledAt(),
+                delivery.getCompletedAt(),
+                delivery.getFailedAt(),
+                delivery.getCancelledAt()
+        );
+
+    }
 }
