@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface JpaProductRepository extends JpaRepository<Product, UUID> {
+public interface JpaProductRepository extends JpaRepository<ProductEntity, UUID> {
 
     //product find by id
     Optional<ProductEntity>  findByProductId(UUID productId);
