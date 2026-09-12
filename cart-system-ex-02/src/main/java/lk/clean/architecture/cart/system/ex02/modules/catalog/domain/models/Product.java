@@ -26,6 +26,23 @@ public class Product {
     public ProductStatus getProductStatus() { return productStatus; }
 
 
+    /* __FACTORY_METHOD__ */
+
+    public static Product createNewProduct(
+            String productName,
+            double unitPrice,
+            int stockQuantity
+    ) {
+        return new Product(
+                UUID.randomUUID(),
+                productName,
+                unitPrice,
+                stockQuantity,
+                ProductStatus.ACTIVE
+        );
+    }
+
+
 
     /* __DOMAIN_LOGIC__ */
 
