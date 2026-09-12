@@ -23,6 +23,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         this.productPersistenceMapper = productPersistenceMapper;
     }
 
+    //check product existence
+    @Override
+    public boolean existsById(UUID productId) {
+        return jpaProductRepository.existsByProductId(productId);
+    }
+
     //product find by its id
     @Override
     public Optional<Product> productFindById(UUID productId) {
