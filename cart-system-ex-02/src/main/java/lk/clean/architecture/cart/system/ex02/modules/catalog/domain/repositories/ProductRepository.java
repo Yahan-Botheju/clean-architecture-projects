@@ -8,5 +8,8 @@ import java.util.UUID;
 public interface ProductRepository {
 
     //product find by id
-    Optional<Product> findById(UUID productId);
+    Optional<Product> productFindById(UUID productId);
+
+    //save product
+    Product saveProduct(Product product);
 }
