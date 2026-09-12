@@ -26,21 +26,65 @@ public class Product {
     public ProductStatus getProductStatus() { return productStatus; }
 
 
+    /* __FACTORY_METHOD__ */
+
+    public static Product createNewProduct(
+            String productName,
+            double unitPrice,
+            int stockQuantity
+    ) {
+        return new Product(
+                UUID.randomUUID(),
+                productName,
+                unitPrice,
+                stockQuantity,
+                ProductStatus.ACTIVE
+        );
+    }
+
+
 
     /* __DOMAIN_LOGIC__ */
 
 
+    //check enough stock is available
+    public void enoughStockAvailable(int quantity) {
+        if(this.stockQuantity < quantity) {
+            throw new IllegalArgumentException("Not enough stock available");
+        }
+    }
+
     //check enough stock available for buy
-    public void hasEnoughStock(int requestedQuantity) {
+    public void deductStock(int requestedQuantity) {
+        //check request quantity not empty
+        if(requestedQuantity <= 0){
+            throw new IllegalArgumentException("Requested quantity must be greater than zero");
+        }
+        //check stock available
         if(this.stockQuantity < requestedQuantity){
             throw  new IllegalArgumentException("Not enough stock available");
         }
+        //mutate the available stock
         this.stockQuantity -= requestedQuantity;
+
+        //no available stock, set to OUT_OF_STOCK
+        if(this.stockQuantity == 0){
+            this.productStatus = ProductStatus.OUT_OF_STOCK;
+        }
     }
 
     //add new quantity for stock
     public void replenishStock(int addNewQuantity) {
+        //check req.quantity is empty
+        if(addNewQuantity <= 0){
+            throw new IllegalArgumentException("Added quantity must be greater than zero");
+        }
+        //add quantity
         this.stockQuantity += addNewQuantity;
+        //if product status OUT_OF_STOCK, then set it into ACTIVE
+        if(this.productStatus == ProductStatus.OUT_OF_STOCK){
+            this.productStatus = ProductStatus.ACTIVE;
+        }
     }
 
     //product DISCONTINUED
