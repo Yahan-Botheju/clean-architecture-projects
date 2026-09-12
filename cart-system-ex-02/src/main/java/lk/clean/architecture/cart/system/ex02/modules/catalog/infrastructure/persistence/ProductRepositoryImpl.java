@@ -2,6 +2,7 @@ package lk.clean.architecture.cart.system.ex02.modules.catalog.infrastructure.pe
 
 import lk.clean.architecture.cart.system.ex02.modules.catalog.domain.models.Product;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.domain.repositories.ProductRepository;
+import lk.clean.architecture.cart.system.ex02.modules.catalog.infrastructure.persistence.entities.ProductEntity;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.infrastructure.persistence.jpa.JpaProductRepository;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.infrastructure.persistence.persistenceMapper.ProductPersistenceMapper;
 
@@ -27,5 +28,15 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Optional<Product> productFindById(UUID productId) {
         return jpaProductRepository.findByProductId(productId)
                 .map(productPersistenceMapper::toDomain);
+    }
+
+    //save product
+    @Override
+    public Product saveProduct(Product product) {
+
+        ProductEntity toEntity = productPersistenceMapper.toEntity(product);
+        ProductEntity savedEntity = jpaProductRepository.save(toEntity);
+
+        return productPersistenceMapper.toDomain(savedEntity);
     }
 }
