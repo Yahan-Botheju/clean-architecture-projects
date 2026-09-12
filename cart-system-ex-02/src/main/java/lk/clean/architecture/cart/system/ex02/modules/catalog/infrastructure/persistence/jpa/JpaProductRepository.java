@@ -11,4 +11,7 @@ public interface JpaProductRepository extends JpaRepository<ProductEntity, UUID>
 
     //product find by id
     Optional<ProductEntity>  findByProductId(UUID productId);
+
+    //check product existence
+    boolean existsByProductId(UUID productId);
 }
