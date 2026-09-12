@@ -39,10 +39,21 @@ public class Product {
 
     //check enough stock available for buy
     public void deductStock(int requestedQuantity) {
+        //check request quantity not empty
+        if(requestedQuantity <= 0){
+            throw new IllegalArgumentException("Requested quantity must be greater than zero");
+        }
+        //check stock available
         if(this.stockQuantity < requestedQuantity){
             throw  new IllegalArgumentException("Not enough stock available");
         }
+        //mutate the available stock
         this.stockQuantity -= requestedQuantity;
+
+        //no available stock, set to OUT_OF_STOCK
+        if(this.stockQuantity == 0){
+            this.productStatus = ProductStatus.OUT_OF_STOCK;
+        }
     }
 
     //add new quantity for stock
