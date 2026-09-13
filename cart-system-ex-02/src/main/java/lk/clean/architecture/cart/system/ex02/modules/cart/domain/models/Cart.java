@@ -106,8 +106,8 @@ public class Cart {
         }
 
         //get specific product
-        CartItem getItem = cartItems.stream().filter(cartItem -> cartItem.getProductId().
-                equals(productId))
+        CartItem getItem = cartItems.stream().filter(cartItem -> cartItem.getProductId()
+                        .equals(productId))
                 .findFirst()
                 .orElseThrow(() ->  new IllegalArgumentException("Product not found"));
 
@@ -120,9 +120,19 @@ public class Cart {
         if(productId == null && newQuantity <= 0){
             throw new IllegalStateException("Required fields cannot be empty");
         }
+        //check product
+        boolean checkItemExist = checkProductExistence(productId);
 
-        boolean
-
+        if(!checkItemExist){
+            throw new IllegalStateException("Product not found");
+        }
+        //get related item
+        CartItem getItem = cartItems.stream().filter(cartItem -> cartItem.getProductId()
+                        .equals(productId))
+                .findFirst()
+                .orElseThrow(() ->  new IllegalArgumentException("Product not found"));
+        //replace new quantity
+        getItem.updateQuantity(newQuantity);
     }
 }
 
