@@ -1,4 +1,4 @@
-package lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.persistence.entities;
+package lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.persistence.entities;
 
 import jakarta.persistence.*;
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.models.CartItem;

@@ -1,7 +1,7 @@
-package lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.persistence.persitenceMapper;
+package lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.persistence.persitenceMapper;
 
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.models.Cart;
-import lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.persistence.entities.CartEntity;
+import lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.persistence.entities.CartEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
