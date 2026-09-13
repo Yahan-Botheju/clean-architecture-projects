@@ -31,7 +31,6 @@ public class CatalogProductCheckApiImpl implements CatalogProductCheckApi {
         //use domain logic
         getProduct.enoughStockAvailable(requestedQuantity);
 
-        productRepository.saveProduct(getProduct);
 
         return new CatalogProductCheckResult(
                 getProduct.getProductId(),
