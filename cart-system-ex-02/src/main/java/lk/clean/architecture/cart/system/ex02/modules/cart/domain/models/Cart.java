@@ -40,6 +40,10 @@ public class Cart {
 
     //add item
     public void addItem(UUID productId, String productName, double unitPrice, int requestedQuantity){
+        //check incoming fields have value
+        if(productId == null &&  productName == null && unitPrice <= 0 && requestedQuantity <= 0){
+            throw new IllegalStateException("Required fields are cannot be empty");
+        }
 
         //check product is available
         boolean checkCartItem = cartItems.stream().anyMatch(cartItem ->  cartItem.getProductId().equals(productId));
@@ -68,4 +72,30 @@ public class Cart {
         }
 
     }
+
+    //remove item
+    public void removeItem(UUID productId){
+        //check product id is empty
+        if(productId == null){
+            throw new IllegalStateException("Product id cannot be null");
+        }
+
+        //get product
+        boolean checkItemExist = cartItems.stream().anyMatch(cartItem ->  cartItem.getProductId().equals(productId));
+
+        //check product existence
+        if(!checkItemExist){
+            throw new IllegalStateException("Product not found");
+        }
+
+        //get specific product
+        CartItem getItem = cartItems.stream().filter(cartItem -> cartItem.getProductId().
+                equals(productId))
+                .findFirst()
+                .orElseThrow(() ->  new IllegalArgumentException("Product not found"));
+
+        //remove it from list
+        cartItems.remove(getItem);
+    }
 }
+
