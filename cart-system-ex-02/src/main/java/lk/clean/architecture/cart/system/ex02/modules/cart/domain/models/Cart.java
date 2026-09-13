@@ -35,8 +35,26 @@ public class Cart {
         );
     }
 
-    /* __DOMAIN_LOGIC__ */
 
+    /*
+    *
+    * __DOMAIN_LOGICS__
+    *
+    * */
+
+
+
+    /* __HELPER_METHOD__ */
+
+    //check product existence
+    private boolean checkProductExistence(UUID productId) {
+        return  this.cartItems.stream().anyMatch(c -> c.getProductId().equals(productId));
+    }
+
+
+
+
+    /* __PUBLIC_METHODS__ */
 
     //add item
     public void addItem(UUID productId, String productName, double unitPrice, int requestedQuantity){
@@ -58,7 +76,7 @@ public class Cart {
                     .orElseThrow(() ->  new IllegalArgumentException("Product not found"));
 
             //add to price with existing one
-            getItem.updateQuantity(requestedQuantity);
+            getItem.updateExistingItemQuantity(requestedQuantity);
 
         }else{
             //product not available create new cart item model
@@ -96,6 +114,16 @@ public class Cart {
 
         //remove it from list
         cartItems.remove(getItem);
+    }
+
+    //update quantity
+    public void updateItemQuantity(UUID productId, int newQuantity){
+        if(productId == null && newQuantity <= 0){
+            throw new IllegalStateException("Required fields cannot be empty");
+        }
+
+        boolean
+
     }
 }
 
