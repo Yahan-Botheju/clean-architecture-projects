@@ -17,4 +17,18 @@ public class CartItem {
         this.unitPrice = unitPrice;
         this.quantity = quantity;
     }
+
+    /* __FACTORY_METHOD__ */
+    public CartItem createNewCartItem(
+            String productName,
+            double unitPrice,
+            int quantity
+    ){
+        return new CartItem(
+                UUID.randomUUID(),
+                productName,
+                unitPrice,
+                quantity
+        );
+    }
 }
