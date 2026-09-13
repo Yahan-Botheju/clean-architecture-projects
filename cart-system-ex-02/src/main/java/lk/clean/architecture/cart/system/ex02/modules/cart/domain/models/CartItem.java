@@ -31,4 +31,14 @@ public class CartItem {
                 quantity
         );
     }
+
+    /* __DOMAIN_LOGICS__ */
+
+    //update quantity
+    public void updateQuantity(int newQuantity){
+        if(newQuantity <= 0){
+            throw new IllegalArgumentException("Quantity cannot be empty or 0");
+        }
+        this.quantity = newQuantity;
+    }
 }
