@@ -41,4 +41,12 @@ public class CartItem {
         }
         this.quantity = newQuantity;
     }
+
+    //get item subtotal
+    public double getItemSubTotal(){
+        if(this.quantity <= 0 && this.unitPrice <= 0){
+            throw new IllegalArgumentException("Quantity and unite price cannot be empty or 0");
+        }
+        return this.unitPrice * this.quantity;
+    }
 }
