@@ -19,7 +19,7 @@ public class CartItem {
     }
 
     /* __FACTORY_METHOD__ */
-    public CartItem createNewCartItem(
+    public static CartItem createNewCartItem(
             String productName,
             double unitPrice,
             int quantity
