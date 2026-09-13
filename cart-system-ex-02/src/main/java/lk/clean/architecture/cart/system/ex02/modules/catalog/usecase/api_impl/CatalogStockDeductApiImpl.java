@@ -29,5 +29,8 @@ public class CatalogStockDeductApiImpl implements CatalogStockDeductApi {
 
         //use domain logic
         product.deductStock(quantity);
+
+        //changes save in db
+        productRepository.saveProduct(product);
     }
 }
