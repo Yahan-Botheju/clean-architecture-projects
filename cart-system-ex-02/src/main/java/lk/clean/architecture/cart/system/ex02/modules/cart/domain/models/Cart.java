@@ -51,6 +51,12 @@ public class Cart {
         return  this.cartItems.stream().anyMatch(c -> c.getProductId().equals(productId));
     }
 
+    //calculate total price
+    private void recalculateTotalPrice(){
+        this.totalPrice = cartItems.stream()
+                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getUnitPrice())
+                .sum();
+    }
 
 
     /* __PUBLIC_METHODS__ */
@@ -72,7 +78,7 @@ public class Cart {
                     .filter( cartItem -> cartItem.getProductId()
                             .equals(productId) && cartItem.getProductName().equals(productName))
                     .findFirst()
-                    .orElseThrow(() ->  new IllegalArgumentException("Product not found"));
+                    .orElseThrow(() ->  new IllegalArgumentException("Required product not found"));
 
             //add to price with existing one
             getItem.updateExistingItemQuantity(requestedQuantity);
