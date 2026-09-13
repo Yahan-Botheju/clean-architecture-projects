@@ -83,6 +83,8 @@ public class Cart {
             //add to price with existing one
             getItem.updateExistingItemQuantity(requestedQuantity);
 
+            recalculateTotalPrice();
+
         }else{
             //product not available create new cart item model
             CartItem newCartItem = CartItem.createNewCartItem(
@@ -92,6 +94,8 @@ public class Cart {
             );
             //add to list
             cartItems.add(newCartItem);
+
+            recalculateTotalPrice();
         }
 
     }
@@ -119,6 +123,8 @@ public class Cart {
 
         //remove it from list
         cartItems.remove(getItem);
+
+        recalculateTotalPrice();
     }
 
     //update quantity
@@ -139,6 +145,8 @@ public class Cart {
                 .orElseThrow(() ->  new IllegalArgumentException("Product not found"));
         //replace new quantity
         getItem.updateQuantity(newQuantity);
+
+        recalculateTotalPrice();
     }
 
     //clear cart
