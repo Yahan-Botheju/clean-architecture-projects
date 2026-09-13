@@ -34,6 +34,14 @@ public class CartItem {
 
     /* __DOMAIN_LOGICS__ */
 
+    //update quantity of existing product
+    public void updateExistingItemQuantity(int newQuantity){
+       if(newQuantity <= 0){
+           throw  new IllegalArgumentException("Quantity should be greater than 0");
+       }
+       this.quantity += newQuantity;
+    }
+
     //update quantity
     public void updateQuantity(int newQuantity){
         if(newQuantity <= 0){
