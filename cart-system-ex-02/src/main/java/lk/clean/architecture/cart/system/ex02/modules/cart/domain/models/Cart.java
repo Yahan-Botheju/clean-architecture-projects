@@ -53,7 +53,6 @@ public class Cart {
 
 
 
-
     /* __PUBLIC_METHODS__ */
 
     //add item
@@ -64,7 +63,7 @@ public class Cart {
         }
 
         //check product is available
-        boolean checkCartItem = cartItems.stream().anyMatch(cartItem ->  cartItem.getProductId().equals(productId));
+        boolean checkCartItem = checkProductExistence(productId);
 
         //check availability
         if(checkCartItem){
@@ -99,7 +98,7 @@ public class Cart {
         }
 
         //get product
-        boolean checkItemExist = cartItems.stream().anyMatch(cartItem ->  cartItem.getProductId().equals(productId));
+        boolean checkItemExist = checkProductExistence(productId);
 
         //check product existence
         if(!checkItemExist){
