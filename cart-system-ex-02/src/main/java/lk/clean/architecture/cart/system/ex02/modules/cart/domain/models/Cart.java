@@ -134,5 +134,11 @@ public class Cart {
         //replace new quantity
         getItem.updateQuantity(newQuantity);
     }
+
+    //clear cart
+    public void clearCart(){
+        cartItems.clear();
+        this.totalPrice = 0.0;
+    }
 }
 
