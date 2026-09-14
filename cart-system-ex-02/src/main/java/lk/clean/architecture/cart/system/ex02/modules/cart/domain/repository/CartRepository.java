@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CartRepository {
+
     //find user by id
     Optional<Cart> findByUserId(UUID userId);
+
+    //save cart
+    Cart save(Cart cart);
 }
