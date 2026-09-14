@@ -2,6 +2,7 @@ package lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.
 
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.models.Cart;
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.repository.CartRepository;
+import lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.persistence.entities.CartEntity;
 import lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.persistence.jpa.JpaCartRepository;
 import lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.cart.persistence.persitenceMapper.CartPersistenceMapper;
 
@@ -28,4 +29,22 @@ public class CartRepositoryImpl implements CartRepository {
         return  jpaCartRepository.findByUserId(userId)
                 .map(cartPersistenceMapper::toDomainModel);
     }
+
+    //save cart
+    @Override
+    public Cart save(Cart cart) {
+
+        CartEntity toEntity = cartPersistenceMapper.toCartEntity(cart);
+        CartEntity savedEntity = jpaCartRepository.save(toEntity);
+
+        return cartPersistenceMapper.toDomainModel(savedEntity);
+    }
+
+    //delete cart by user id
+    @Override
+    public void deleteCartByUserId(UUID userId) {
+        jpaCartRepository.deleteByUserId(userId);
+    }
+
+
 }
