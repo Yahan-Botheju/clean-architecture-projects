@@ -40,5 +40,11 @@ public class CartRepositoryImpl implements CartRepository {
         return cartPersistenceMapper.toDomainModel(savedEntity);
     }
 
+    //delete cart by user id
+    @Override
+    public void deleteCartByUserId(UUID userId) {
+        jpaCartRepository.deleteByUserId(userId);
+    }
+
 
 }
