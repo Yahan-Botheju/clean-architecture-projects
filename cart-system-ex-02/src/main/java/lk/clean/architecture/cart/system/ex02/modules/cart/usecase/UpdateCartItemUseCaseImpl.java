@@ -43,6 +43,8 @@ public class UpdateCartItemUseCaseImpl implements UpdateCartItemUseCase {
         //call domain method
         cart.updateItemQuantity(updateCartItemCommand.productId(), updateCartItemCommand.newQuantity());
 
+        cartRepository.save(cart);
+
         return new UpdateCartItemResult(
                 updateCartItemCommand.productId(),
                 productSnapshots.productName(),
