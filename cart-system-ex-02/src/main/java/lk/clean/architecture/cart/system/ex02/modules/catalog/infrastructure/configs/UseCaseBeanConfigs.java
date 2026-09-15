@@ -2,11 +2,13 @@ package lk.clean.architecture.cart.system.ex02.modules.catalog.infrastructure.co
 
 import lk.clean.architecture.cart.system.ex02.modules.catalog.api.CatalogProductCheckApi;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.api.CatalogStockDeductApi;
+import lk.clean.architecture.cart.system.ex02.modules.catalog.api.GetProductDetailsApi;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.domain.repositories.ProductRepository;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.usecase.CreateProductUseCase;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.usecase.CreateProductUseCaseImpl;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.usecase.api_impl.CatalogProductCheckApiImpl;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.usecase.api_impl.CatalogStockDeductApiImpl;
+import lk.clean.architecture.cart.system.ex02.modules.catalog.usecase.api_impl.GetProductDetailsApiImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +32,12 @@ public class UseCaseBeanConfigs {
         return new CatalogStockDeductApiImpl(productRepository);
     }
 
+    @Bean
+    public GetProductDetailsApi getProductDetailsApi(
+            ProductRepository productRepository
+    ){
+        return new GetProductDetailsApiImpl(productRepository);
+    }
 
     /* __DOMAIN_USE_CASE__ */
 
