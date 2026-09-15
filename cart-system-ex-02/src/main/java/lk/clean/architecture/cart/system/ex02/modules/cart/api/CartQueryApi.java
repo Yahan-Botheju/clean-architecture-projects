@@ -1,6 +1,6 @@
 package lk.clean.architecture.cart.system.ex02.modules.cart.api;
 
-import lk.clean.architecture.cart.system.ex02.modules.shared_domain.catalog.api_records.CartDetailsResult;
+import lk.clean.architecture.cart.system.ex02.modules.shared_domain.cart.api_records.CartDetailsResult;
 
 import java.util.UUID;
 

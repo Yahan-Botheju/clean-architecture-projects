@@ -3,7 +3,7 @@ package lk.clean.architecture.cart.system.ex02.modules.cart.usecase.api;
 import lk.clean.architecture.cart.system.ex02.modules.cart.api.CartQueryApi;
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.models.Cart;
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.repository.CartRepository;
-import lk.clean.architecture.cart.system.ex02.modules.shared_domain.catalog.api_records.CartDetailsResult;
+import lk.clean.architecture.cart.system.ex02.modules.shared_domain.cart.api_records.CartDetailsResult;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.util.UUID;
