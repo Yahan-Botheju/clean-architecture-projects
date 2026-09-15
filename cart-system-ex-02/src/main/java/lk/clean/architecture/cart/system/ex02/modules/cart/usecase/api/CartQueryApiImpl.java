@@ -41,5 +41,8 @@ public class CartQueryApiImpl implements CartQueryApi {
 
         //clear cart using domai model method
         cart.clearCart();
+
+        //save in db
+        cartRepository.save(cart);
     }
 }
