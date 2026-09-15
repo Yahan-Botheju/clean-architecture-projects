@@ -6,5 +6,9 @@ import java.util.UUID;
 
 public interface CartQueryApi {
 
+    //get cart details
     CartDetailsResult getCartByUserId(UUID userId);
+
+    //clear cart
+    void clearCartByUserId(UUID userId);
 }
