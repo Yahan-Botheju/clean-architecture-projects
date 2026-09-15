@@ -17,4 +17,12 @@ public class OrderItem {
         this.unitPrice = unitPrice;
         this.quantity = quantity;
     }
+
+    /* __DOMAIN_LOGIC__ */
+
+
+    //get subtotal
+    public double getItemSubTotal(){
+        return this.unitPrice * this.quantity;
+    }
 }
