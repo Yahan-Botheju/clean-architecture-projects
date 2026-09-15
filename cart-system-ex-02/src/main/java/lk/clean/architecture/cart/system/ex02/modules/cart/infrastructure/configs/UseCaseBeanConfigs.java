@@ -1,7 +1,9 @@
 package lk.clean.architecture.cart.system.ex02.modules.cart.infrastructure.configs;
 
+import lk.clean.architecture.cart.system.ex02.modules.cart.api.CartQueryApi;
 import lk.clean.architecture.cart.system.ex02.modules.cart.domain.repository.CartRepository;
 import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.*;
+import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.api.CartQueryApiImpl;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.api.CatalogProductCheckApi;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.api.GetProductDetailsApi;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,19 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UseCaseBeanConfigs {
+
+    /* __EXTERNAL_API__ */
+
+    @Bean
+    public CartQueryApi cartQueryApi(CartRepository cartRepository) {
+        return new CartQueryApiImpl(cartRepository);
+    }
+
+
+
+
+    /* __DOMAIN_USE CASE__ */
+
 
     //add to cart usecase impl
     @Bean
