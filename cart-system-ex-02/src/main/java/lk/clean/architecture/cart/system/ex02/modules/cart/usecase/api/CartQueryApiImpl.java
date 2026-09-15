@@ -31,4 +31,15 @@ public class CartQueryApiImpl implements CartQueryApi {
                 cart.getTotalPrice()
         );
     }
+
+    //clear cart
+    @Override
+    public void clearCartByUserId(UUID userId) {
+        //get cart
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+
+        //clear cart using domai model method
+        cart.clearCart();
+    }
 }
