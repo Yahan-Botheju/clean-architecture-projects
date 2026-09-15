@@ -36,4 +36,12 @@ public class UseCaseBeanConfigs {
     ){
         return new RemoveFromCartUseCaseImpl(cartRepository,getProductDetailsApi);
     }
+
+    //get cart
+    @Bean
+    public GetCartUseCaseImpl getCartUseCase(
+            CartRepository cartRepository
+    ){
+        return new GetCartUseCaseImpl(cartRepository);
+    }
 }
