@@ -23,6 +23,9 @@ public class OrderItem {
 
     //get subtotal
     public double getItemSubTotal(){
+        if(this.quantity <= 0 || this.unitPrice <= 0){
+            throw new IllegalArgumentException("Please buy at least one item");
+        }
         return this.unitPrice * this.quantity;
     }
 }
