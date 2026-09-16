@@ -48,7 +48,7 @@ public class Order {
     /* __DOMAIN_LOGIC__ */
 
     //create order
-    public void createOrder() {
+    public void createOrder(LocalDateTime currentTime) {
         //check order item is empty
         if(this.orderItems.isEmpty()){
             throw new IllegalArgumentException("Order items cannot be empty");
@@ -57,5 +57,16 @@ public class Order {
         this.totalAmount = orderItems.stream().mapToDouble(OrderItem::getItemSubTotal).sum();
         //set order status as pending
         this.orderStatus = OrderStatus.PENDING;
+        this.createdAt = currentTime;
+    }
+
+    //confirm order
+    public void confirmOrder(){
+        //check order status is required state
+        if(this.orderStatus != OrderStatus.PENDING){
+            throw new IllegalArgumentException("Order status must be PENDING");
+        }
+        //set to confirmed
+        this.orderStatus = OrderStatus.CONFIRMED;
     }
 }
