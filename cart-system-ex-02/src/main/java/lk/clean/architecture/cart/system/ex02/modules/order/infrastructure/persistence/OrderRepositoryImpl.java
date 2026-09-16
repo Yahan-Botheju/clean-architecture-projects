@@ -6,6 +6,9 @@ import lk.clean.architecture.cart.system.ex02.modules.order.infrastructure.persi
 import lk.clean.architecture.cart.system.ex02.modules.order.infrastructure.persistence.jpa.JpaOrderRepository;
 import lk.clean.architecture.cart.system.ex02.modules.order.infrastructure.persistence.persistenceMapper.OrderPersistenceMapper;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public class OrderRepositoryImpl implements OrderRepository {
 
     //inject required dependencies
@@ -17,6 +20,12 @@ public class OrderRepositoryImpl implements OrderRepository {
         this.orderPersistenceMapper = orderPersistenceMapper;
     }
 
+    //get order by its id
+    @Override
+    public Optional<Order> getOrderByOrderId(UUID orderId) {
+        return jpaOrderRepository.findByOrderId(orderId)
+                .map(orderPersistenceMapper::toOrderDomainModel);
+    }
 
     //save order
     @Override
