@@ -6,5 +6,5 @@ import lk.clean.architecture.cart.system.ex02.modules.order.usecase.records.Plac
 public interface PlaceOrderUseCase {
 
     //place an order
-    PlaceOrderResult placeOrder(PlaceOrderCommand placeOrderCommand);
+    PlaceOrderResult execute(PlaceOrderCommand placeOrderCommand);
 }
