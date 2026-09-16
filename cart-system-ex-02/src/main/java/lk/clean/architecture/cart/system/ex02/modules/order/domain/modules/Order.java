@@ -24,4 +24,18 @@ public class Order {
         this.orderItems = orderItems;
         this.createdAt = createdAt;
     }
+
+    /* __DOMAIN_LOGIC__ */
+
+    //create order
+    public void createOrder() {
+        //check order item is empty
+        if(this.orderItems.isEmpty()){
+            throw new IllegalArgumentException("Order items cannot be empty");
+        }
+        //set all subtotal into total amount
+        this.totalAmount = orderItems.stream().mapToDouble(OrderItem::getItemSubTotal).sum();
+        //set order status as pending
+        this.orderStatus = OrderStatus.PENDING;
+    }
 }
