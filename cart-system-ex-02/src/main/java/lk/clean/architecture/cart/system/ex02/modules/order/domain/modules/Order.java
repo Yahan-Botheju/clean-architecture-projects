@@ -25,6 +25,26 @@ public class Order {
         this.createdAt = createdAt;
     }
 
+    /* __FACTORY_METHOD__ */
+    public static Order createNewOrder(
+            UUID userId,
+            double totalAmount,
+            OrderStatus orderStatus,
+            List<OrderItem> orderItems,
+            LocalDateTime createdAt
+    ) {
+        return new Order(
+                UUID.randomUUID(),
+                userId,
+                totalAmount,
+                orderStatus,
+                orderItems,
+                createdAt
+        );
+    }
+
+
+
     /* __DOMAIN_LOGIC__ */
 
     //create order
