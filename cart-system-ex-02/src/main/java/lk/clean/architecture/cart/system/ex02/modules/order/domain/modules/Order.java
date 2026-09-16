@@ -64,9 +64,18 @@ public class Order {
     public void confirmOrder(){
         //check order status is required state
         if(this.orderStatus != OrderStatus.PENDING){
-            throw new IllegalArgumentException("Order status must be PENDING");
+            throw new IllegalStateException("Order status must be PENDING");
         }
         //set to confirmed
         this.orderStatus = OrderStatus.CONFIRMED;
+    }
+
+    //cancel order
+    public void cancelOrder(){
+        //check order
+        if(this.orderStatus != OrderStatus.CONFIRMED && this.orderStatus != OrderStatus.CANCELLED){
+            throw new IllegalStateException("Order is not in correct state to be cancelled");
+        }
+        this.orderStatus = OrderStatus.CANCELLED;
     }
 }
