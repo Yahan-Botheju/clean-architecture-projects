@@ -16,48 +16,31 @@ public class Order {
     private List<OrderItem> orderItems;
     private LocalDateTime createdAt;
 
-    public Order(UUID orderId, UUID userId, double totalAmount, OrderStatus orderStatus, List<OrderItem> orderItems, LocalDateTime createdAt) {
+    private Order(UUID orderId, UUID userId,  List<OrderItem> orderItems, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.userId = userId;
-        this.totalAmount = totalAmount;
-        this.orderStatus = orderStatus;
         this.orderItems = orderItems;
         this.createdAt = createdAt;
     }
-
-    /* __FACTORY_METHOD__ */
-    public static Order createNewOrder(
-            UUID userId,
-            double totalAmount,
-            OrderStatus orderStatus,
-            List<OrderItem> orderItems,
-            LocalDateTime createdAt
-    ) {
-        return new Order(
-                UUID.randomUUID(),
-                userId,
-                totalAmount,
-                orderStatus,
-                orderItems,
-                createdAt
-        );
-    }
-
 
 
     /* __DOMAIN_LOGIC__ */
 
     //create order
-    public void createOrder(LocalDateTime currentTime) {
+    public static Order createOrder(UUID userId, List<OrderItem> orderItems, LocalDateTime currentTime) {
         //check order item is empty
-        if(this.orderItems.isEmpty()){
+        if(orderItems.isEmpty()){
             throw new IllegalArgumentException("Order items cannot be empty");
         }
         //set all subtotal into total amount
-        this.totalAmount = orderItems.stream().mapToDouble(OrderItem::getItemSubTotal).sum();
+
         //set order status as pending
-        this.orderStatus = OrderStatus.PENDING;
-        this.createdAt = currentTime;
+         Order createNewOrder = new Order(UUID.randomUUID(), userId, orderItems,  currentTime);
+         createNewOrder.totalAmount =  orderItems.stream().mapToDouble(OrderItem::getItemSubTotal).sum();
+         createNewOrder.orderStatus = OrderStatus.PENDING;
+         createNewOrder.createdAt = currentTime;
+
+         return createNewOrder;
     }
 
     //confirm order
