@@ -19,8 +19,12 @@ public interface CartWebMapper {
 
     /* __GET_CART__ */
 
+    //requestDTO to usecase obj
+    GetCartCommand toGetCartCommand(GetCartRequestDTO getCartRequestDTO);
+
     //domain model to responseDTO
     GetCartResponseDTO toGetCartResponseDTO(GetCartResult getCartResult);
+
 
 
     /* __UPDATE_CART_ITEM__ */
