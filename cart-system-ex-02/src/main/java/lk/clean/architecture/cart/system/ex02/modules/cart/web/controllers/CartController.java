@@ -6,9 +6,11 @@ import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.GetCartUseCas
 import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.RemoveFromCartUseCase;
 import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.UpdateCartItemUseCase;
 import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.records.AddToCartCommand;
+import lk.clean.architecture.cart.system.ex02.modules.cart.usecase.records.AddToCartResult;
 import lk.clean.architecture.cart.system.ex02.modules.cart.web.DTOs.AddToCartRequestDTO;
 import lk.clean.architecture.cart.system.ex02.modules.cart.web.DTOs.AddToCartResponseDTO;
 import lk.clean.architecture.cart.system.ex02.modules.cart.web.webMappers.CartWebMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,10 +42,15 @@ public class CartController {
         this.cartWebMapper = cartWebMapper;
     }
 
+    //add to cart
     @PostMapping("/add-to-cart")
     public ResponseEntity<AddToCartResponseDTO> addToCart(
             @Valid @RequestBody AddToCartRequestDTO addToCartRequestDTO
     ){
-        AddToCartCommand toAddToCartCommand =
+        AddToCartCommand toAddToCartCommand = cartWebMapper.toAddToCartCommand(addToCartRequestDTO);
+        AddToCartResult toUseCase = addToCartUseCase.execute(toAddToCartCommand);
+        AddToCartResponseDTO responseDTO = cartWebMapper.toAddToCartResponseDTO(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 }
