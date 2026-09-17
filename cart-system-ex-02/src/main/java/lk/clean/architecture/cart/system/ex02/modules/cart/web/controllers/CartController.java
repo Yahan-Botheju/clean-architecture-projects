@@ -37,6 +37,19 @@ public class CartController {
         this.cartWebMapper = cartWebMapper;
     }
 
+
+    //get cart
+    @GetMapping
+    public ResponseEntity<GetCartResponseDTO> getCart(
+            @Valid @RequestBody GetCartRequestDTO getCartRequestDTO
+    ){
+        GetCartCommand getCartCommand = cartWebMapper.toGetCartCommand(getCartRequestDTO);
+        GetCartResult toUseCase = getCartUseCase.getCart(getCartCommand);
+        GetCartResponseDTO responseDTO = cartWebMapper.toGetCartResponseDTO(toUseCase);
+
+        return ResponseEntity.ok(responseDTO);
+    }
+
     //add to cart
     @PostMapping("/add-to-cart")
     public ResponseEntity<AddToCartResponseDTO> addToCart(
@@ -72,4 +85,5 @@ public class CartController {
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
+
 }
