@@ -3,17 +3,18 @@ package lk.clean.architecture.cart.system.ex02.modules.order.web.controllers;
 import jakarta.validation.Valid;
 import lk.clean.architecture.cart.system.ex02.modules.order.usecase.GetOrderDetailsUseCase;
 import lk.clean.architecture.cart.system.ex02.modules.order.usecase.PlaceOrderUseCase;
+import lk.clean.architecture.cart.system.ex02.modules.order.usecase.records.GetOrderDetailsCommand;
+import lk.clean.architecture.cart.system.ex02.modules.order.usecase.records.GetOrderDetailsResult;
 import lk.clean.architecture.cart.system.ex02.modules.order.usecase.records.PlaceOrderCommand;
 import lk.clean.architecture.cart.system.ex02.modules.order.usecase.records.PlaceOrderResult;
+import lk.clean.architecture.cart.system.ex02.modules.order.web.DTOs.GetOrderDetailsRequestDTO;
+import lk.clean.architecture.cart.system.ex02.modules.order.web.DTOs.GetOrderDetailsResponseDTO;
 import lk.clean.architecture.cart.system.ex02.modules.order.web.DTOs.PlaceOrderRequestDTO;
 import lk.clean.architecture.cart.system.ex02.modules.order.web.DTOs.PlaceOrderResponseDTO;
 import lk.clean.architecture.cart.system.ex02.modules.order.web.webMapper.OrderWebMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -42,6 +43,18 @@ public class OrderController {
         PlaceOrderCommand toCommand = orderWebMapper.toPlaceOrderCommand(placeOrderRequestDTO);
         PlaceOrderResult toUseCase =  placeOrderUseCase.execute(toCommand);
         PlaceOrderResponseDTO responseDTO = orderWebMapper.toPlaceOrderResponseDTO(toUseCase);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    //get order details
+    @GetMapping
+    public ResponseEntity<GetOrderDetailsResponseDTO> getOrderDetails(
+            @Valid @RequestBody GetOrderDetailsRequestDTO getOrderDetailsRequestDTO
+    ){
+        GetOrderDetailsCommand  toCommand = orderWebMapper.toGetOrderDetailsCommand(getOrderDetailsRequestDTO);
+        GetOrderDetailsResult toUseCase = getOrderDetailsUseCase.getOrderDetails(toCommand);
+        GetOrderDetailsResponseDTO responseDTO = orderWebMapper.toGetOrderDetailsResponseDTO(toUseCase);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
