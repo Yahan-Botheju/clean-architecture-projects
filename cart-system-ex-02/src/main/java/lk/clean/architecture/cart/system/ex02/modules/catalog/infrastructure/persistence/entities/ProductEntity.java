@@ -1,7 +1,6 @@
 package lk.clean.architecture.cart.system.ex02.modules.catalog.infrastructure.persistence.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lk.clean.architecture.cart.system.ex02.modules.catalog.domain.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;

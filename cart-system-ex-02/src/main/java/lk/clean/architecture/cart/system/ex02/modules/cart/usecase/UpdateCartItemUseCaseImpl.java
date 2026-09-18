@@ -8,7 +8,6 @@ import lk.clean.architecture.cart.system.ex02.modules.catalog.api.CatalogProduct
 import lk.clean.architecture.cart.system.ex02.modules.shared_domain.catalog.api_records.CatalogProductCheckResult;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
-import java.util.Optional;
 
 public class UpdateCartItemUseCaseImpl implements UpdateCartItemUseCase {
 
