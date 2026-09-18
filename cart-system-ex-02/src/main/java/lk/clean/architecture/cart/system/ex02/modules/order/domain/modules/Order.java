@@ -16,7 +16,17 @@ public class Order {
     private List<OrderItem> orderItems;
     private LocalDateTime createdAt;
 
-    private Order(UUID orderId, UUID userId,  List<OrderItem> orderItems, LocalDateTime createdAt) {
+
+    public Order(UUID orderId, UUID userId, double totalAmount, OrderStatus orderStatus, List<OrderItem> orderItems, LocalDateTime createdAt) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.totalAmount = totalAmount;
+        this.orderStatus = orderStatus;
+        this.orderItems = orderItems;
+        this.createdAt = createdAt;
+    }
+
+    private Order(UUID orderId, UUID userId, List<OrderItem> orderItems, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.userId = userId;
         this.orderItems = orderItems;

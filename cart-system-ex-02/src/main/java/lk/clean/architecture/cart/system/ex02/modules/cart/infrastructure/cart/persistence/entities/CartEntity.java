@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SoftDelete;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,8 +26,9 @@ public class CartEntity {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "cart_items")
-    private List<CartItem> cartItems;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
+    private List<CartItemEntity> cartItems = new ArrayList<>();
 
     @Column(name = "total_price")
     private double totalPrice;
