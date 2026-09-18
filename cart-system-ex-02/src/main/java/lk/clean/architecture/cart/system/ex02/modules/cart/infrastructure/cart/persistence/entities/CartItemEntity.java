@@ -12,7 +12,7 @@ import org.hibernate.annotations.SoftDelete;
 import java.util.UUID;
 
 @Entity
-@Table(name = "cartItems")
+@Table(name = "cart_items")
 @SoftDelete(columnName = "is_deleted")
 @Data
 @AllArgsConstructor
