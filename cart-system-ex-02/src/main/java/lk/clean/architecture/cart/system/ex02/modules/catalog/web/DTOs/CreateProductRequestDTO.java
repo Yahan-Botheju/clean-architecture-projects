@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 public class CreateProductRequestDTO {
 
     @NotBlank(message = "Product name is required")
-    String productName;
+    private String productName;
 
     @Min(1)
     @NotNull(message = "Unit price is required")
-    double unitPrice;
+    private double unitPrice;
 
     @Min(5)
     @NotNull(message = "Initial stock is required")
-    int initialStock;
+    private int initialStock;
 }
