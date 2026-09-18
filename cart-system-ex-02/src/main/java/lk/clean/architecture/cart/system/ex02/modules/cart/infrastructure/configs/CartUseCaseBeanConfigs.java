@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class UseCaseBeanConfigs {
+public class CartUseCaseBeanConfigs {
 
     /* __EXTERNAL_API__ */
 
